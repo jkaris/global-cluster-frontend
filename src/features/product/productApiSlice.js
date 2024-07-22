@@ -34,3 +34,4 @@ export const { useLazyProductsQuery, useProductsQuery,useProductMutation,useDele
 
 // const [trigger, { data, error, isLoading }] = useLazyProductsQuery();
 // const { data, error, isLoading } = useProductsQuery();
+// const [mutation] = useMutation();

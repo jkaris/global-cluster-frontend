@@ -10,6 +10,7 @@ function BusinessSignUpForm({ companySizeInput, SetCompanySizeInput }) {
     register,
     handleSubmit,
     formState: { errors },
+    watch
   } = useForm();
   const [signup] = useSignupMutation();
   const navigate = useNavigate()

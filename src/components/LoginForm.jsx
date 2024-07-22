@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { HiMiniUserPlus } from "react-icons/hi2";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useLoginMutation } from "../features/auth/authApiSlice";
+import { useDispatch } from "react-redux";
+import { loginAction } from "../features/auth/authSlice";
 
 function LoginForm() {
   const [loginType, setLoginType] = useState("Business");
@@ -14,9 +16,18 @@ function LoginForm() {
 
   const [login] = useLoginMutation();
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
+
   const onSubmit = async (data) => {
     try {
       const response = await login(data);
+      if (response.status === 200) {
+        const response_data = response.data;
+        dispatch(loginAction(response_data))
+        // navigate(``)
+
+      }
       console.log(JSON.stringify(response))
       
     } catch (error) {
