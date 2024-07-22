@@ -1,5 +1,10 @@
 import { globalClusterApi } from "../api/apiSlice";
 
+/**
+ * AuthApiSlice is a set of endpoints for authentication-related API calls.
+ * @param {globalClusterApi} globalClusterApi - The API object to inject the endpoints into.
+ * @returns None
+ */
 export const AuthApiSlice = globalClusterApi.injectEndpoints({
   endpoints: (builder) => ({
     signup: builder.mutation({

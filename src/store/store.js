@@ -1,3 +1,7 @@
+/**
+ * Configures and creates a Redux store with persisted state using redux-persist.
+ * @returns {Object} An object containing the Redux store and persistor.
+ */
 import { configureStore } from "@reduxjs/toolkit";
 import {
   persistStore,

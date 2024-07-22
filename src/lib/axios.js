@@ -2,6 +2,12 @@ import axios from "axios";
 import { BASE_URL } from "./constants";
 
 // Axios instance with base URL
+
+/**
+ * Creates an Axios instance with a base URL and default headers for JSON content type.
+ * Interceptors are added to handle request and response, including refreshing access token on 401 error.
+ * @returns AxiosInstance - An Axios instance with interceptors for request and response handling.
+ */
 export const axiosInstance = axios.create({
     baseURL: BASE_URL,
     headers: { "Content-Type": "application/json" }

@@ -3,6 +3,10 @@ import react from '@vitejs/plugin-react';
 import eslint from 'vite-plugin-eslint';
 
 // https://vitejs.dev/config/
+/**
+ * Defines the configuration for the project.
+ * @returns {Object} The project configuration object.
+ */
 export default defineConfig({
   plugins: [react(), eslint()],
   test: {
