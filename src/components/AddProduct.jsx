@@ -59,7 +59,7 @@ function AddProduct({ addNewProduct, CloseModalWindow, currentStatus }) {
     setProductLinkType(e.target.id);
   };
 
-  const AddAndCloseModal = () => {
+  const AddAndCloseModal = async() => {
     const newProduct = {
       name: productName,
       description: description,
@@ -68,7 +68,7 @@ function AddProduct({ addNewProduct, CloseModalWindow, currentStatus }) {
       linkValue: linkValue,
     };
 
-    addNewProduct(newProduct);
+    await addNewProduct(newProduct);
     CloseModalWindow(!currentStatus);
   };
 

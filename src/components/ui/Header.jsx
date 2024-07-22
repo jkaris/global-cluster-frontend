@@ -1,11 +1,13 @@
-import React from 'react';
-import HeaderSearch from '../HeaderSearch';
-import { LuBellRing } from 'react-icons/lu';
-import ProfileImg from './../../assets/images/profileImg.jpeg';
-import { BiChevronDown } from 'react-icons/bi';
-import USAFlag from './../../assets/images/usa.png';
+import React from "react";
+import HeaderSearch from "../HeaderSearch";
+import { LuBellRing } from "react-icons/lu";
+import ProfileImg from "./../../assets/images/profileImg.jpeg";
+import { BiChevronDown } from "react-icons/bi";
+import USAFlag from "./../../assets/images/usa.png";
+import { useUser } from "../../hooks/auth/useUser";
 
 function Header() {
+  const { user } = useUser();
   return (
     <div className="flex items-center justify-between shadow-sm px-10 py-10 bg-gray-50">
       <div className="w-[50rem]">
@@ -26,19 +28,21 @@ function Header() {
           </select>
         </div>
         <div className="p-4 bg-[#fffaf1]">
-          <LuBellRing style={{ color: '#ffa412', fontSize: '1.8rem' }} />
+          <LuBellRing style={{ color: "#ffa412", fontSize: "1.8rem" }} />
         </div>
         <div className="flex items-center justify-center gap-8">
           <img
             className="w-14 h-16 rounded-lg"
-            src={ProfileImg}
+            src={user?.avatar || ProfileImg}
             alt="Profile Img of Business Account"
           />
           <div className="flex flex-col">
             <p className="flex items-center gap-4 justify-between text-2xl">
-              Silas Oladipo <BiChevronDown />
+              {user?.name || "Silas Oladipo"} <BiChevronDown />
             </p>
-            <p className="text-lg text-gray-500">@silasadahum</p>
+            <p className="text-lg text-gray-500">
+              { user?.username || "@silasadahum" }
+            </p>
           </div>
         </div>
       </div>

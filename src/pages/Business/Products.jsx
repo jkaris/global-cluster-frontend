@@ -1,19 +1,26 @@
-import React, { useContext, useState } from 'react';
-import { useLoaderData } from 'react-router-dom';
-import { ModalContext } from './../../App';
+import React, { useContext, useEffect, useState } from "react";
+// import { useLoaderData } from "react-router-dom";
+import { ModalContext } from "./../../App";
 
-import ActionNotification from '../../components/ActionNotification';
-import AddProduct from '../../components/AddProduct';
-import Button from '../../components/Button';
-import Modal from '../../components/Modal';
-import Pagination from '../../components/Pagination';
-import Filter from '../../components/ui/Filter';
-import BusinessDashboardHeader from '../../components/ui/Header';
-import PageDataHeader from '../../components/ui/PageDataHeader';
-import ProductsTicket from '../../components/ui/ProductTickets';
-import TableData from '../../components/ui/TableData';
+import ActionNotification from "../../components/ActionNotification";
+import AddProduct from "../../components/AddProduct";
+import Button from "../../components/Button";
+import Modal from "../../components/Modal";
+import Pagination from "../../components/Pagination";
+import Filter from "../../components/ui/Filter";
+import BusinessDashboardHeader from "../../components/ui/Header";
+import PageDataHeader from "../../components/ui/PageDataHeader";
+import ProductsTicket from "../../components/ui/ProductTickets";
+import TableData from "../../components/ui/TableData";
 
-import { addProduct, BASE_URL, fetchProducts } from '../../services/api';
+// import { addProduct, BASE_URL, fetchProducts } from "../../services/api";
+import {
+  useAddProductMutation,
+  useDeleteProductMutation,
+  useProductMutation,
+  useProductsQuery,
+} from "../../features/product/productApiSlice";
+import { itemsPerPage } from "../../lib/constants";
 
 const initialProductsData = [
   // Your initial products data
@@ -23,55 +30,66 @@ function Products() {
   const { showModal, setShowModal } = useContext(ModalContext);
   const [showAction, setShowAction] = useState(false);
 
-  const fetchedProductsData = useLoaderData();
-  const [productsData, setProductsData] = useState(
-    fetchedProductsData.length ? fetchedProductsData : initialProductsData,
-  );
+  // const fetchedProductsData = useLoaderData();
+  // const [productsData, setProductsData] = useState(
+  //   fetchedProductsData.length ? fetchedProductsData : initialProductsData
+  // );
+  const [productsData, setProductsData] = useState(initialProductsData);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 7;
+  const { data: productsQuery } = useProductsQuery({
+    pollingInterval: 3000,
+    refetchOnMountOrArgChange: true,
+    skip: false,
+  });
 
+  const [product] = useProductMutation();
+  const [deleteProduct] = useDeleteProductMutation();
+  const [addProduct] = useAddProductMutation();
   async function addNewProduct(newProduct) {
     try {
-      const addedProduct = await addProduct(newProduct);
+      // const addedProduct = await addProduct(newProduct);
+      const response = await addProduct(newProduct);
+      const addedProduct = response.data.product;
       setProductsData([...productsData, addedProduct]);
       setShowModal(false);
       showTemporaryNotification();
     } catch (error) {
-      console.error('Error adding product:', error.message);
+      console.error("Error adding product:", error.message);
     }
   }
 
   async function handleDelete(productId) {
     // 192.168.100.214:8000/api/
-    const deleteApiUrl = `${BASE_URL}/products/${productId}`;
+    // const deleteApiUrl = `${BASE_URL}/products/${productId}`;
 
     try {
-      const response = await fetch(deleteApiUrl, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      // const response = await fetch(deleteApiUrl, {
+      //   method: "DELETE",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      // });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
+      // if (!response.ok) {
+      //   throw new Error(`HTTP error! Status: ${response.status}`);
+      // }
 
-      const updatedProducts = await fetchProducts();
+      // const updatedProducts = await fetchProducts();
+      const response = await deleteProduct(productId);
+      const updatedProducts = productsData.filter(
+        (product) => product.id !== productId
+      );
       setProductsData(updatedProducts);
     } catch (error) {
-      console.error('Failed to delete product:', error.message);
+      console.error("Failed to delete product:", error.message);
     }
   }
 
   async function handleShowProductDetails(productId) {
-    // console.log(productId)
-
-    const apiUrl = `${BASE_URL}/products/${productId}/`;
-    console.log(apiUrl);
+    console.log(productId);
 
     try {
-      const response = await fetch(apiUrl);
+      const response = await product(productId);
 
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
@@ -81,7 +99,7 @@ function Products() {
 
       return productData;
     } catch (error) {
-      console.error('Failed to fetch that product:', error.message);
+      console.error("Failed to fetch that product:", error.message);
     }
   }
 
@@ -92,7 +110,12 @@ function Products() {
     }, 2000);
   }
 
-  const handlePageChange = page => {
+  useEffect(() => {
+    if (productsQuery) {
+      setProductsData(productsQuery.products); // Assuming the data has a 'products' property
+    }
+  }, [productsQuery]);
+  const handlePageChange = (page) => {
     setCurrentPage(page);
   };
 
@@ -138,14 +161,14 @@ function Products() {
               <TableData
                 data={currentProducts}
                 tableHeadNames={[
-                  'Product Name',
-                  'Description',
-                  'No of Shares',
-                  'Traffic',
-                  'Status',
-                  'Action',
+                  "Product Name",
+                  "Description",
+                  "No of Shares",
+                  "Traffic",
+                  "Status",
+                  "Action",
                 ]}
-                onDelete={index =>
+                onDelete={(index) =>
                   handleDelete(productsData[startIndex + index].id)
                 }
                 handleShowProductDetails={handleShowProductDetails}
@@ -163,9 +186,9 @@ function Products() {
   );
 }
 
-export async function loader() {
-  const productsData = await fetchProducts(); // Assuming this function fetches all products from backend
-  return productsData;
-}
+// export async function loader() {
+//   const productsData = await fetchProducts(); // Assuming this function fetches all products from backend
+//   return productsData;
+// }
 
 export default Products;

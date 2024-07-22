@@ -1,5 +1,6 @@
-export const BASE_URL = 'http://127.0.0.1:8000/api';
-
+import { BASE_URL as BASE_url } from "../lib/constants";
+export const BASE_URL = BASE_url
+//will not be using these methods in prefence of the rtkQuery mutation injectected into the endpoints in feature slices.
 export async function fetchProducts() {
   try {
     const response = await fetch(`${BASE_URL}/products/`, {

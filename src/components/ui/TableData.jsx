@@ -8,6 +8,7 @@ import ConfirmDeletion from '../ConfirmDeletion';
 import Modal from '../Modal';
 import ShowDetailComp from '../ShowDetailComp';
 import ProductImg from './../../assets/images/productImg.png';
+import { convertStandardDate, DecreaseDescription } from '../../lib/utils';
 
 function TableData({
   data = [],
@@ -21,12 +22,7 @@ function TableData({
   const [productDetail, setProductDetail] = useState({});
   const [deleteIndex, setDeleteIndex] = useState(null);
 
-  function DecreaseDescription(description) {
-    if (!description) return '';
-    return description.length > 50
-      ? `${description.slice(0, 40)}...`
-      : description;
-  }
+
 
   function handleDelete(index) {
     setDeleteIndex(index);
@@ -53,12 +49,7 @@ function TableData({
     setShowProductDetail(true);
   }
 
-  const convertStandardDate = strDate => {
-    if (!strDate) return '';
-    const date = new Date(strDate);
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return date.toLocaleDateString('en-US', options);
-  };
+
 
   return (
     <div className="overflow-hidden rounded-t-xl rounded-l-xl rounded-r-xl border-t border-l border-r">

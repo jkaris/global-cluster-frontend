@@ -14,7 +14,7 @@ function GrowBusinessCard() {
         </p>
         <NavLink
           className="bg-white w-fit text-primary-light px-6 text-2xl py-2 rounded-xl"
-          to="products"
+          to="/business/products"
         >
           Go to Products
         </NavLink>

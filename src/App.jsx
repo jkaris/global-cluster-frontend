@@ -1,219 +1,231 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState } from "react";
 import {
   createBrowserRouter,
   Navigate,
   RouterProvider,
-} from 'react-router-dom';
+} from "react-router-dom";
 
-import AdminLogin from './components/AdminLogin';
-import BusinessSignUp from './components/BusinessSignUp';
-import BusinessLayout from './Layouts/BusinessLayout';
-import AdminDashboard from './pages/Admin/Dashboard';
-import BusinessDashboard from './pages/Business/Dashboard';
+import AdminLogin from "./components/AdminLogin";
+import BusinessSignUp from "./components/BusinessSignUp";
+import BusinessLayout from "./Layouts/BusinessLayout";
+import AdminDashboard from "./pages/Admin/Dashboard";
+import BusinessDashboard from "./pages/Business/Dashboard";
 import BusinessProducts, {
-  loader as productLoader,
-} from './pages/Business/Products';
-import BusinessSettings from './pages/Business/Settings';
-import BusinessSignOut from './pages/Business/SingOut';
-import BusinessSupportTicket from './pages/Business/SupportTicket';
-import Login from './pages/Login';
+  // loader as productLoader,
+} from "./pages/Business/Products";
+import BusinessSettings from "./pages/Business/Settings";
+import BusinessSignOut from "./pages/Business/SingOut";
+import BusinessSupportTicket from "./pages/Business/SupportTicket";
+import Login from "./pages/Login";
 
-import AdminLayout from './Layouts/AdminLayout';
-import UserLayout from './Layouts/UserLayout';
-import AdminBonusManagement from './pages/Admin/BonusMangement';
-import AdminSupportCenter from './pages/Admin/SupportCenter';
-import UserDashboard from './pages/User/Dashboard';
-import UserNetwork from './pages/User/Network';
-import UserPayOut from './pages/User/Payout';
-import UserPermoteAndEArn from './pages/User/PermoteAndEarn';
-import UserProducts from './pages/User/Products';
-import UserRegister from './pages/User/Register';
-import UserRegistrations from './pages/User/Registrations';
-import UserSettings from './pages/User/Settings';
-import UserSignOut from './pages/User/SignOut';
-import UserSupportTicket from './pages/User/SupportTicket';
-import UserWallet from './pages/User/Wallet';
+import AdminLayout from "./Layouts/AdminLayout";
+import UserLayout from "./Layouts/UserLayout";
+import AdminBonusManagement from "./pages/Admin/BonusMangement";
+import AdminSupportCenter from "./pages/Admin/SupportCenter";
+import UserDashboard from "./pages/User/Dashboard";
+import UserNetwork from "./pages/User/Network";
+import UserPayOut from "./pages/User/Payout";
+import UserPermoteAndEArn from "./pages/User/PermoteAndEarn";
+import UserProducts from "./pages/User/Products";
+import UserRegister from "./pages/User/Register";
+import UserRegistrations from "./pages/User/Registrations";
+import UserSettings from "./pages/User/Settings";
+import UserSignOut from "./pages/User/SignOut";
+import UserSupportTicket from "./pages/User/SupportTicket";
+import UserWallet from "./pages/User/Wallet";
 
-import AdminUserRanking from './pages/Admin/UserRankings';
+import AdminUserRanking from "./pages/Admin/UserRankings";
 
-import AdminPayout from './pages/Admin/Payout';
-import AdminProducts from './pages/Admin/Products.jsx';
+import AdminPayout from "./pages/Admin/Payout";
+import AdminProducts from "./pages/Admin/Products.jsx";
 
-import AdminStafManagement from './pages/Admin/StafManagement';
+import AdminStafManagement from "./pages/Admin/StafManagement";
 
-import AdminBusinessManage from './pages/Admin/ManageBusiness';
+import AdminBusinessManage from "./pages/Admin/ManageBusiness";
 
-import AdminUserManage from './pages/Admin/ManageUser';
+import AdminUserManage from "./pages/Admin/ManageUser";
 
-import AdminUserRegistrations from './pages/Admin/UserRegistrations';
+import AdminUserRegistrations from "./pages/Admin/UserRegistrations";
 
-import AdminBusinessRegistrations from './pages/Admin/BusinessRegistrations';
+import AdminBusinessRegistrations from "./pages/Admin/BusinessRegistrations";
+import { Provider } from "react-redux";
+import { persistor, store } from "./store/store.js";
+import { PersistGate } from "redux-persist/integration/react";
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <Navigate to="/login" replace />, // Redirect root to login
   },
   {
-    path: '/login',
+    path: "/login",
     element: <Login />,
   },
   {
-    path: '/business-signup',
+    path: "/business-signup",
     element: <BusinessSignUp />,
   },
   {
-    path: '/admin-login',
+    path: "/admin-login",
     element: <AdminLogin />,
   },
   {
-    path: '/business',
+    path: "/business",
     element: <BusinessLayout />,
     children: [
       {
-        path: 'dashboard',
+        path: "dashboard",
         element: <BusinessDashboard />,
       },
       {
-        path: 'products',
+        path: "products",
         element: <BusinessProducts />,
-        loader: productLoader,
+        // loader: productLoader,
       },
       {
-        path: 'support-ticket',
+        path: "support-ticket",
         element: <BusinessSupportTicket />,
       },
       {
-        path: 'settings',
+        path: "settings",
         element: <BusinessSettings />,
       },
       {
-        path: 'sign-out',
+        path: "sign-out",
         element: <BusinessSignOut />,
       },
     ],
   },
   {
-    path: '/user',
+    path: "/user",
     element: <UserLayout />,
     children: [
       {
-        path: 'dashboard',
+        path: "dashboard",
         element: <UserDashboard />,
       },
       {
-        path: 'network',
+        path: "network",
         element: <UserNetwork />,
       },
       {
-        path: 'register',
+        path: "register",
         element: <UserRegister />,
       },
       {
-        path: 'registrations',
+        path: "registrations",
         element: <UserRegistrations />,
       },
       {
-        path: 'promote-and-earn',
+        path: "promote-and-earn",
         element: <UserPermoteAndEArn />,
       },
       {
-        path: 'products',
+        path: "products",
         element: <UserProducts />,
       },
       {
-        path: 'wallet',
+        path: "wallet",
         element: <UserWallet />,
       },
       {
-        path: 'payout',
+        path: "payout",
         element: <UserPayOut />,
       },
       {
-        path: 'support-ticket',
+        path: "support-ticket",
         element: <UserSupportTicket />,
       },
       {
-        path: 'settings',
+        path: "settings",
         element: <UserSettings />,
       },
       {
-        path: 'sign-out',
+        path: "sign-out",
         element: <UserSignOut />,
       },
     ],
   },
   {
-    path: '/admin',
+    path: "/admin",
     element: <AdminLayout />,
     children: [
       {
-        path: 'dashboard',
+        path: "dashboard",
         element: <AdminDashboard />,
       },
       {
-        path: 'user/registrations',
+        path: "user/registrations",
         element: <AdminUserRegistrations />,
       },
       {
-        path: 'business/registrations',
+        path: "business/registrations",
         element: <AdminBusinessRegistrations />,
       },
       {
-        path: 'user/manage',
+        path: "user/manage",
         element: <AdminUserManage />,
       },
       {
-        path: 'business/manage',
+        path: "business/manage",
         element: <AdminBusinessManage />,
       },
       {
-        path: 'staff/management',
+        path: "staff/management",
         element: <AdminStafManagement />,
       },
       {
-        path: 'wallet',
+        path: "wallet",
         element: <UserWallet />,
       },
       {
-        path: 'products',
+        path: "products",
         element: <AdminProducts />,
       },
 
       {
-        path: 'payout',
+        path: "payout",
         element: <AdminPayout />,
       },
       {
-        path: 'user/rankings',
+        path: "user/rankings",
         element: <AdminUserRanking />,
       },
       {
-        path: 'bonus/management',
+        path: "bonus/management",
         element: <AdminBonusManagement />,
       },
       {
-        path: 'support/center',
+        path: "support/center",
         element: <AdminSupportCenter />,
       },
     ],
   },
   {
-    path: '*',
+    path: "*",
     element: <Navigate to="/login" replace />, // Redirect any unmatched paths to login
   },
 ]);
 export const ModalContext = createContext();
 
+/**
+ * Functional component representing the main App.
+ * It manages the state and provides the store to the components.
+ * @returns JSX element representing the main App component.
+ */
 function App() {
   const [showModal, setShowModal] = useState(false);
 
   return (
-    <div className={`${showModal === true ? 'relative' : null}`}>
-      <ModalContext.Provider value={{ showModal, setShowModal }}>
-        <RouterProvider router={router} />
-      </ModalContext.Provider>
-    </div>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <div className={`${showModal === true ? "relative" : null}`}>
+          <ModalContext.Provider value={{ showModal, setShowModal }}>
+            <RouterProvider router={router} />
+          </ModalContext.Provider>
+        </div>
+      </PersistGate>
+    </Provider>
   );
 }
 

@@ -60,7 +60,7 @@ function Dashboard() {
   );
 
   // Calculate total product count
-  const productCount = productsData.length;
+  const productVisits = productsData.length;
 
   // Dummy value for TotalIncDec (Replace this with actual logic if required)
   const totalIncDec = 5; // Example static increment/decrement percentage
@@ -71,18 +71,17 @@ function Dashboard() {
     <div className="bg-gray-50">
       <BusinessDashboardHeader />
       <div className="px-6 py-10 flex gap-6 flex-wrap bg-white">
-        <InsightsCard
-          CardName="Total Products"
-          TotalCount={productCount}
-          TotalIncDec={totalIncDec} // This can be replaced with actual calculation logic
-        />
 
         <InsightsCard
           CardName="Total Shares"
           TotalCount={totalShares}
           TotalIncDec={totalIncDec} // This can be replaced with actual calculation logic
         />
-
+        <InsightsCard
+          CardName="Total Visits"
+          TotalCount={productVisits}
+          TotalIncDec={totalIncDec} // This can be replaced with actual calculation logic
+        />
         <GrowBusinessCard />
       </div>
       <div className="px-6 py-6 flex gap-6">

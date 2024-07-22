@@ -7,6 +7,8 @@ module.exports = {
     'plugin:react/jsx-runtime',
     'plugin:react-hooks/recommended',
     'react-app',
+    // "@babel/plugin-transform-private-property-in-object", 
+    // "next/core-web-vitals"
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
