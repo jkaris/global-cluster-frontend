@@ -1,0 +1,207 @@
+import PropTypes from "prop-types";
+import React from "react";
+import { HiMiniUserPlus } from "react-icons/hi2";
+import { NavLink,useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { useSignupMutation } from "../features/auth/authApiSlice";
+
+function BusinessSignUpForm({ companySizeInput, SetCompanySizeInput }) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch
+  } = useForm();
+  const [signup] = useSignupMutation();
+  const navigate = useNavigate()
+  const onSubmit = async (data) => {
+    try {
+      const response = await signup({ companySizeInput, ...data });
+      console.log(JSON.stringify(response));
+      navigate(`business/dashboard`)
+    } catch (error) {
+      console.log(JSON.stringify(error));
+    }
+  };
+  return (
+    <form className=" " onSubmit={handleSubmit(onSubmit)}>
+      {companySizeInput && (
+        <div className={`space-y-6  px-8`}>
+          <div className="space-y-4">
+            <label htmlFor="companyName" className="block text-gray-700">
+              Email Address or Username<span className="text-red-500">*</span>
+            </label>
+            <input
+              id="companyName"
+              type="text"
+              placeholder="Dahort Consult"
+              className="w-full p-4 border border-gray-300 outline-none rounded-2xl"
+              {...register("companyName", {
+                required: "Company Name is required",
+              })}
+            />
+            {errors.companyName && (
+              <span className="text-red-500">{errors.companyName.message}</span>
+            )}
+          </div>
+          <div className="space-y-4">
+            <label htmlFor="EmailAdress" className="block text-gray-700">
+              Email Address<span className="text-red-500">*</span>
+            </label>
+            <input
+              id="EmailAdress"
+              type="email"
+              placeholder="janedoe@xxx.com"
+              className="w-full p-4 border border-gray-300 outline-none rounded-2xl"
+              {...register("EmailAdress", {
+                required: "Email is required",
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: "Invalid email address",
+                },
+              })}
+            />
+            {errors.EmailAdress && (
+              <span className="text-red-500">{errors.EmailAdress.message}</span>
+            )}
+          </div>
+          <div className="space-y-4">
+            <label htmlFor="address" className="block text-gray-700">
+              Address
+            </label>
+            <input
+              id="address"
+              type="text"
+              placeholder="Enter your Address"
+              className="w-full p-4 border border-gray-300 outline-none rounded-2xl"
+              {...register("address")}
+            />
+          </div>
+
+          <div className="space-y-4">
+            <label htmlFor="phone" className="block text-gray-700">
+              Phone No
+            </label>
+            <input
+              id="phone"
+              type="tel"
+              placeholder="+1 (555) 123-4567"
+              className="w-full p-4 border border-gray-300 outline-none rounded-2xl"
+              {...register("phone")}
+            />
+          </div>
+
+          <div className="space-y-4">
+            <label htmlFor="country" className="block text-gray-700">
+              Country
+            </label>
+            <input
+              id="country"
+              type="text"
+              placeholder="Select Your Country"
+              className="w-full p-4 border border-gray-300 outline-none rounded-2xl"
+              {...register("country")}
+            />
+          </div>
+
+          <div className="space-y-4">
+            <label
+              htmlFor="CompanyRegistrationNumber"
+              className="block text-gray-700"
+            >
+              Country Registration No (RC or BN)
+              <span className="text-red-500">*</span>
+            </label>
+            <input
+              id="CompanyRegistrationNumber"
+              name="CompanyRegistrationNumber"
+              type="text"
+              placeholder="Reg1245669"
+              className="w-full p-4 border border-gray-300 outline-none rounded-2xl"
+              {...register("CompanyRegistrationNumber", {
+                required: "Registration Number is required",
+              })}
+            />
+            {errors.CompanyRegistrationNumber && (
+              <span className="text-red-500">
+                {errors.CompanyRegistrationNumber.message}
+              </span>
+            )}
+          </div>
+
+          <div className="space-y-2">
+            <label htmlFor="password" className="block text-gray-700">
+              Password<span className="text-red-500">*</span>
+            </label>
+            <input
+              id="password"
+              type="password"
+              placeholder="Confirm Your Password"
+              className="w-full border border-gray-300 p-4 outline-none rounded-2xl"
+              {...register("password", {
+                required: "Password is required",
+                minLength: {
+                  value: 6,
+                  message: "Password must be at least 6 characters",
+                },
+              })}
+            />
+            {errors.password && (
+              <span className="text-red-500">{errors.password.message}</span>
+            )}
+          </div>
+
+          <div className="space-y-2">
+            <label htmlFor="cofirmPassword" className="block text-gray-700">
+              Confirm Password<span className="text-red-500">*</span>
+            </label>
+            <input
+              id="cofirmPassword"
+              type="password"
+              placeholder="Confirm Your Password"
+              className="w-full border border-gray-300 p-4 outline-none rounded-2xl"
+              {...register("confirmPassword", {
+                required: "Confirm Password is required",
+                validate: (value) =>
+                  value === watch("password") || "Passwords do not match",
+              })}
+            />
+            {errors.confirmPassword && (
+              <span className="text-red-500">
+                {errors.confirmPassword.message}
+              </span>
+            )}
+          </div>
+
+          <div
+            className="w-full bg-primary-light text-white font-semibold py-6 rounded-full hover:bg-primary-dark
+        transition duration-300 flex gap-4 items-center justify-center cursor-pointer"
+            onClick={() => SetCompanySizeInput(false)}
+          >
+            <button
+              type="submit"
+              className="flex items-center justify-center gap-4"
+            >
+              <HiMiniUserPlus className="text-5xl " />
+              <p>Sign Up</p>
+            </button>
+          </div>
+
+          <div className="text-center text-lg">
+            <NavLink to="/login">
+              {`Don't `} Have an account,{" "}
+              <span className="font-semibold">Login Here</span>
+            </NavLink>
+          </div>
+        </div>
+      )}
+    </form>
+  );
+}
+
+BusinessSignUpForm.propTypes = {
+  companySizeInput: PropTypes.bool.isRequired,
+  SetCompanySizeInput: PropTypes.func.isRequired,
+};
+
+export default BusinessSignUpForm;
