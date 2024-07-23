@@ -21,3 +21,35 @@ export const convertStandardDate = strDate => {
       ? `${description.slice(0, 40)}...`
       : description;
   }
+
+
+// Derive a key from the secret string
+export function deriveKey(secret) {
+  const salt = crypto.randomBytes(16); // Salt should be random and unique
+  const key = crypto.pbkdf2Sync(secret, salt, 100000, 32, 'sha256'); // Derive a 32-byte key
+  return { key, salt };
+}
+
+// Encryption function
+export function encrypt(text, secret) {
+  const { key, salt } = deriveKey(secret);
+  const iv = crypto.randomBytes(16); // Initialization vector
+  const cipher = crypto.createCipheriv('aes-256-cbc', key, iv);
+  let encrypted = cipher.update(text, 'utf8', 'hex');
+  encrypted += cipher.final('hex');
+  return salt.toString('hex') + ':' + iv.toString('hex') + ':' + encrypted;
+}
+
+// Decryption function
+export function decrypt(text, secret) {
+  const textParts = text.split(':');
+  const salt = Buffer.from(textParts.shift(), 'hex');
+  const iv = Buffer.from(textParts.shift(), 'hex');
+  const encryptedText = textParts.join(':');
+  
+  const key = crypto.pbkdf2Sync(secret, salt, 100000, 32, 'sha256'); // Derive the key using the same salt
+  const decipher = crypto.createDecipheriv('aes-256-cbc', key, iv);
+  let decrypted = decipher.update(encryptedText, 'hex', 'utf8');
+  decrypted += decipher.final('utf8');
+  return decrypted;
+}

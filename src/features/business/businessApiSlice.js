@@ -9,14 +9,14 @@ export const BusinessApiSlice = globalClusterApi.injectEndpoints({
   endpoints: (builder) => ({
     signupBusiness: builder.mutation({
       query: (signupData) => ({
-        url: "/register/company/",
+        url: "/api/v1/register/company/",
         method: "POST",
         body: signupData,
       }),
     }),
     loginBusiness: builder.mutation({
       query: (loginData) => ({
-        url: "/login/company/",
+        url: "/api/v1/login/",
         method: "POST",
         body: loginData,
       }),

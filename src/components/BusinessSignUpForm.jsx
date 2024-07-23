@@ -16,12 +16,12 @@ function BusinessSignUpForm({ companySizeInput, SetCompanySizeInput }) {
   const navigate = useNavigate();
   const onSubmit = async (data) => {
     try {
-      const { data: responseData, error } = await signupBusiness({
+      const responseData = await signupBusiness({
         companySizeInput,
         ...data,
       }).unwrap();
       console.log(JSON.stringify(responseData));
-      navigate(`business/dashboard`);
+      navigate(`login`);
     } catch (error) {
       if (error.response) {
         // Server errors (status code outside of 2xx range)
@@ -32,7 +32,6 @@ function BusinessSignUpForm({ companySizeInput, SetCompanySizeInput }) {
       } else {
         // Other errors
         console.error("Error:", JSON.stringify(error));
-       
       }
     }
   };
@@ -41,15 +40,15 @@ function BusinessSignUpForm({ companySizeInput, SetCompanySizeInput }) {
       {companySizeInput && (
         <div className={`space-y-6  px-8`}>
           <div className="space-y-4">
-            <label htmlFor="companyName" className="block text-gray-700">
-              Email Address or Username<span className="text-red-500">*</span>
+            <label htmlFor="company_name" className="block text-gray-700">
+              company Name<span className="text-red-500">*</span>
             </label>
             <input
-              id="companyName"
+              id="company_name"
               type="text"
               placeholder="Dahort Consult"
               className="w-full p-4 border border-gray-300 outline-none rounded-2xl"
-              {...register("companyName", {
+              {...register("company_name", {
                 required: "Company Name is required",
               })}
             />
@@ -58,15 +57,15 @@ function BusinessSignUpForm({ companySizeInput, SetCompanySizeInput }) {
             )}
           </div>
           <div className="space-y-4">
-            <label htmlFor="EmailAdress" className="block text-gray-700">
+            <label htmlFor="email" className="block text-gray-700">
               Email Address<span className="text-red-500">*</span>
             </label>
             <input
-              id="EmailAdress"
+              id="email"
               type="email"
               placeholder="janedoe@xxx.com"
               className="w-full p-4 border border-gray-300 outline-none rounded-2xl"
-              {...register("EmailAdress", {
+              {...register("email", {
                 required: "Email is required",
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
@@ -119,19 +118,18 @@ function BusinessSignUpForm({ companySizeInput, SetCompanySizeInput }) {
 
           <div className="space-y-4">
             <label
-              htmlFor="CompanyRegistrationNumber"
+              htmlFor="company_registration_no"
               className="block text-gray-700"
             >
               Country Registration No (RC or BN)
               <span className="text-red-500">*</span>
             </label>
             <input
-              id="CompanyRegistrationNumber"
-              name="CompanyRegistrationNumber"
+              id="company_registration_no"
               type="text"
               placeholder="Reg1245669"
               className="w-full p-4 border border-gray-300 outline-none rounded-2xl"
-              {...register("CompanyRegistrationNumber", {
+              {...register("company_registration_no", {
                 required: "Registration Number is required",
               })}
             />

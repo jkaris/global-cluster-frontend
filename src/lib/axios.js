@@ -44,8 +44,8 @@ axiosInstance.interceptors.response.use(
         const refreshToken = "" // Replace with your actual refresh token retrieval logic
 
         // Use your refresh token logic to get a new access token
-        const response = await axios.post('/auth/refresh', {
-          refresh_token: refreshToken,
+        const response = await axios.post('/api/v1/token/refresh', {
+          token_refresh: refreshToken,
         });
 
         const newAccessToken = response.data.access_token;

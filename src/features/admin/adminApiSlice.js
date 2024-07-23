@@ -7,28 +7,28 @@ import { globalClusterApi } from "../api/apiSlice";
  */
 export const AdminApiSlice = globalClusterApi.injectEndpoints({
   endpoints: (builder) => ({
-    signupBusiness: builder.mutation({
-      query: (signupData) => ({
-        url: "/register/company/",
-        method: "POST",
-        body: signupData,
-      }),
-    }),
-    loginBusiness: builder.mutation({
+    // signupAdmin: builder.mutation({
+    //   query: (signupData) => ({
+    //     url: "/register/company/",
+    //     method: "POST",
+    //     body: signupData,
+    //   }),
+    // }),
+    loginAdmin: builder.mutation({
       query: (loginData) => ({
-        url: "/login/company/",
+        url: "/api/v1/login/",
         method: "POST",
         body: loginData,
       }),
     }),
-    resetPasswordBusiness: builder.mutation({
+    resetPasswordAdmin: builder.mutation({
       query: ({ resetPasswordData, token }) => ({
         url: `/register/company/reset/${token}`,
         method: "POST",
         body: resetPasswordData,
       }),
     }),
-    forgotPasswordBusiness: builder.mutation({
+    forgotPasswordAdmin: builder.mutation({
       query: (forgotPasswordData) => ({
         url: "/register/company/forgot",
         method: "POST",
@@ -38,4 +38,8 @@ export const AdminApiSlice = globalClusterApi.injectEndpoints({
   }),
 });
 
-export const { useSignupBusinessMutation,useLoginBusinessMutation,useResetPasswordBusinessMutation,useForgotPasswordBusinessMutation }  = AdminApiSlice
+export const {
+  useLoginAdminMutation,
+  useResetPasswordAdminMutation,
+  useForgotPasswordAdminMutation,
+} = AdminApiSlice;

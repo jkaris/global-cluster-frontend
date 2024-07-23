@@ -1,11 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
 const initialState = {
-    access_token: null,
-    refresh_token: null,
-    user: { role: null, isAuthenticated: false,user: {} },
-    global: null,
+  access: null,
+  refresh: null,
+  isAuthenticated: false,
+  user: {
+    email: null,
+    user_type: null,
+    user_id: null,
+  },
+  global: null,
 };
 
 /**
@@ -16,24 +20,35 @@ const initialState = {
  * @returns An auth slice object with login, signup, and logout actions.
  */
 const AuthSlice = createSlice({
-    name: 'auth',
-    initialState,
-    reducers: {
-        loginAction: (state, action) => {
-            state.isAuthenticated = true;
-            state.user = action.payload;
-        },
-        signupAction: (state, action) => {
-            state.isAuthenticated = true;
-            state.user = action.payload;
-        },
-        logoutAction: (state) => {
-            state.isAuthenticated = false;
-            state.user = null;
-        }
-    }
-})
+  name: "auth",
+  initialState,
+  reducers: {
+    loginAction: (state, action) => {
+      const { access, refresh, email, user_type, user_id } = action.payload;
+      state.isAuthenticated = true;
+      state.access = access;
+      state.refresh = refresh;
+      state.user.email = email;
+      state.user.user_type = user_type;
+      state.user.user_id = user_id;
+    },
+    signupAction: (state, action) => {
+      state.isAuthenticated = true;
+      state.user = action.payload;
+    },
+    logoutAction: (state) => {
+      state.isAuthenticated = false;
+      state.user = null;
+    },
+  },
+});
 
-export const { loginAction,signupAction, logoutAction } = AuthSlice.actions;
+export const { loginAction, signupAction, logoutAction } = AuthSlice.actions;
 
 export default AuthSlice.reducer; // Ensure this is correctly exported
+
+export const selectIsAuthenticated = (state) => state.auth.isAuthenticated;
+export const selectUser = (state) => state.auth.user;
+export const selectGlobal = (state) => state.auth.global;
+export const selectAccessToken = (state) => state.auth.access;
+export const selectRefreshToken = (state) => state.auth.refresh;

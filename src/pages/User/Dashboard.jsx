@@ -10,8 +10,10 @@ import TeamPerfomance from '../../components/TeamPerfomance';
 import UserDashboardPayout from '../../components/UserDashboardPayout';
 import UserImg from './../../assets/images/userImg.png';
 import UserDashboardHeader from './../../components/ui/Header';
+import { useUser } from '../../hooks/auth/useUser';
 
 function Dashboard() {
+  const {user,isisAuthenticated,userRole} = useUser()
   return (
     <div className="bg-gray-50 h-full w-full">
       <div className="bg-white">
@@ -20,7 +22,7 @@ function Dashboard() {
       <main className="m-10 rounded-xl flex flex-col gap-4">
         <div className="p-10 flex flex-col gap-6 bg-white rounded-md">
           <div className="flex flex-col gap-3">
-            <h2 className="font-semibold text-3xl">Welcome Silas Oladipo</h2>
+            <h2 className="font-semibold text-3xl">Welcome {user?.firstname }{" "}{user?.lastname}</h2>
             <p>Dashboard Summary</p>
           </div>
           <div className="flex gap-4">

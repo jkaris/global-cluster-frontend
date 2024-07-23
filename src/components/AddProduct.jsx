@@ -1,16 +1,16 @@
-import PropTypes from 'prop-types';
-import React, { useEffect, useRef, useState } from 'react';
-import { ImCancelCircle } from 'react-icons/im';
-import { IoCloudUploadOutline } from 'react-icons/io5';
-import TakeInput from './TakeInput';
+import PropTypes from "prop-types";
+import React, { useEffect, useRef, useState } from "react";
+import { ImCancelCircle } from "react-icons/im";
+import { IoCloudUploadOutline } from "react-icons/io5";
+import TakeInput from "./TakeInput";
 
 function AddProduct({ addNewProduct, CloseModalWindow, currentStatus }) {
   const [dragging, setDragging] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
-  const [productName, setProductName] = useState('');
-  const [description, setDescription] = useState('');
-  const [productLinkType, setProductLinkType] = useState('');
-  const [linkValue, setLinkValue] = useState('');
+  const [productName, setProductName] = useState("");
+  const [description, setDescription] = useState("");
+  const [productLinkType, setProductLinkType] = useState("");
+  const [linkValue, setLinkValue] = useState("");
 
   const modalRef = useRef(null);
 
@@ -21,45 +21,45 @@ function AddProduct({ addNewProduct, CloseModalWindow, currentStatus }) {
       }
     }
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [CloseModalWindow, currentStatus]);
 
-  const handleDragEnter = e => {
+  const handleDragEnter = (e) => {
     e.preventDefault();
     setDragging(true);
   };
 
-  const handleDragLeave = e => {
+  const handleDragLeave = (e) => {
     e.preventDefault();
     setDragging(false);
   };
 
-  const handleDragOver = e => {
+  const handleDragOver = (e) => {
     e.preventDefault();
     setDragging(true);
   };
 
-  const handleDrop = e => {
+  const handleDrop = (e) => {
     e.preventDefault();
     setDragging(false);
     const file = e.dataTransfer.files[0];
     setSelectedFile(file);
   };
 
-  const handleFileInputChange = e => {
+  const handleFileInputChange = (e) => {
     const file = e.target.files[0];
     setSelectedFile(file);
   };
 
-  const handleProductLinkTypeChange = e => {
+  const handleProductLinkTypeChange = (e) => {
     setProductLinkType(e.target.id);
   };
 
-  const AddAndCloseModal = async() => {
+  const AddAndCloseModal = async () => {
     const newProduct = {
       name: productName,
       description: description,
@@ -67,7 +67,7 @@ function AddProduct({ addNewProduct, CloseModalWindow, currentStatus }) {
       productLinkType: productLinkType,
       linkValue: linkValue,
     };
-
+    //form validation
     await addNewProduct(newProduct);
     CloseModalWindow(!currentStatus);
   };
@@ -77,7 +77,7 @@ function AddProduct({ addNewProduct, CloseModalWindow, currentStatus }) {
       <div
         ref={modalRef}
         className={`w-[50rem] font-thin flex flex-col gap-2 bg-white border rounded-xl ${
-          dragging ? 'border-blue-500' : ''
+          dragging ? "border-blue-500" : ""
         }`}
         onDragEnter={handleDragEnter}
         onDragOver={handleDragOver}
@@ -90,7 +90,7 @@ function AddProduct({ addNewProduct, CloseModalWindow, currentStatus }) {
             className="cursor-pointer"
             onClick={() => CloseModalWindow(!currentStatus)}
           >
-            <ImCancelCircle style={{ fontSize: '2rem' }} />
+            <ImCancelCircle style={{ fontSize: "2rem" }} />
           </div>
         </div>
         <div className="px-14 py-8 flex flex-col gap-8">
@@ -104,7 +104,7 @@ function AddProduct({ addNewProduct, CloseModalWindow, currentStatus }) {
               name="name"
               className="border rounded-md outline-none p-2 w-full"
               value={productName}
-              onChange={e => setProductName(e.target.value)}
+              onChange={(e) => setProductName(e.target.value)}
             />
           </div>
           <div className="mb-4 flex flex-col gap-1">
@@ -118,7 +118,7 @@ function AddProduct({ addNewProduct, CloseModalWindow, currentStatus }) {
               cols="5"
               id="description"
               value={description}
-              onChange={e => setDescription(e.target.value)}
+              onChange={(e) => setDescription(e.target.value)}
             ></textarea>
           </div>
 
@@ -128,13 +128,13 @@ function AddProduct({ addNewProduct, CloseModalWindow, currentStatus }) {
             </label>
             <div
               className={`flex flex-col border-dashed border-2  rounded-lg h-[10rem] w-full items-center justify-center ${
-                dragging ? 'bg-blue-100 border-blue-500' : 'border-gray-300'
+                dragging ? "bg-blue-100 border-blue-500" : "border-gray-300"
               }`}
               onDragEnter={handleDragEnter}
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
               onDrop={handleDrop}
-              onClick={() => document.getElementById('fileInput').click()}
+              onClick={() => document.getElementById("fileInput").click()}
             >
               <input
                 type="file"
@@ -148,8 +148,8 @@ function AddProduct({ addNewProduct, CloseModalWindow, currentStatus }) {
                 <p className="text-gray-400">{selectedFile.name}</p>
               ) : (
                 <div className="flex flex-col gap-4 items-center justify-center">
-                  <IoCloudUploadOutline style={{ fontSize: '5rem' }} />
-                  <p className={`text-gray-400 ${dragging ? 'hidden' : ''}`}>
+                  <IoCloudUploadOutline style={{ fontSize: "5rem" }} />
+                  <p className={`text-gray-400 ${dragging ? "hidden" : ""}`}>
                     Drag and Drop files here
                   </p>
                 </div>
@@ -173,9 +173,9 @@ function AddProduct({ addNewProduct, CloseModalWindow, currentStatus }) {
                   type="radio"
                   id="whatsapp"
                   name="linkType"
-                  checked={productLinkType === 'whatsapp'}
+                  checked={productLinkType === "whatsapp"}
                   onChange={handleProductLinkTypeChange}
-                  onClick={() => setProductLinkType('whatsapp')}
+                  onClick={() => setProductLinkType("whatsapp")}
                 />
                 WhatsApp
               </label>
@@ -187,9 +187,9 @@ function AddProduct({ addNewProduct, CloseModalWindow, currentStatus }) {
                   type="radio"
                   id="website"
                   name="linkType"
-                  checked={productLinkType === 'website'}
+                  checked={productLinkType === "website"}
                   onChange={handleProductLinkTypeChange}
-                  onClick={() => setProductLinkType('website')}
+                  onClick={() => setProductLinkType("website")}
                 />
                 Website
               </label>
@@ -201,9 +201,9 @@ function AddProduct({ addNewProduct, CloseModalWindow, currentStatus }) {
                   type="radio"
                   id="phone"
                   name="linkType"
-                  checked={productLinkType === 'phone'}
+                  checked={productLinkType === "phone"}
                   onChange={handleProductLinkTypeChange}
-                  onClick={() => setProductLinkType('phone')}
+                  onClick={() => setProductLinkType("phone")}
                 />
                 Phone
               </label>

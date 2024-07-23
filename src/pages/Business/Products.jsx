@@ -36,7 +36,7 @@ function Products() {
   // );
   const [productsData, setProductsData] = useState(initialProductsData);
   const [currentPage, setCurrentPage] = useState(1);
-  const { data: productsQuery } = useProductsQuery({
+  const productsQuery = useProductsQuery({
     pollingInterval: 3000,
     refetchOnMountOrArgChange: true,
     skip: false,
@@ -47,42 +47,41 @@ function Products() {
   const [addProduct] = useAddProductMutation();
   async function addNewProduct(newProduct) {
     try {
-      // const addedProduct = await addProduct(newProduct);
-      const response = await addProduct(newProduct);
-      const addedProduct = response.data.product;
-      setProductsData([...productsData, addedProduct]);
+      const response = await addProduct(newProduct).unwrap();
+      setProductsData([...productsData, response]);
       setShowModal(false);
       showTemporaryNotification();
     } catch (error) {
-      console.error("Error adding product:", error.message);
-    }
+      if (error.response) {
+        // Server errors (status code outside of 2xx range)
+        console.error("Server Error:", JSON.stringify(error.response));
+      } else if (error.request) {
+        // Network errors or no response from server
+        console.error("Network Error:", error.message);
+      } else {
+        // Other errors
+        console.error("Error Adding New Product:", error.message);
+      }    }
   }
 
   async function handleDelete(productId) {
-    // 192.168.100.214:8000/api/
-    // const deleteApiUrl = `${BASE_URL}/products/${productId}`;
-
     try {
-      // const response = await fetch(deleteApiUrl, {
-      //   method: "DELETE",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      // });
-
-      // if (!response.ok) {
-      //   throw new Error(`HTTP error! Status: ${response.status}`);
-      // }
-
-      // const updatedProducts = await fetchProducts();
-      const response = await deleteProduct(productId);
+      const response = await deleteProduct(productId).unwrap();
       const updatedProducts = productsData.filter(
         (product) => product.id !== productId
       );
       setProductsData(updatedProducts);
     } catch (error) {
-      console.error("Failed to delete product:", error.message);
-    }
+      if (error.response) {
+        // Server errors (status code outside of 2xx range)
+        console.error("Server Error:", JSON.stringify(error.response));
+      } else if (error.request) {
+        // Network errors or no response from server
+        console.error("Network Error:", error.message);
+      } else {
+        // Other errors
+        console.error("Error:", error.message);
+      }    }
   }
 
   async function handleShowProductDetails(productId) {

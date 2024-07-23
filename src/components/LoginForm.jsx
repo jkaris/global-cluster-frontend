@@ -6,6 +6,7 @@ import { useLoginMutation } from "../features/auth/authApiSlice";
 import { useDispatch } from "react-redux";
 import { loginAction } from "../features/auth/authSlice";
 import { TypeLogin } from "../lib/constants";
+import { useLoginBusinessMutation } from "../features/business/businessApiSlice";
 
 function LoginForm() {
   const [loginType, setLoginType] = useState(TypeLogin.BUSINESS);
@@ -17,22 +18,50 @@ function LoginForm() {
   } = useForm();
 
   const [login] = useLoginMutation();
+  const [loginBusiness] = useLoginBusinessMutation();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
     try {
-      const { data: responseData, error } = await login(data).unwrap();
-      // if (response.status === 200) {
-      //   const response_data = response.data;
-        dispatch(loginAction(responseData))
-        navigate(``)
+      if (loginType === TypeLogin.INDIVIDUAL) {
+        const responseData = await loginBusiness({
+          ...data,
+          user_type: loginType,
+        }).unwrap();
 
-      // }
-      console.log(JSON.stringify(data, error));
+        const { access, refresh, email, user_type, user_id } = responseData;
+
+        dispatch(loginAction({ access, refresh, email, user_type, user_id }));
+        navigate(`/user/dashboard`);
+
+        // console.log(responseData);
+      }
+      if (loginType === TypeLogin.BUSINESS) {
+        const responseData = await loginBusiness({
+          ...data,
+          user_type: loginType,
+        }).unwrap();
+
+        const { access, refresh, email, user_type, user_id } = responseData;
+
+        dispatch(loginAction({ access, refresh, email, user_type, user_id }));
+        navigate(`/business/dashboard`);
+
+        // console.log(responseData);
+      }
     } catch (error) {
-      console.log(JSON.stringify(error));
+      if (error.response) {
+        // Server errors (status code outside of 2xx range)
+        console.error("Server Error:", JSON.stringify(error.response));
+      } else if (error.request) {
+        // Network errors or no response from server
+        console.error("Network Error:", error.message);
+      } else {
+        // Other errors
+        console.error("Error:", error.message);
+      }
     }
   };
 
@@ -69,13 +98,13 @@ function LoginForm() {
             Email Address or Username
           </label>
           <input
-            id="emailOrUsername"
-            name="emailOrUsername"
-            type="text" // Change to "text" to allow both email and username
+            id="email"
+            name="email"
+            type="email" // Change to "text" to allow both email and username
             placeholder="janedoe@xxx.com"
             className="w-full p-4 border border-gray-300 outline-none rounded-2xl"
-            {...register("emailOrUsername", {
-              required: "Email or Username is required",
+            {...register("email", {
+              required: "Email is required",
               pattern: {
                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                 message: "Invalid email address",

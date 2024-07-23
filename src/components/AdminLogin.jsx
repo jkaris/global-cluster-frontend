@@ -4,11 +4,12 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import AdminHeader from "./AdminHeader";
-import { useSignupBusinessMutation } from "../features/admin/adminApiSlice";
 import { loginAdminAction } from "../features/admin/adminSlice";
+import { useLoginAdminMutation } from "../features/admin/adminApiSlice";
 import { IoEyeOutline } from "react-icons/io5";
 import { FaRegEyeSlash } from "react-icons/fa6";
 import ErrorBoundary from "./ErrorBoundary";
+import { loginAction } from "../features/auth/authSlice";
 
 function AdminLogin() {
   const {
@@ -17,7 +18,7 @@ function AdminLogin() {
     formState: { errors },
   } = useForm();
 
-  const [signupBusiness] = useSignupBusinessMutation();
+  const [loginAdmin] = useLoginAdminMutation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [type, setType] = React.useState("password");
@@ -25,13 +26,20 @@ function AdminLogin() {
 
   const onSubmit = async (data) => {
     try {
-      const { data: responseData } = await signupBusiness(data).unwrap();
-      dispatch(loginAdminAction(responseData));
+      const responseData = await loginAdmin({
+        ...data,
+        user_type: "admin",
+      }).unwrap();
+
+      const { access, refresh, email, user_type, user_id } = responseData;
+
+      dispatch(loginAction({ access, refresh, email, user_type, user_id }));
+      navigate(`/user/dashboard`);
       navigate(`/admin/dashboard`);
     } catch (error) {
       if (error.response) {
         // Server errors (status code outside of 2xx range)
-        console.error("Server Error:", JSON.stringify(error.response.data));
+        console.error("Server Error:", JSON.stringify(error.response));
       } else if (error.request) {
         // Network errors or no response from server
         console.error("Network Error:", error.message);
