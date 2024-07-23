@@ -22,7 +22,8 @@ import AuthReducer from "../features/auth/authSlice"; // Ensure this is a defaul
 import ProductReducer from "../features/product/productSlice"; // Ensure this is a default export
 import UserReducer from "../features/user/userSlice"; // Ensure this is a default export
 import TicketReducer from "../features/ticket/ticketSlice"; // Ensure this is a default export
-
+import AdminReducer from "../features/admin/adminSlice"; // Ensure this is a default export
+import BusinessReducer from "../features/business/businessSlice"
 // Auth persistence configuration
 const authPersistConfig = {
   key: `${WEBSITE_NAME}:auth`,
@@ -46,6 +47,8 @@ const rootReducer = {
   product: persistReducer({ key: `${WEBSITE_NAME}:product`, ...sessionPersistConfig }, ProductReducer),
   ticket: persistReducer({ key: `${WEBSITE_NAME}:ticket`, ...sessionPersistConfig }, TicketReducer),
   user: persistReducer({ key: `${WEBSITE_NAME}:user`, ...sessionPersistConfig }, UserReducer),
+  admin: persistReducer({ key: `${WEBSITE_NAME}:user`, ...sessionPersistConfig }, AdminReducer),
+  business: persistReducer({ key: `${WEBSITE_NAME}:user`, ...sessionPersistConfig }, BusinessReducer),
 };
 
 export const store = configureStore({

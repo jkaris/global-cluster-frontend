@@ -5,9 +5,11 @@ import { useForm } from "react-hook-form";
 import { useLoginMutation } from "../features/auth/authApiSlice";
 import { useDispatch } from "react-redux";
 import { loginAction } from "../features/auth/authSlice";
+import { TypeLogin } from "../lib/constants";
 
 function LoginForm() {
-  const [loginType, setLoginType] = useState("Business");
+  const [loginType, setLoginType] = useState(TypeLogin.BUSINESS);
+
   const {
     register,
     handleSubmit,
@@ -17,21 +19,20 @@ function LoginForm() {
   const [login] = useLoginMutation();
 
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const onSubmit = async (data) => {
     try {
-      const response = await login(data);
-      if (response.status === 200) {
-        const response_data = response.data;
-        dispatch(loginAction(response_data))
-        // navigate(``)
+      const { data: responseData, error } = await login(data).unwrap();
+      // if (response.status === 200) {
+      //   const response_data = response.data;
+        dispatch(loginAction(responseData))
+        navigate(``)
 
-      }
-      console.log(JSON.stringify(response))
-      
+      // }
+      console.log(JSON.stringify(data, error));
     } catch (error) {
-      console.log(JSON.stringify(error))
+      console.log(JSON.stringify(error));
     }
   };
 
@@ -43,17 +44,21 @@ function LoginForm() {
       >
         <p
           className={`text-center w-full px-4 py-4 rounded-md cursor-pointer ${
-            loginType === "Individual" ? "bg-[#ffffff] text-primary-light border" : ""
+            loginType === TypeLogin.INDIVIDUAL
+              ? "bg-[#ffffff] text-primary-light border"
+              : ""
           }`}
-          onClick={() => setLoginType("Individual")}
+          onClick={() => setLoginType(TypeLogin.INDIVIDUAL)}
         >
           Individual
         </p>
         <p
           className={`text-center w-full px-4 py-4 rounded-md cursor-pointer ${
-            loginType === "Business" ? "bg-[#ffffff] text-primary-light border" : ""
+            loginType === "Business"
+              ? "bg-[#ffffff] text-primary-light border"
+              : ""
           }`}
-          onClick={() => setLoginType("Business")}
+          onClick={() => setLoginType(TypeLogin.BUSINESS)}
         >
           Business
         </p>
@@ -78,7 +83,9 @@ function LoginForm() {
             })}
           />
           {errors.emailOrUsername && (
-            <span className="text-red-500">{errors.emailOrUsername.message}</span>
+            <span className="text-red-500">
+              {errors.emailOrUsername.message}
+            </span>
           )}
         </div>
         <div className="space-y-2">
@@ -92,7 +99,10 @@ function LoginForm() {
             className="w-full border border-gray-300 p-4 outline-none rounded-2xl"
             {...register("password", {
               required: "Password is required",
-              minLength: { value: 6, message: "Password must be at least 6 characters" },
+              minLength: {
+                value: 6,
+                message: "Password must be at least 6 characters",
+              },
             })}
           />
           {errors.password && (
@@ -117,15 +127,16 @@ function LoginForm() {
             <p className="select-none text-4xl font-thin">Login</p>
           </button>
         </div>
-
-        <div className="text-center text-xl">
-          <NavLink to="/business-signUp">
-            {`Don't`} have an account?{" "}
-            <span className="font-semibold hover:underline-offset-1">
-              Sign up as Business
-            </span>
-          </NavLink>
-        </div>
+        {loginType === TypeLogin.BUSINESS ? (
+          <div className="text-center text-xl">
+            <NavLink to="/business-signUp">
+              {`Don't`} have an account?{" "}
+              <span className="font-semibold hover:underline-offset-1">
+                Sign up as Business
+              </span>
+            </NavLink>
+          </div>
+        ) : null}
       </div>
     </form>
   );

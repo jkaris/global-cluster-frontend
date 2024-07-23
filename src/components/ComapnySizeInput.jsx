@@ -2,21 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 
-function CompanySizeInput({ companySize, setCompanySize }) {
+function CompanySizeInput({ companySize, setCompanySize,handleSubmit }) {
   // Handle radio button change
   const handleSizeChange = e => {
     setCompanySize(e.target.value);
   };
 
-  // Handle form submission
-  const handleSubmit = e => {
-    e.preventDefault();
-    if (companySize) {
-      console.log('Selected Company Size:', companySize);
-    } else {
-      console.log('No size selected');
-    }
-  };
+  // // Handle form submission
+  // const handleSubmit = e => {
+  //   e.preventDefault();
+  //   if (companySize) {
+  //     console.log('Selected Company Size:', companySize);
+  //   } else {
+  //     console.log('No size selected');
+  //   }
+  // };
 
   return (
     <div className="flex flex-col gap-2">
@@ -84,6 +84,7 @@ function CompanySizeInput({ companySize, setCompanySize }) {
 CompanySizeInput.propTypes = {
   companySize: PropTypes.string,
   setCompanySize: PropTypes.func,
+  handleSubmit: PropTypes.func,
 };
 
 export default CompanySizeInput;

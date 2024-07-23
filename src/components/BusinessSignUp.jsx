@@ -23,7 +23,7 @@ function BusinessSignUp() {
               >
                 Get Started with Global Cluster as a Business
               </h2>
-              {companySizeInputShow ? (
+              {/* {companySizeInputShow ? (
                 <BusinessSignUpForm
                   companySizeInput={companySizeInputShow}
                   SetCompanySizeInput={SetCompanySizeInputShow}
@@ -33,7 +33,11 @@ function BusinessSignUp() {
                   companySize={companySize}
                   setCompanySize={setCompanySize}
                 />
-              )}
+              )} */}
+              <BusinessSignUpForm
+                  companySizeInput={companySizeInputShow}
+                  SetCompanySizeInput={SetCompanySizeInputShow}
+                />
             </div>
           </div>
         </div>

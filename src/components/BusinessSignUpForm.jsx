@@ -1,26 +1,39 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { HiMiniUserPlus } from "react-icons/hi2";
-import { NavLink,useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useSignupMutation } from "../features/auth/authApiSlice";
+import { useSignupBusinessMutation } from "../features/business/businessApiSlice";
 
 function BusinessSignUpForm({ companySizeInput, SetCompanySizeInput }) {
   const {
     register,
     handleSubmit,
     formState: { errors },
-    watch
+    watch,
   } = useForm();
-  const [signup] = useSignupMutation();
-  const navigate = useNavigate()
+  const [signupBusiness] = useSignupBusinessMutation();
+  const navigate = useNavigate();
   const onSubmit = async (data) => {
     try {
-      const response = await signup({ companySizeInput, ...data });
-      console.log(JSON.stringify(response));
-      navigate(`business/dashboard`)
+      const { data: responseData, error } = await signupBusiness({
+        companySizeInput,
+        ...data,
+      }).unwrap();
+      console.log(JSON.stringify(responseData));
+      navigate(`business/dashboard`);
     } catch (error) {
-      console.log(JSON.stringify(error));
+      if (error.response) {
+        // Server errors (status code outside of 2xx range)
+        console.error("Server Error:", JSON.stringify(error.response.data));
+      } else if (error.request) {
+        // Network errors or no response from server
+        console.error("Network Error:", error.message);
+      } else {
+        // Other errors
+        console.error("Error:", JSON.stringify(error));
+       
+      }
     }
   };
   return (
@@ -176,7 +189,7 @@ function BusinessSignUpForm({ companySizeInput, SetCompanySizeInput }) {
           <div
             className="w-full bg-primary-light text-white font-semibold py-6 rounded-full hover:bg-primary-dark
         transition duration-300 flex gap-4 items-center justify-center cursor-pointer"
-            onClick={() => SetCompanySizeInput(false)}
+            // onClick={() => SetCompanySizeInput(false)}
           >
             <button
               type="submit"
