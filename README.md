@@ -99,18 +99,27 @@ yarn test
 ```
 vite-react-project/
 ├── public/
-│   ├── index.html
 ├── src/
 │   ├── components/
-│   │   ├── AddProduct.jsx
-│   │   ├── TakeInput.jsx
+│   ├── assets/
+│   ├── features/
+│   ├── hooks/
+│   ├── layouts/
+│   ├── lib/
+│   ├── pages/
+│   ├── store/
+│   ├── tests/
+│   │   ├── App.test.jsx
+│   │   ├── setup.js
+│   │   ├── utils.test.js
 │   ├── App.jsx
 │   ├── main.jsx
-│   ├── styles/
-│   │   ├── global.css
+│   ├── index.css
+├── index.html
 ├── .eslintrc.js
-├── .prettierrc
 ├── package.json
+├── postcss.config.js
+├── tailwind.config.js
 ├── vite.config.js
 ```
 
