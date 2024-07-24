@@ -4,7 +4,6 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import AdminHeader from "./AdminHeader";
-import { loginAdminAction } from "../features/admin/adminSlice";
 import { useLoginAdminMutation } from "../features/admin/adminApiSlice";
 import { IoEyeOutline } from "react-icons/io5";
 import { FaRegEyeSlash } from "react-icons/fa6";

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { AiOutlineProduct } from 'react-icons/ai';
 import { HiOutlineUsers } from 'react-icons/hi2';
@@ -11,12 +11,29 @@ import {
 } from 'react-icons/md';
 
 import { FaGift } from 'react-icons/fa';
-import { PiChartPieSliceFill, PiRankingFill } from 'react-icons/pi';
+import { PiChartPieSliceFill, PiRankingFill, PiSignOutFill } from 'react-icons/pi';
 import { TbNotes } from 'react-icons/tb';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import SidebarLogo from './SidebarLogo';
+import { useDispatch } from 'react-redux';
+import { logoutAction } from '../features/auth/authSlice';
 
 function AdminSidebar() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [signOut, setSignOut] = useState(false);
+
+  const handleSignOut = () => {
+    dispatch(logoutAction());
+    setSignOut(true);
+  };
+
+  useEffect(() => {
+    if (signOut) {
+      navigate('/login');
+    }
+  }, [signOut, navigate]);
   const getNavLinkClass = ({ isActive }) =>
     isActive
       ? 'py-4 px-8 bg-white text-primary-light rounded-lg'
@@ -91,6 +108,12 @@ function AdminSidebar() {
             <li className="flex gap-6 items-center">
               <MdSupportAgent className="text-5xl" />
               <p>Support Center</p>
+            </li>
+          </NavLink>
+          <NavLink to="/login" onClick={handleSignOut} className="py-4 px-8">
+            <li className="flex gap-6 items-center ">
+              <PiSignOutFill className="text-5xl" />
+              <p>Sign Out</p>
             </li>
           </NavLink>
         </ul>

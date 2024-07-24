@@ -3,12 +3,17 @@ import React, { useEffect, useRef, useState } from "react";
 import { ImCancelCircle } from "react-icons/im";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import TakeInput from "./TakeInput";
+import { useForm } from "react-hook-form";
 
 function AddProduct({ addNewProduct, CloseModalWindow, currentStatus }) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
   const [dragging, setDragging] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
-  const [productName, setProductName] = useState("");
-  const [description, setDescription] = useState("");
   const [productLinkType, setProductLinkType] = useState("");
   const [linkValue, setLinkValue] = useState("");
 
@@ -22,7 +27,6 @@ function AddProduct({ addNewProduct, CloseModalWindow, currentStatus }) {
     }
 
     document.addEventListener("mousedown", handleClickOutside);
-
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
@@ -59,17 +63,26 @@ function AddProduct({ addNewProduct, CloseModalWindow, currentStatus }) {
     setProductLinkType(e.target.id);
   };
 
-  const AddAndCloseModal = async () => {
-    const newProduct = {
-      name: productName,
-      description: description,
-      photo: selectedFile,
-      productLinkType: productLinkType,
-      linkValue: linkValue,
-    };
-    //form validation
-    await addNewProduct(newProduct);
-    CloseModalWindow(!currentStatus);
+  const onSubmit = async (data) => {
+    const formData = new FormData();
+
+    try {
+      formData.append("productName", data.productName);
+      formData.append("description", data.description);
+      formData.append("productLinkType", data.productLinkType);
+      formData.append("linkValue", data.linkValue);
+      if (selectedFile) {
+        formData.append("photo", selectedFile);
+      }
+      // Log all entries in the FormData object
+      for (let [key, value] of formData.entries()) {
+        console.log(`${key}:`, value);
+      }
+      await addNewProduct(formData);
+      CloseModalWindow(!currentStatus);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -93,19 +106,25 @@ function AddProduct({ addNewProduct, CloseModalWindow, currentStatus }) {
             <ImCancelCircle style={{ fontSize: "2rem" }} />
           </div>
         </div>
-        <div className="px-14 py-8 flex flex-col gap-8">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="px-14 py-8 flex flex-col gap-8"
+        >
           <div className="mb-4 flex flex-col gap-2">
             <label htmlFor="productName" className="block">
               Product Name
             </label>
             <input
               type="text"
-              id="name"
-              name="name"
+              id="productName"
               className="border rounded-md outline-none p-2 w-full"
-              value={productName}
-              onChange={(e) => setProductName(e.target.value)}
+              {...register("productName", {
+                required: "Product Name is required",
+              })}
             />
+            {errors.productName && (
+              <p className="text-red-500">{errors.productName.message}</p>
+            )}
           </div>
           <div className="mb-4 flex flex-col gap-1">
             <label htmlFor="description" className="block">
@@ -113,13 +132,15 @@ function AddProduct({ addNewProduct, CloseModalWindow, currentStatus }) {
             </label>
             <textarea
               className="border rounded-md p-2 outline-none"
-              name="description"
               rows="5"
-              cols="5"
               id="description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              {...register("description", {
+                required: "Description is required",
+              })}
             ></textarea>
+            {errors.description && (
+              <p className="text-red-500">{errors.description.message}</p>
+            )}
           </div>
 
           <div className="mb-4 flex flex-col gap-4 cursor-pointer">
@@ -127,7 +148,7 @@ function AddProduct({ addNewProduct, CloseModalWindow, currentStatus }) {
               Product Image
             </label>
             <div
-              className={`flex flex-col border-dashed border-2  rounded-lg h-[10rem] w-full items-center justify-center ${
+              className={`flex flex-col border-dashed border-2 rounded-lg h-[10rem] w-full items-center justify-center ${
                 dragging ? "bg-blue-100 border-blue-500" : "border-gray-300"
               }`}
               onDragEnter={handleDragEnter}
@@ -161,56 +182,58 @@ function AddProduct({ addNewProduct, CloseModalWindow, currentStatus }) {
           </div>
 
           <div className="flex flex-col gap-4">
-            <label htmlFor="productLink" className="block">
-              Product Link
+            <label htmlFor="productLinkType" className="block">
+              Product Link Type
             </label>
             <div className="flex gap-4">
-              <label
-                className="py-4 px-6 flex-1 font-thin flex gap-2 border-2 rounded-xl"
-                htmlFor="whatsapp"
-              >
+              <label className="py-4 px-6 flex-1 font-thin flex gap-2 border-2 rounded-xl">
                 <input
                   type="radio"
                   id="whatsapp"
-                  name="linkType"
-                  checked={productLinkType === "whatsapp"}
+                  {...register("productLinkType", {
+                    required: "Link Type is required",
+                  })}
+                  value="whatsapp"
                   onChange={handleProductLinkTypeChange}
-                  onClick={() => setProductLinkType("whatsapp")}
                 />
                 WhatsApp
               </label>
-              <label
-                className="py-4 px-6 flex-1 font-thin  flex gap-2 border-2 rounded-xl"
-                htmlFor="website"
-              >
+              <label className="py-4 px-6 flex-1 font-thin flex gap-2 border-2 rounded-xl">
                 <input
                   type="radio"
                   id="website"
-                  name="linkType"
-                  checked={productLinkType === "website"}
+                  {...register("productLinkType", {
+                    required: "Link Type is required",
+                  })}
+                  value="website"
                   onChange={handleProductLinkTypeChange}
-                  onClick={() => setProductLinkType("website")}
                 />
                 Website
               </label>
-              <label
-                className="py-4 px-6 flex-1 font-thin  flex gap-2 border-2 rounded-xl"
-                htmlFor="phone"
-              >
+              <label className="py-4 px-6 flex-1 font-thin flex gap-2 border-2 rounded-xl">
                 <input
                   type="radio"
                   id="phone"
-                  name="linkType"
-                  checked={productLinkType === "phone"}
+                  {...register("productLinkType", {
+                    required: "Link Type is required",
+                  })}
+                  value="phone"
                   onChange={handleProductLinkTypeChange}
-                  onClick={() => setProductLinkType("phone")}
                 />
                 Phone
               </label>
             </div>
+            {errors.productLinkType && (
+              <p className="text-red-500">{errors.productLinkType.message}</p>
+            )}
           </div>
 
-          <TakeInput type={productLinkType} setLinkValue={setLinkValue} />
+          {/* <TakeInput type={productLinkType} setLinkValue={setLinkValue} /> */}
+          <TakeInput
+            type={productLinkType}
+            register={register}
+            errors={errors}
+          />
 
           <div className="flex items-center justify-center gap-4">
             <p
@@ -219,23 +242,23 @@ function AddProduct({ addNewProduct, CloseModalWindow, currentStatus }) {
             >
               Cancel
             </p>
-            <p
-              onClick={AddAndCloseModal}
+            <button
+              type="submit"
               className="flex-1 flex items-center justify-center px-4 py-6 bg-primary-light text-white rounded-xl cursor-pointer hover:bg-primary-dark"
             >
               Add
-            </p>
+            </button>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );
 }
 
 AddProduct.propTypes = {
-  addNewProduct: PropTypes.func,
-  CloseModalWindow: PropTypes.func,
-  currentStatus: PropTypes.bool,
+  addNewProduct: PropTypes.func.isRequired,
+  CloseModalWindow: PropTypes.func.isRequired,
+  currentStatus: PropTypes.bool.isRequired,
 };
 
 export default AddProduct;

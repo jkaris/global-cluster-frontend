@@ -1,8 +1,21 @@
-import React from 'react';
-import { Outlet } from 'react-router-dom';
+import React, { useEffect } from "react";
+import { Outlet, useNavigate } from 'react-router-dom';
 import UserSidebar from './../components/UserSidebar';
+import { useUser } from '../hooks/auth/useUser';
 
 function UserLayout() {
+  const {user,isAuthenticated}  = useUser()
+  const isIndividual = user?.user_type === 'individual';
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!isAuthenticated || !isIndividual) {
+      navigate("/login");
+    }
+  }, [isAuthenticated, isIndividual, navigate]);
+
+  if (!isAuthenticated || !isIndividual) {
+    return null; // Prevent rendering the children if the user is not authenticated or not an admin
+  }
   return (
     <div className="flex">
       <div className="bg-primary w-[22%] flex flex-col min-h-screen">

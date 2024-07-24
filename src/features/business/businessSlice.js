@@ -2,10 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 
 const initialState = {
-    access_token: null,
-    refresh_token: null,
-    user: { role: null, isAuthenticated: false,user: {} },
-    global: null,
+    
 };
 
 /**
@@ -19,21 +16,10 @@ const BusinessSlice = createSlice({
     name: 'business',
     initialState,
     reducers: {
-        loginBsAction: (state, action) => {
-            state.isAuthenticated = true;
-            state.user = action.payload;
-        },
-        signupBsAction: (state, action) => {
-            state.isAuthenticated = true;
-            state.user = action.payload;
-        },
-        logoutBsAction: (state) => {
-            state.isAuthenticated = false;
-            state.user = null;
-        }
+        
     }
 })
 
-export const { loginBsAction,signupBsAction, logoutBsAction } = BusinessSlice.actions;
+export const {  } = BusinessSlice.actions;
 
 export default BusinessSlice.reducer; // Ensure this is correctly exported

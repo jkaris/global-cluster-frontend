@@ -36,7 +36,7 @@ function Products() {
   // );
   const [productsData, setProductsData] = useState(initialProductsData);
   const [currentPage, setCurrentPage] = useState(1);
-  const productsQuery = useProductsQuery({
+  const { data: productsQuery } = useProductsQuery({
     pollingInterval: 3000,
     refetchOnMountOrArgChange: true,
     skip: false,
@@ -45,23 +45,25 @@ function Products() {
   const [product] = useProductMutation();
   const [deleteProduct] = useDeleteProductMutation();
   const [addProduct] = useAddProductMutation();
-  async function addNewProduct(newProduct) {
+  async function addNewProduct(formData) {
     try {
-      const response = await addProduct(newProduct).unwrap();
+      const response = await addProduct(formData).unwrap();
       setProductsData([...productsData, response]);
       setShowModal(false);
       showTemporaryNotification();
     } catch (error) {
-      if (error.response) {
-        // Server errors (status code outside of 2xx range)
-        console.error("Server Error:", JSON.stringify(error.response));
-      } else if (error.request) {
-        // Network errors or no response from server
-        console.error("Network Error:", error.message);
-      } else {
-        // Other errors
-        console.error("Error Adding New Product:", error.message);
-      }    }
+      throw new Error("Failed to add new product");
+      // if (error.response) {
+      //   // Server errors (status code outside of 2xx range)
+      //   console.error("Server Error:", JSON.stringify(error.response));
+      // } else if (error.request) {
+      //   // Network errors or no response from server
+      //   console.error("Network Error:", error.message);
+      // } else {
+      //   // Other errors
+      //   console.error("Error Adding New Product:", error.message);
+      // }
+    }
   }
 
   async function handleDelete(productId) {
@@ -81,7 +83,8 @@ function Products() {
       } else {
         // Other errors
         console.error("Error:", error.message);
-      }    }
+      }
+    }
   }
 
   async function handleShowProductDetails(productId) {

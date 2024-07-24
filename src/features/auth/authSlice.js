@@ -4,11 +4,7 @@ const initialState = {
   access: null,
   refresh: null,
   isAuthenticated: false,
-  user: {
-    email: null,
-    user_type: null,
-    user_id: null,
-  },
+  user: { email: null, user_type: null, user_id: null },
   global: null,
 };
 
@@ -25,25 +21,28 @@ const AuthSlice = createSlice({
   reducers: {
     loginAction: (state, action) => {
       const { access, refresh, email, user_type, user_id } = action.payload;
+      // console.log(access, refresh, email, user_type, user_id)
       state.isAuthenticated = true;
       state.access = access;
       state.refresh = refresh;
-      state.user.email = email;
-      state.user.user_type = user_type;
-      state.user.user_id = user_id;
+      state.user = {email, user_type, user_id };
+    
     },
-    signupAction: (state, action) => {
-      state.isAuthenticated = true;
-      state.user = action.payload;
-    },
+    signupAction: (state, action) => {},
     logoutAction: (state) => {
       state.isAuthenticated = false;
       state.user = null;
+      state.access = null;
+      state.refresh = null;
+    },
+    refreshTokenAction: (state, action) => {
+      state.access = action.payload.access;
     },
   },
 });
 
-export const { loginAction, signupAction, logoutAction } = AuthSlice.actions;
+export const { loginAction, signupAction, logoutAction, refreshTokenAction } =
+  AuthSlice.actions;
 
 export default AuthSlice.reducer; // Ensure this is correctly exported
 

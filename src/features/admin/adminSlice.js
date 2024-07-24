@@ -22,22 +22,11 @@ const AdminSlice = createSlice({
   name: "admin",
   initialState,
   reducers: {
-    loginAdminAction: (state, action) => {
-      state.isAuthenticated = true;
-      state.user = action.payload;
-    },
-    signupAdminAction: (state, action) => {
-      state.isAuthenticated = true;
-      state.user = action.payload;
-    },
-    logoutAdminAction: (state) => {
-      state.isAuthenticated = false;
-      state.user = null;
-    },
+    
   },
 });
 
-export const { loginAdminAction, signupAdminAction, logoutAdminAction } =
+export const {} =
   AdminSlice.actions;
 
 export default AdminSlice.reducer; // Ensure this is correctly exported

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BiWalletAlt } from 'react-icons/bi';
 import { BsTicketPerforated } from 'react-icons/bs';
 import { HiOutlineUsers } from 'react-icons/hi2';
@@ -6,10 +6,29 @@ import { IoSettingsOutline } from 'react-icons/io5';
 import { TbNotes } from 'react-icons/tb';
 
 import { PiChartPieSliceFill, PiSignOutFill } from 'react-icons/pi';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import SidebarLogo from './SidebarLogo';
+import { useDispatch } from 'react-redux';
+import { logoutAction } from '../features/auth/authSlice';
 
 function UserSidebar() {
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+
+  const [signOut, setSignOut] = useState(false);
+
+  const handleSignOut = () => {
+    dispatch(logoutAction());
+    setSignOut(true);
+  };
+
+  useEffect(() => {
+    if (signOut) {
+      navigate('/login');
+    }
+  }, [signOut, navigate]);
+  
   return (
     <div className="flex  flex-col gap-6 items-center">
       <SidebarLogo />
@@ -69,7 +88,7 @@ function UserSidebar() {
               <p>Settings</p>
             </li>
           </NavLink>
-          <NavLink to="sign-out" className="py-4 px-8">
+          <NavLink to="/login" onClick={handleSignOut} className="py-4 px-8">
             <li className="flex gap-6 items-center ">
               <PiSignOutFill className="text-5xl" />
               <p>Sign Out</p>

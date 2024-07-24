@@ -26,7 +26,7 @@ function LoginForm() {
   const onSubmit = async (data) => {
     try {
       if (loginType === TypeLogin.INDIVIDUAL) {
-        const responseData = await loginBusiness({
+        const responseData = await login({
           ...data,
           user_type: loginType,
         }).unwrap();
@@ -41,10 +41,12 @@ function LoginForm() {
       if (loginType === TypeLogin.BUSINESS) {
         const responseData = await loginBusiness({
           ...data,
-          user_type: loginType,
+          user_type: "company",
         }).unwrap();
 
         const { access, refresh, email, user_type, user_id } = responseData;
+        console.log(access, refresh, email, user_type, user_id);
+
 
         dispatch(loginAction({ access, refresh, email, user_type, user_id }));
         navigate(`/business/dashboard`);

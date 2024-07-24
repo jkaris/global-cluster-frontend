@@ -1,14 +1,23 @@
-import React, { useState } from 'react';
-import Payment from '../../components/Payment';
-import Header from '../../components/ui/Header';
-import ContactInformationStep2 from './../../components/ContactInformationStep2';
-import LoginInformationStep3 from './../../components/LoginInformationStep3';
-import OverviewStep4 from './../../components/OverviewStep4';
-import RegisterNowStep1 from './../../components/RegisterNowStep1';
+import React, { useState } from "react";
+import Payment from "../../components/Payment";
+import Header from "../../components/ui/Header";
+import ContactInformationStep2 from "./../../components/ContactInformationStep2";
+import LoginInformationStep3 from "./../../components/LoginInformationStep3";
+import OverviewStep4 from "./../../components/OverviewStep4";
+import RegisterNowStep1 from "./../../components/RegisterNowStep1";
+import { useUser } from "../../hooks/auth/useUser";
+import { useForm } from "react-hook-form";
 
 // import RegisterUser from '../../components/RegisterUser'
 
 function Register() {
+  const { user } = useUser();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
   const [regForm, setRegForm] = useState(1);
 
   function PreviousFormPage() {
@@ -34,7 +43,7 @@ function Register() {
             <div className="flex flex-col gap-2 items-center justify-center">
               <p
                 className={`${
-                  regForm > 1 ? 'bg-primary-light' : 'bg-slate-400'
+                  regForm > 1 ? "bg-primary-light" : "bg-slate-400"
                 } text-white px-6 py-2`}
               >
                 2
@@ -45,7 +54,7 @@ function Register() {
             <div className="flex flex-col gap-2 items-center justify-center">
               <p
                 className={`${
-                  regForm > 2 ? 'bg-primary-light' : 'bg-slate-400'
+                  regForm > 2 ? "bg-primary-light" : "bg-slate-400"
                 } text-white px-6 py-2`}
               >
                 3
@@ -56,7 +65,7 @@ function Register() {
             <div className="flex flex-col gap-2 items-center justify-center">
               <p
                 className={`${
-                  regForm > 3 ? 'bg-primary-light' : 'bg-slate-400'
+                  regForm > 3 ? "bg-primary-light" : "bg-slate-400"
                 } text-white px-6 py-2`}
               >
                 4
@@ -66,7 +75,7 @@ function Register() {
           </div>
 
           <div className="w-4/6 mx-auto">
-            {regForm === 1 && <RegisterNowStep1 />}
+            {regForm === 1 && <RegisterNowStep1 user={user} />}
             {regForm === 2 && <ContactInformationStep2 />}
             {regForm === 3 && <LoginInformationStep3 />}
             {regForm === 4 && <OverviewStep4 />}

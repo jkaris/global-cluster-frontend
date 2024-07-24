@@ -1,13 +1,30 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { PiChartPieSliceFill, PiSignOutFill } from 'react-icons/pi';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 import { AiOutlineProduct } from 'react-icons/ai';
 import { BsTicketPerforated } from 'react-icons/bs';
 import { IoSettingsOutline } from 'react-icons/io5';
 import SidebarLogo from './SidebarLogo';
+import { useDispatch } from 'react-redux';
+import { logoutAction } from '../features/auth/authSlice';
 
 function BusinesSidebar() {
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [signOut, setSignOut] = useState(false);
+
+  const handleSignOut = () => {
+    dispatch(logoutAction());
+    setSignOut(true);
+  };
+
+  useEffect(() => {
+    if (signOut) {
+      navigate('/login');
+    }
+  }, [signOut, navigate]);
   return (
     <div className="flex  flex-col gap-6 items-center">
       <SidebarLogo />
@@ -37,7 +54,7 @@ function BusinesSidebar() {
               <p>Settings</p>
             </li>
           </NavLink>
-          <NavLink to="sign-out" className="py-4 px-8">
+          <NavLink to="/login" onClick={handleSignOut} className="py-4 px-8">
             <li className="flex gap-6 items-center ">
               <PiSignOutFill className="text-5xl" />
               <p>Sign Out</p>

@@ -3,6 +3,8 @@
  * @returns {Object} An object containing the Redux store and persistor.
  */
 import { configureStore } from "@reduxjs/toolkit";
+import { globalClusterApi } from "../features/api/apiSlice"; // Ensure correct import
+
 import {
   persistStore,
   persistReducer,
@@ -16,7 +18,6 @@ import {
 import sessionStorage from "redux-persist/lib/storage/session";
 import localStorage from "redux-persist/lib/storage"; // Correct import for localStorage
 import { WEBSITE_NAME } from "../lib/constants";
-import { globalClusterApi } from "../features/api/apiSlice"; // Ensure correct import
 
 import AuthReducer from "../features/auth/authSlice"; // Ensure this is a default export
 import ProductReducer from "../features/product/productSlice"; // Ensure this is a default export
