@@ -31,7 +31,7 @@ git clone https://github.com/Mohamed-code-marvel/global-cluster-frontend.git
 2. Navigate to the project directory:
 
 ```bash
-cd vite-react-project
+cd global-cluster-frontend
 ```
 
 3. Install dependencies:
