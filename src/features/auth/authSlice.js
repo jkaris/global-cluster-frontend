@@ -4,7 +4,7 @@ const initialState = {
   access: null,
   refresh: null,
   isAuthenticated: false,
-  user: { email: null, user_type: null, user_id: null },
+  user: { email: null, user_type: null, user_id: null,profile: null },
   global: null,
 };
 
@@ -28,6 +28,9 @@ const AuthSlice = createSlice({
       state.user = {email, user_type, user_id };
     
     },
+    profileAction: (state, action) => {
+
+    },
     signupAction: (state, action) => {},
     logoutAction: (state) => {
       state.isAuthenticated = false;
@@ -41,7 +44,7 @@ const AuthSlice = createSlice({
   },
 });
 
-export const { loginAction, signupAction, logoutAction, refreshTokenAction } =
+export const { loginAction,profileAction, signupAction, logoutAction, refreshTokenAction } =
   AuthSlice.actions;
 
 export default AuthSlice.reducer; // Ensure this is correctly exported

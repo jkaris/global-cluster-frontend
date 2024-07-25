@@ -13,9 +13,12 @@ axiosInstance.interceptors.request.use(
     const lc_storage = localStorage.getItem(`persist:${WEBSITE_NAME}:auth`);
     const lc_storage_obj = JSON.parse(lc_storage || "{}"); // Safely parse localStorage
 
-    const accessToken = lc_storage_obj?.access;
+    const accessToken = lc_storage_obj?.access.replace('"',"") ;
     if (accessToken &&  !config.url.includes("/login") && !config.url.includes("/register")) {
-      config.headers.Authorization = `Bearer ${accessToken}`;
+
+      const authorizationBearer = `Bearer ${accessToken}`.replace('"',"");
+
+      config.headers.Authorization = authorizationBearer;
     }
     return config;
   },
@@ -45,17 +48,18 @@ axiosInstance.interceptors.response.use(
         const lc_storage = localStorage.getItem(`persist:${WEBSITE_NAME}:auth`);
         const lc_storage_obj = JSON.parse(lc_storage || "{}"); // Safely parse localStorage
 
-        const refreshToken = lc_storage_obj?.refresh;
+        const refreshToken = lc_storage_obj?.refresh.replace('"',"");
         if (!refreshToken) {
           throw new Error("No refresh token available");
         }
 
         // Use refresh token logic to get a new access token
-        const response = await axios.post("/auth/refresh", {
-          refresh_token: refreshToken,
+        const response = await axios.post(`${BASE_URL}/api/v1/token/refresh/`, {
+          refresh: refreshToken.replace('"',""),
         });
 
-        const newAccessToken = response.data.access_token;
+        // console.log(JSON.stringify(response.data) + "-------------Refresh Token--------------");
+        const newAccessToken = response.data.access;
 
         // Update access token in localStorage
         lc_storage_obj.access = newAccessToken;
@@ -65,11 +69,12 @@ axiosInstance.interceptors.response.use(
         );
 
         // Retry original request with new access token
-        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+        const authorizationBearer = `Bearer ${newAccessToken}`;
+        originalRequest.headers.Authorization = authorizationBearer;
         return axiosInstance(originalRequest);
       } catch (refreshError) {
         console.error("Failed to refresh token:", refreshError);
-        window.location.href = "/login"; // Redirect to login
+        // window.location.href = "/login"; // Redirect to login
         return Promise.reject(refreshError);
       }
     }

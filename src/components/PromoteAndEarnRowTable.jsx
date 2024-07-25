@@ -1,8 +1,9 @@
-import PropTypes from 'prop-types';
-import React, { useState } from 'react';
-import { MdIosShare } from 'react-icons/md';
-import productImg from './../assets/images/productImg.png';
-import ShareLinksScreen from './ShareLinksScreen';
+import PropTypes from "prop-types";
+import React, { useState } from "react";
+import { MdIosShare } from "react-icons/md";
+import productImg from "./../assets/images/productImg.png";
+import ShareLinksScreen from "./ShareLinksScreen";
+import { getDateStr, imageUrl } from "../lib/utils";
 
 const PromoteAndEarnRowTable = ({ products }) => {
   const [showShare, setShowShare] = useState(false);
@@ -25,7 +26,11 @@ const PromoteAndEarnRowTable = ({ products }) => {
                 <div className="flex items-center">
                   <div className="bg-orange-100 p-3 rounded mr-4">
                     <img
-                      src={productImg}
+                      src={
+                        product.product_image
+                          ? imageUrl(product.product_image)
+                          : productImg
+                      }
                       alt="Product"
                       className="w-12 h-12 bg-orange-2000"
                     />
@@ -35,11 +40,11 @@ const PromoteAndEarnRowTable = ({ products }) => {
               </td>
               <td className="py-6">{product.company}</td>
               <td className="py-6">{product.description}</td>
-              <td className="py-6">{product.date}</td>
+              <td className="py-6">{product?.date_created ? getDateStr(product?.date_created): new Date().getDay()}</td>
               <td className="py-6">
                 <div className="flex items-center gap-4 cursor-pointer">
                   <span className="mr-3">Share</span>
-                  <MdIosShare className="text-5xl" />
+                  <MdIosShare className="text-5xl"  />
                   {/* <FaExternalLinkAlt /> */}
                 </div>
               </td>
@@ -60,7 +65,7 @@ PromoteAndEarnRowTable.propTypes = {
       company: PropTypes.string.isRequired,
       description: PropTypes.string.isRequired,
       date: PropTypes.string.isRequired,
-    }),
+    })
   ).isRequired,
 };
 

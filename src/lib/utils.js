@@ -1,3 +1,5 @@
+import { BASE_URL } from "./constants";
+
 /**
  * Converts a standard date string into a formatted date string.
  * @param {string} strDate - The standard date string to convert.
@@ -52,4 +54,48 @@ export function decrypt(text, secret) {
   let decrypted = decipher.update(encryptedText, 'hex', 'utf8');
   decrypted += decipher.final('utf8');
   return decrypted;
+}
+
+export const imageUrl = (str)=>{
+  
+  // console.log(str+"------------***************************")
+  
+  const url = `${BASE_URL+str}`
+ 
+  // console.log(url+"---------------------------------------------")
+
+  return url
+}
+const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+export function transformProductsToChartData(productsArray) {
+  // Initialize an object to hold traffic sums for each month
+  const trafficByMonth = {};
+
+  // Initialize each month's traffic to 0
+  months.forEach((month, index) => {
+    trafficByMonth[month] = 0;
+  });
+
+  // Sum traffic for each product by month
+  productsArray.forEach(product => {
+    const monthIndex = new Date(product.date_created).getMonth();
+    const monthName = months[monthIndex];
+    trafficByMonth[monthName] += product.traffic;
+  });
+
+  // Convert the trafficByMonth object to an array of { month, views } objects
+  const chartData = months.map(month => ({
+    month,
+    views: trafficByMonth[month]
+  }));
+
+  return chartData;
+}
+ export const getDateStr = (str) => {
+  const monthIndex = new Date(str).getMonth();
+  const day = new Date(str).getDate()
+  const year = new Date(str).getFullYear()
+  const monthName = months[monthIndex];
+  return `${monthName}-${day}-${year}`
 }

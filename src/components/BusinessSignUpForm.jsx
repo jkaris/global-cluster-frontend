@@ -4,7 +4,7 @@ import { HiMiniUserPlus } from "react-icons/hi2";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useSignupBusinessMutation } from "../features/business/businessApiSlice";
-
+import countries from "../lib/countries.json";
 function BusinessSignUpForm({ companySizeInput, SetCompanySizeInput }) {
   const {
     register,
@@ -108,13 +108,26 @@ function BusinessSignUpForm({ companySizeInput, SetCompanySizeInput }) {
             <label htmlFor="country" className="block text-gray-700">
               Country
             </label>
-            <input
+            {/* <input
               id="country"
               type="text"
               placeholder="Select Your Country"
               className="w-full p-4 border border-gray-300 outline-none rounded-2xl"
               {...register("country")}
-            />
+            /> */}
+            <select
+              // value={}
+              id="country"
+              name="country"
+              className="w-full p-4 border border-gray-300 outline-none rounded-2xl"
+              {...register("country")}
+            >
+              {countries.countries.country.map((country, index) => (
+                <option key={index} className="" value={country.countryName}>
+                  {country.countryName}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div className="space-y-4">

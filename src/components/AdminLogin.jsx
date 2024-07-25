@@ -9,6 +9,7 @@ import { IoEyeOutline } from "react-icons/io5";
 import { FaRegEyeSlash } from "react-icons/fa6";
 import ErrorBoundary from "./ErrorBoundary";
 import { loginAction } from "../features/auth/authSlice";
+import { BiCheckSquare } from "react-icons/bi";
 
 function AdminLogin() {
   const {
@@ -61,7 +62,7 @@ function AdminLogin() {
           onSubmit={handleSubmit(onSubmit)}
           className="w-full min-h-full  bg-[#F2F2F2] flex flex-grow justify-center items-center "
         >
-          <div className="flex flex-col gap-8 border-gray bg-[#ffffff] my-auto rounded-3xl max-w-[600px] p-12 ">
+          <div className="flex flex-col gap-8 border-gray bg-[#ffffff] my-auto rounded-3xl max-w-[600px] p-16 ">
             <div className="flex w-full py-4 px-2 gap-4  items-center justify-center rounded-md select-none flex-col">
               <h2 className="text-4xl font-semibold mb-4">Sign In</h2>
               <p className="text-gray-600 mb-6">
@@ -109,15 +110,15 @@ function AdminLogin() {
                     },
                   })}
                 />
-                <div className="absolute bottom-6 right-0 w-auto z-10 cursor-pointer ">
+                <div className="absolute bottom-6 right-1 w-auto z-10 cursor-pointer ">
                   {showPassword ? (
                     <IoEyeOutline
-                      className="text-4xl pr-1 "
+                      className="text-4xl pr-2 "
                       onClick={() => handleShowPwd("text")}
                     />
                   ) : (
                     <FaRegEyeSlash
-                      className="text-4xl pr-1"
+                      className="text-4xl pr-2"
                       onClick={() => handleShowPwd("password")}
                     />
                   )}
@@ -128,8 +129,9 @@ function AdminLogin() {
                   </span>
                 )}
               </div>
-              <div className="">
-                <div className="w-full bg-primary-light text-white font-semibold py-4 rounded-full hover:bg-primary-dark transition duration-300 flex gap-4 items-center justify-center cursor-pointer">
+              <div className="flex justify-between px-2">
+              <span className=""><BiCheckSquare className=""/> <span className="">Remember me</span></span>
+              <div className="w-full bg-primary-light text-white font-semibold py-4 rounded-full hover:bg-primary-dark transition duration-300 flex gap-4 items-center justify-center cursor-pointer">
                   <button
                     type="submit"
                     className="flex items-center justify-center gap-4 w-full"

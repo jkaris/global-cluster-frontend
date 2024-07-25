@@ -6,7 +6,8 @@ export const TypeLogin = {
     INDIVIDUAL:"Individual"
 }
 export const userType = {
-    ADMIN:"Admin",
+    ADMIN:"admin",
     INDIVIDUAL:"individual",
-    COMPANY:"company"
+    COMPANY:"company",
+    STAFF:"staff"
 };

@@ -13,12 +13,11 @@ import PageDataHeader from "../../components/ui/PageDataHeader";
 import ProductsTicket from "../../components/ui/ProductTickets";
 import TableData from "../../components/ui/TableData";
 
-// import { addProduct, BASE_URL, fetchProducts } from "../../services/api";
 import {
   useAddProductMutation,
   useDeleteProductMutation,
   useProductMutation,
-  useProductsQuery,
+  useProductsMutation,
 } from "../../features/product/productApiSlice";
 import { itemsPerPage } from "../../lib/constants";
 
@@ -36,13 +35,8 @@ function Products() {
   // );
   const [productsData, setProductsData] = useState(initialProductsData);
   const [currentPage, setCurrentPage] = useState(1);
-  const { data: productsQuery } = useProductsQuery({
-    pollingInterval: 3000,
-    refetchOnMountOrArgChange: true,
-    skip: false,
-  });
-
   const [product] = useProductMutation();
+  const [products] = useProductsMutation();
   const [deleteProduct] = useDeleteProductMutation();
   const [addProduct] = useAddProductMutation();
   async function addNewProduct(formData) {
@@ -68,9 +62,9 @@ function Products() {
 
   async function handleDelete(productId) {
     try {
-      const response = await deleteProduct(productId).unwrap();
+      await deleteProduct(productId).unwrap();
       const updatedProducts = productsData.filter(
-        (product) => product.id !== productId
+        (product) => product.uuid !== productId
       );
       setProductsData(updatedProducts);
     } catch (error) {
@@ -88,20 +82,21 @@ function Products() {
   }
 
   async function handleShowProductDetails(productId) {
-    console.log(productId);
-
     try {
-      const response = await product(productId);
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      const productData = await response.json();
+      const productData = await product(productId).unwrap();
 
       return productData;
     } catch (error) {
-      console.error("Failed to fetch that product:", error.message);
+      if (error.response) {
+        // Server errors (status code outside of 2xx range)
+        console.error("Server Error:", JSON.stringify(error.response));
+      } else if (error.request) {
+        // Network errors or no response from server
+        console.error("Network Error:", error.message);
+      } else {
+        // Other errors
+        console.error("Error:", error.message);
+      }
     }
   }
 
@@ -113,10 +108,26 @@ function Products() {
   }
 
   useEffect(() => {
-    if (productsQuery) {
-      setProductsData(productsQuery.products); // Assuming the data has a 'products' property
-    }
-  }, [productsQuery]);
+    const fetchedProducts = async () => {
+      try {
+        const response = await products().unwrap();
+
+        setProductsData(response);
+      } catch (error) {
+        if (error.response) {
+          // Server errors (status code outside of 2xx range)
+          console.error("Server Error:", JSON.stringify(error.response));
+        } else if (error.request) {
+          // Network errors or no response from server
+          console.error("Network Error:", error.message);
+        } else {
+          // Other errors
+          console.error("Error:", error.message);
+        }
+      }
+    };
+    fetchedProducts();
+  }, []);
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
@@ -155,7 +166,7 @@ function Products() {
             </Modal>
           )}
 
-          <ProductsTicket />
+          <ProductsTicket products={productsData} />
 
           <section className="flex flex-col gap-6">
             <Filter />
@@ -170,8 +181,8 @@ function Products() {
                   "Status",
                   "Action",
                 ]}
-                onDelete={(index) =>
-                  handleDelete(productsData[startIndex + index].id)
+                onDelete={(productId) =>
+                  handleDelete(productId)
                 }
                 handleShowProductDetails={handleShowProductDetails}
               />

@@ -21,6 +21,12 @@ export const AuthApiSlice = globalClusterApi.injectEndpoints({
         body: loginData,
       }),
     }),
+    profile: builder.mutation({
+      query: (id) => ({
+        url: `/api/v1/profile/${id}`,
+        method: "POST",
+      }),
+    }),
     resetPassword: builder.mutation({
       query: ({ resetPasswordData, token }) => ({
         url: `auth/reset/${token}`,
@@ -28,9 +34,17 @@ export const AuthApiSlice = globalClusterApi.injectEndpoints({
         body: resetPasswordData,
       }),
     }),
+    updatePassword: builder.mutation({
+      query: (data) => ({
+        url: `/api/v1/register/individual/`,
+        method: "POST",
+        body: data,
+      }),
+    }),
+
     forgotPassword: builder.mutation({
       query: (forgotPasswordData) => ({
-        url: "auth/forgot",
+        url: "/api/v1/register/individual/",
         method: "POST",
         body: forgotPasswordData,
       }),
@@ -38,4 +52,4 @@ export const AuthApiSlice = globalClusterApi.injectEndpoints({
   }),
 });
 
-export const { useSignupMutation,useLoginMutation,useResetPasswordMutation,useForgotPasswordMutation }  = AuthApiSlice
+export const { useSignupMutation,useLoginMutation,useProfileMutation, useResetPasswordMutation,useUpdatePasswordMutation, useForgotPasswordMutation }  = AuthApiSlice

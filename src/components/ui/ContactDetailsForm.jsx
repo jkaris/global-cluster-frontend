@@ -1,5 +1,5 @@
-import React from 'react';
-
+import React from "react";
+import countries from "../../lib/countries.json";
 function ContactDetailsForm() {
   return (
     <div className="flex flex-col gap-16 py-20 px-14">
@@ -18,13 +18,25 @@ function ContactDetailsForm() {
         </div>
         <div className="flex flex-col gap-2 text-gray-500">
           <label htmlFor="country">Country</label>
-          <input
+          {/* <input
             className="outline-none border border-gray-300 rounded-md px-4 py-3 w-1/3 focus:border-primary-light transition-all duration-300 ease-in-out"
             type="text"
             id="country"
             name="country"
             placeholder="Enter your country"
-          />
+          /> */}
+          <select
+            // value={}
+            id="country"
+            name="country"
+            className="outline-none border border-gray-300 rounded-md px-4 py-4 w-1/3 focus:border-primary-light transition-all duration-300 ease-in-out"
+          >
+            {countries.countries.country.map((country, index) => (
+              <option key={index} className="py-3" value={country.countryName}>
+                {country.countryName}
+              </option>
+            ))}
+          </select>
         </div>
         <div className="flex flex-col gap-2 text-gray-500">
           <label htmlFor="state">State</label>

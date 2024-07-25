@@ -1,11 +1,11 @@
-import React from 'react';
-
+import React from "react";
+import countries from "../lib/countries.json";
 function ContactInformationStep2() {
   return (
     <form className=" mx-auto my-6 text-gray-500">
       <div className="flex gap-2">
         <div className="flex flex-col gap-2 w-1/2">
-          {' '}
+          {" "}
           <label className="p-2" htmlFor="firstName">
             First Name
           </label>
@@ -65,12 +65,24 @@ function ContactInformationStep2() {
         <label className="p-2" htmlFor="country">
           Country
         </label>
-        <input
+        {/* <input
           className="p-6 border outline-none rounded-md"
           type="text"
           id="country"
           name="country"
-        />
+        /> */}
+        <select
+          // value={}
+          id="country"
+          name="country"
+          className="p-6 border outline-none rounded-md"
+        >
+          {countries.countries.country.map((country, index) => (
+            <option key={index} className="" value={country.countryName}>
+              {country.countryName}
+            </option>
+          ))}
+        </select>
       </div>
       <div className="flex flex-col gap-2">
         <label className="p-2" htmlFor="state">

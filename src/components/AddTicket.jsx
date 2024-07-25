@@ -1,16 +1,16 @@
-import PropTypes from 'prop-types';
-import React, { useEffect, useRef, useState } from 'react';
-import { ImCancelCircle } from 'react-icons/im';
-import { IoCloudUploadOutline } from 'react-icons/io5';
+import PropTypes from "prop-types";
+import React, { useEffect, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
+import { ImCancelCircle } from "react-icons/im";
+import { IoCloudUploadOutline } from "react-icons/io5";
+import { useUser } from "../hooks/auth/useUser";
 
 function AddTicket({ addNewTicket, CloseModalWindow, currentStatus }) {
-  const [priority, setPriority] = useState('');
-  const [subject, setSubject] = useState('');
-  const [need, setNeed] = useState('');
-  const [description, setDescription] = useState('');
+  const [priority, setPriority] = useState("");
   const [dragging, setDragging] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
-
+  const { register, handleSubmit, formState: { errors }, setValue } = useForm();
+  const { user } = useUser();
   const modalRef = useRef(null);
 
   useEffect(() => {
@@ -20,63 +20,65 @@ function AddTicket({ addNewTicket, CloseModalWindow, currentStatus }) {
       }
     }
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [CloseModalWindow, currentStatus]);
 
-  const handleDragEnter = e => {
+  const handleDragEnter = (e) => {
     e.preventDefault();
     setDragging(true);
   };
 
-  const handleDragLeave = e => {
+  const handleDragLeave = (e) => {
     e.preventDefault();
     setDragging(false);
   };
 
-  const handleDragOver = e => {
+  const handleDragOver = (e) => {
     e.preventDefault();
     setDragging(true);
   };
 
-  const handleDrop = e => {
+  const handleDrop = (e) => {
     e.preventDefault();
     setDragging(false);
     const file = e.dataTransfer.files[0];
     setSelectedFile(file);
-    // Handle the dropped file here (e.g., upload or display preview)
   };
 
-  const handleFileInputChange = e => {
+  const handleFileInputChange = (e) => {
     const file = e.target.files[0];
     setSelectedFile(file);
-    // Handle file selection here
   };
 
-  const AddAndCloseModal = () => {
-    const ticket = {
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-      subject,
-      status: 'open',
-      priority,
-      user: 1,
-      need,
-      description,
-      file: selectedFile,
-    };
+  const onSubmit = async (data) => {
+    const formData = new FormData();
 
-    addNewTicket(ticket);
-    CloseModalWindow(!currentStatus);
+    try {
+      formData.append("title", data.subject);
+      formData.append("priority", priority.toLocaleLowerCase());
+      formData.append("description", data.description);
+      formData.append("user", user?.user_id);
+      formData.append("user_type", user?.user_type);
+      // formData.append("support", data.need);
+      if (selectedFile) {
+        formData.append("attachments", selectedFile, selectedFile.name);
+      }
+
+      await addNewTicket(formData);
+      // CloseModalWindow(!currentStatus);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 text-gray-500">
       <div
-        className={`w-[60rem] font-thin flex flex-col gap-2 bg-white border rounded-xl `}
+        className="w-[60rem] font-thin flex flex-col gap-2 bg-white border rounded-xl"
         ref={modalRef}
       >
         <div className="flex justify-between items-center px-12 py-4 border-b">
@@ -85,36 +87,40 @@ function AddTicket({ addNewTicket, CloseModalWindow, currentStatus }) {
             className="cursor-pointer"
             onClick={() => CloseModalWindow(!currentStatus)}
           >
-            <ImCancelCircle style={{ fontSize: '2rem' }} />
+            <ImCancelCircle style={{ fontSize: "2rem" }} />
           </div>
         </div>
-        <div className="px-10 py-12 flex flex-col gap-6">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="px-10 py-12 flex flex-col gap-6"
+        >
           <div className="mb-4 flex flex-col gap-2">
             <p>How can we assist you?</p>
             <div className="flex items-center p-8 justify-between">
-              <div className="flex gap-5 items-center cursor-pointer">
-                <input
-                  type="radio"
-                  id="needSupport"
-                  name="assistType"
-                  className="appearance-none border border-gray-300 rounded-full w-6 h-6
-                   checked:bg-primary-light checked:border-transparent outline-offset-2  focus:ring-primary-light"
-                  value="needSupport"
-                  onChange={e => setSubject(e.target.value)}
-                />
-                <label className="text-nowrap" htmlFor="needSupport">
-                  Need Support
-                </label>
+              <div className="flex flex-col">
+                <div className="flex gap-5 items-center cursor-pointer">
+                  <input
+                    type="radio"
+                    id="needSupport"
+                    className="appearance-none border border-gray-300 rounded-full w-6 h-6 checked:bg-primary-light checked:border-transparent outline-offset-2 focus:ring-primary-light"
+                    value="needSupport"
+                    {...register("subject", { required: "Subject is required" })}
+                  />
+                  <label className="text-nowrap" htmlFor="needSupport">
+                    Need Support
+                  </label>
+                </div>
+                {errors.subject && (
+                  <p className="text-red-500">{errors.subject.message}</p>
+                )}
               </div>
               <div className="flex gap-5 items-center cursor-pointer">
                 <input
                   type="radio"
                   id="suggestion"
-                  name="assistType"
-                  className="appearance-none border border-gray-300 rounded-full w-6 h-6
-                   checked:bg-primary-light checked:border-transparent outline-offset-2  focus:ring-primary-light"
+                  className="appearance-none border border-gray-300 rounded-full w-6 h-6 checked:bg-primary-light checked:border-transparent outline-offset-2 focus:ring-primary-light"
                   value="suggestion"
-                  onChange={e => setSubject(e.target.value)}
+                  {...register("subject", { required: "Subject is required" })}
                 />
                 <label className="text-nowrap" htmlFor="suggestion">
                   Have a Suggestion
@@ -129,11 +135,15 @@ function AddTicket({ addNewTicket, CloseModalWindow, currentStatus }) {
             </label>
             <input
               type="text"
-              name="need"
               id="need"
               className="outline-none border rounded-lg p-5"
-              onChange={e => setNeed(e.target.value)}
+              {...register("need", {
+                required: "Need is required",
+              })}
             />
+            {errors.need && (
+              <p className="text-red-500">{errors.need.message}</p>
+            )}
           </div>
 
           <div className="mb-4 flex flex-col gap-1">
@@ -142,11 +152,15 @@ function AddTicket({ addNewTicket, CloseModalWindow, currentStatus }) {
             </label>
             <textarea
               className="border outline-none rounded-lg p-4"
-              name="description"
               id="description"
               rows="5"
-              onChange={e => setDescription(e.target.value)}
+              {...register("description", {
+                required: "Description is required",
+              })}
             ></textarea>
+            {errors.description && (
+              <p className="text-red-500">{errors.description.message}</p>
+            )}
           </div>
 
           <div className="mb-4 flex flex-col gap-3">
@@ -154,39 +168,40 @@ function AddTicket({ addNewTicket, CloseModalWindow, currentStatus }) {
             <div className="flex gap-6 p-4">
               <p
                 className={`border px-8 py-2 rounded-full cursor-pointer ${
-                  priority === 'High' ? 'bg-primary-light text-white' : null
+                  priority === "High" ? "bg-primary-light text-white" : null
                 }`}
-                onClick={() => setPriority('High')}
+                onClick={() => setPriority("High")}
               >
                 High
               </p>
               <p
                 className={`border px-8 py-2 rounded-full cursor-pointer ${
-                  priority === 'Medium' ? 'bg-primary-light text-white' : null
+                  priority === "Medium" ? "bg-primary-light text-white" : null
                 }`}
-                onClick={() => setPriority('Medium')}
+                onClick={() => setPriority("Medium")}
               >
                 Medium
               </p>
               <p
                 className={`border px-8 py-2 rounded-full cursor-pointer ${
-                  priority === 'Low' ? 'bg-primary-light text-white' : null
+                  priority === "Low" ? "bg-primary-light text-white" : null
                 }`}
-                onClick={() => setPriority('Low')}
+                onClick={() => setPriority("Low")}
               >
                 Low
               </p>
             </div>
           </div>
+
           <div
-            className={`flex flex-col border-dashed border-2  rounded-lg h-[10rem] w-full items-center justify-center ${
-              dragging ? 'bg-blue-100 border-blue-500' : 'border-gray-300'
+            className={`flex flex-col border-dashed border-2 rounded-lg h-[10rem] w-full items-center justify-center ${
+              dragging ? "bg-blue-100 border-blue-500" : "border-gray-300"
             }`}
             onDragEnter={handleDragEnter}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
-            onClick={() => document.getElementById('fileInput').click()}
+            onClick={() => document.getElementById("fileInput").click()}
           >
             <input
               type="file"
@@ -200,8 +215,8 @@ function AddTicket({ addNewTicket, CloseModalWindow, currentStatus }) {
               <p className="text-gray-400">{selectedFile.name}</p>
             ) : (
               <div className="flex flex-col gap-4 items-center justify-center">
-                <IoCloudUploadOutline style={{ fontSize: '5rem' }} />
-                <p className={`text-gray-400 ${dragging ? 'hidden' : ''}`}>
+                <IoCloudUploadOutline style={{ fontSize: "5rem" }} />
+                <p className={`text-gray-400 ${dragging ? "hidden" : ""}`}>
                   Drag and Drop files here
                 </p>
               </div>
@@ -218,14 +233,14 @@ function AddTicket({ addNewTicket, CloseModalWindow, currentStatus }) {
             >
               Cancel
             </p>
-            <p
-              onClick={AddAndCloseModal}
+            <button
+              type="submit"
               className="flex-1 flex items-center justify-center px-4 py-6 bg-primary-light text-white rounded-xl cursor-pointer hover:bg-primary-dark"
             >
               Add
-            </p>
+            </button>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );
@@ -237,4 +252,4 @@ AddTicket.propTypes = {
   currentStatus: PropTypes.bool,
 };
 
-export default AddTicket;
+export default AddTicket

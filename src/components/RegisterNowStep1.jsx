@@ -1,9 +1,11 @@
-import React from 'react';
-import UserImg from './../assets/images/userProfile.png';
+import React from "react";
+import UserImg from "./../assets/images/userProfile.png";
+import { useUser } from "../hooks/auth/useUser";
 
 function RegisterNowStep1() {
+  const { user } = useUser();
   return (
-    <div className="bg-white px-20 py-8 flex justify-between flex-col gap-4">
+    <div className="bg-white px-20 py-8 justify-between flex-col gap-4">
       <h2 className="font-semibold text-4xl">Sponsor</h2>
       <div className="flex flex-col gap-8">
         <div className="flex gap-6 items-center">
@@ -11,8 +13,8 @@ function RegisterNowStep1() {
             <img src={UserImg} alt="user profile" />
           </div>
           <div className="text-lg text-gray-500">
-            <p>REF00111</p>
-            <p>SilasDahun</p>
+            <p>{user?.profile?.ref}</p>
+            <p>{`${user?.profile?.first_name}${user?.profile?.last_name}`}</p>
           </div>
         </div>
         <div className="flex  gap-6 text-white">

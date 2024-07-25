@@ -1,91 +1,104 @@
-import React, { useEffect, useState } from 'react';
-import GrowBusinessCard from '../../components/ui/GrowBusinessCard';
-import BusinessDashboardHeader from '../../components/ui/Header';
-import InsightsCard from '../../components/ui/InsightsCard';
-import TableData from '../../components/ui/TableData';
-import TopProducts from '../../components/ui/TopProducts';
-import TrafficReportGraph from '../../components/ui/TrafficReportGraph';
-import { fetchProducts } from './../../services/api.js';
+import React, { useEffect, useState } from "react";
+import GrowBusinessCard from "../../components/ui/GrowBusinessCard";
+import BusinessDashboardHeader from "../../components/ui/Header";
+import InsightsCard from "../../components/ui/InsightsCard";
+import TableData from "../../components/ui/TableData";
+import TopProducts from "../../components/ui/TopProducts";
+import TrafficReportGraph from "../../components/ui/TrafficReportGraph";
+import {
+  useProductMutation,
+  useProductsMutation,
+} from "../../features/product/productApiSlice.js";
+import { useTokens } from "../../hooks/auth/useTokens.js";
+import { transformProductsToChartData } from "../../lib/utils.js";
 
 const productsDumyData = [
   {
-    name: 'lorem Ipsum',
+    name: "lorem Ipsum",
     description:
-      'Lorem ipsum dolor sit, amet consectetur adipisicing elit.orem ipsum dolor sit, amet consectetur adipisicing elit. Atque, provident? Atque, provident?',
+      "Lorem ipsum dolor sit, amet consectetur adipisicing elit.orem ipsum dolor sit, amet consectetur adipisicing elit. Atque, provident? Atque, provident?",
     shares: 10,
-    status: 'Pending',
-    traffic: '1200',
-    action: 'Edit',
+    status: "Pending",
+    traffic: "1200",
+    action: "Edit",
   },
   // ... other dummy products
 ];
 
 function Dashboard() {
-  const [productsData, setProducts] = useState(productsDumyData);
+  const { access } = useTokens();
+  const [productsData, setProducts] = useState([]);
+  const [products] = useProductsMutation();
+  const [product] = useProductMutation();
 
   async function handleShowProductDetails(productId) {
-    // console.log(productId)
-
-    const apiUrl = `192.168.100.214:8000/api/products/${productId}/`;
-    console.log(apiUrl);
-
     try {
-      const response = await fetch(apiUrl);
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      const productData = await response.json();
+      const productData = await product(productId).unwrap();
 
       return productData;
     } catch (error) {
-      console.error('Failed to fetch that product:', error.message);
+      if (error.response) {
+        // Server errors (status code outside of 2xx range)
+        console.error("Server Error:", JSON.stringify(error.response));
+      } else if (error.request) {
+        // Network errors or no response from server
+        console.error("Network Error:", error.message);
+      } else {
+        // Other errors
+        console.error("Error:", error.message);
+      }
     }
   }
 
   useEffect(() => {
-    async function fetchData() {
-      const data = await fetchProducts();
-      setProducts(data);
-    }
+    const fetchedProducts = async () => {
+      try {
+        const response = await products().unwrap();
 
-    fetchData();
-  }, []);
+        setProducts(response);
+      } catch (error) {
+        if (error.response) {
+          // Server errors (status code outside of 2xx range)
+          console.error("Server Error:", JSON.stringify(error.response));
+        } else if (error.request) {
+          // Network errors or no response from server
+          console.error("Network Error:", error.message);
+        } else {
+          // Other errors
+          console.error("Error:", error.message);
+        }
+      }
+    };
+    fetchedProducts();
+  }, [products, access]);
 
   // Calculate total shares
-  const totalShares = productsData.reduce(
-    (sum, product) => sum + (product.shares || 0),
-    0,
-  );
+  const totalShares = productsData.length > 0 ? productsData.reduce((sum, product) => sum + (product.shares || 0),0 )  : 0
 
   // Calculate total product count
-  const productVisits = productsData.length;
-
-  // Dummy value for TotalIncDec (Replace this with actual logic if required)
-  const totalIncDec = 5; // Example static increment/decrement percentage
+  const productVisits = productsData.length > 0 ? productsData.reduce((sum, product) => sum + (product.traffic || 0), 0 ) : 0
 
   const slicedTopData = productsData.slice(0, 5);
-
+  const totalIncDecVisits = 0;
+  const totalIncDecShares = 0;
   return (
     <div className="bg-gray-50">
       <BusinessDashboardHeader />
       <div className="px-6 py-10 flex gap-6 flex-wrap bg-white">
-
         <InsightsCard
           CardName="Total Shares"
           TotalCount={totalShares}
-          TotalIncDec={totalIncDec} // This can be replaced with actual calculation logic
+          TotalIncDec={totalIncDecShares} // This can be replaced with actual calculation logic
         />
         <InsightsCard
           CardName="Total Visits"
           TotalCount={productVisits}
-          TotalIncDec={totalIncDec} // This can be replaced with actual calculation logic
+          TotalIncDec={totalIncDecVisits} // This can be replaced with actual calculation logic
         />
         <GrowBusinessCard />
       </div>
       <div className="px-6 py-6 flex gap-6">
-        <TrafficReportGraph />
+        <TrafficReportGraph data={transformProductsToChartData(productsData)} />
         <TopProducts products={slicedTopData} />
       </div>
 
@@ -106,12 +119,12 @@ function Dashboard() {
             type="dashboard"
             data={productsData ? slicedTopData : productsDumyData}
             tableHeadNames={[
-              'Product Name',
-              'Description',
-              'No of Shares',
-              'Traffic',
-              'Status',
-              'Action',
+              "Product Name",
+              "Description",
+              "No of Shares",
+              "Traffic",
+              "Status",
+              "Action",
             ]}
             handleShowProductDetails={handleShowProductDetails}
           />

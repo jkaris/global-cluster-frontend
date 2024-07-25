@@ -7,12 +7,12 @@ import Modal from './Modal';
 import ShowDetailComp from './ShowDetailComp';
 
 function UserDataTable({ data = [], tableHeadNames, type = 'default' }) {
-  console.log(data);
+  // console.log(data);
   const [showDetail, setShowDetail] = useState(false);
   const [userData, setUserData] = useState();
 
   async function handleShowProducts(user) {
-    console.log(user);
+    // console.log(user);
     // const userData = await getProfile(user.id);
     // console.log(userData);
     setUserData(user);

@@ -1,13 +1,14 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import BusinessProductImg from './../../assets/images/productImg.png';
+import PropTypes from "prop-types";
+import React from "react";
+import BusinessProductImg from "./../../assets/images/productImg.png";
+import { imageUrl } from "../../lib/utils";
 
 const dumyproducts = [
-  { name: 'Lorem Ipsum', shares: 195 },
-  { name: 'Lorem Ipsum', shares: 146 },
-  { name: 'Lorem Ipsum', shares: 122 },
-  { name: 'Lorem Ipsum', shares: 110 },
-  { name: 'Lorem Ipsum', shares: 87 },
+  { name: "Lorem Ipsum", shares: 195 },
+  { name: "Lorem Ipsum", shares: 146 },
+  { name: "Lorem Ipsum", shares: 122 },
+  { name: "Lorem Ipsum", shares: 110 },
+  { name: "Lorem Ipsum", shares: 87 },
 ];
 
 const TopProducts = ({ products }) => {
@@ -29,11 +30,15 @@ const TopProducts = ({ products }) => {
                   <div className="bg-orange-100 p-2 rounded-md mr-3 ">
                     <img
                       className="w-10"
-                      src={BusinessProductImg}
+                      src={
+                        product?.product_image
+                          ? imageUrl(product?.product_image)
+                          : BusinessProductImg
+                      }
                       alt="Top Products Images "
                     />
                   </div>
-                  <span>{product.name}</span>
+                  <span>{product.product_name}</span>
                 </div>
                 <span className="font-semibold">{product.shares}</span>
               </li>

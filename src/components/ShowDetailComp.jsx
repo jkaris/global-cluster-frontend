@@ -1,18 +1,43 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import { ImCancelCircle } from 'react-icons/im';
-import ProductDetailImage from './../assets/images/detailsImg.jpeg';
+import PropTypes from "prop-types";
+import React, { useEffect } from "react";
+import { ImCancelCircle } from "react-icons/im";
+import ProductDetailImage from "./../assets/images/detailsImg.jpeg";
+import { imageUrl } from "../lib/utils";
+// import { useProductMutation } from "../features/product/productApiSlice";
 
 function ShowDetailComp({ detail, setShowDetail, type }) {
-  // console.log('thsi si in product detail components:' , productDetail)
-  if (type === 'user') {
+  // const [product] = useProductMutation();
+
+  // useEffect(() => {
+  //   if (type === "product") {
+  //     const updateTraffic = async () => {
+  //       try {
+  //         const response = await product(detail.uuid);
+  //       } catch (error) {
+  //         if (error.response) {
+  //           // Server errors (status code outside of 2xx range)
+  //           console.error("Server Error:", JSON.stringify(error.response));
+  //         } else if (error.request) {
+  //           // Network errors or no response from server
+  //           console.error("Network Error:", error.message);
+  //         } else {
+  //           // Other errors
+  //           console.error("Error:", error.message);
+  //         }
+  //       }
+  //     };
+  //     updateTraffic();
+  //   }
+  // }, []);
+
+  if (type === "user") {
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 text-gray-500">
         <div className="w-[60rem] font-thin flex flex-col gap-2 bg-gray-100 border overflow-hidden rounded-xl">
           <div className="flex justify-between items-center px-8 py-5 bg-white rounded-xl">
             <h2 className="font-semibold text-2xl">User Details</h2>
             <ImCancelCircle
-              style={{ fontSize: '2rem', cursor: 'pointer' }}
+              style={{ fontSize: "2rem", cursor: "pointer" }}
               onClick={() => setShowDetail(false)}
             />
           </div>
@@ -57,7 +82,7 @@ function ShowDetailComp({ detail, setShowDetail, type }) {
           <div className="flex justify-between items-center px-8 py-5 bg-white rounded-xl">
             <h2 className="font-semibold text-2xl">Product Details</h2>
             <ImCancelCircle
-              style={{ fontSize: '2rem', cursor: 'pointer' }}
+              style={{ fontSize: "2rem", cursor: "pointer" }}
               onClick={() => setShowDetail(false)}
             />
           </div>
@@ -66,7 +91,11 @@ function ShowDetailComp({ detail, setShowDetail, type }) {
             <div>
               <img
                 className="w-2/6"
-                src={ProductDetailImage}
+                src={
+                  detail.product_image
+                    ? imageUrl(detail.product_image)
+                    : ProductDetailImage
+                }
                 alt="Product details images for show"
               />
             </div>
@@ -75,7 +104,7 @@ function ShowDetailComp({ detail, setShowDetail, type }) {
             <div className="p-4 flex items-center justify-between">
               <div>
                 <p>Product Name</p>
-                <p className="font-bold">{detail.name}</p>
+                <p className="font-bold">{detail.product_name}</p>
               </div>
               <div>
                 <p>Status</p>

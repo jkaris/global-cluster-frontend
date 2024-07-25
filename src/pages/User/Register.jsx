@@ -75,9 +75,9 @@ function Register() {
           </div>
 
           <div className="w-4/6 mx-auto">
-            {regForm === 1 && <RegisterNowStep1 user={user} />}
-            {regForm === 2 && <ContactInformationStep2 />}
-            {regForm === 3 && <LoginInformationStep3 />}
+            {regForm === 1 && <RegisterNowStep1 register={register} />}
+            {regForm === 2 && <ContactInformationStep2 register={register} />}
+            {regForm === 3 && <LoginInformationStep3 register={register} />}
             {regForm === 4 && <OverviewStep4 />}
             {regForm === 5 && (
               <Payment setRegForm={setRegForm} regForm={regForm} />

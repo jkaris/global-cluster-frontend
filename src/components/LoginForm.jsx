@@ -45,8 +45,7 @@ function LoginForm() {
         }).unwrap();
 
         const { access, refresh, email, user_type, user_id } = responseData;
-        console.log(access, refresh, email, user_type, user_id);
-
+        // console.log(access, refresh, email, user_type, user_id);
 
         dispatch(loginAction({ access, refresh, email, user_type, user_id }));
         navigate(`/business/dashboard`);

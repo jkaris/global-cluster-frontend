@@ -67,17 +67,18 @@ function AddProduct({ addNewProduct, CloseModalWindow, currentStatus }) {
     const formData = new FormData();
 
     try {
-      formData.append("productName", data.productName);
+      formData.append("product_name", data.productName);
       formData.append("description", data.description);
-      formData.append("productLinkType", data.productLinkType);
-      formData.append("linkValue", data.linkValue);
+      formData.append("product_link", data.productLinkType);
+      formData.append("link_value", data.linkValue);
       if (selectedFile) {
-        formData.append("photo", selectedFile);
+        formData.append("product_image", selectedFile, selectedFile.name);
       }
       // Log all entries in the FormData object
-      for (let [key, value] of formData.entries()) {
-        console.log(`${key}:`, value);
-      }
+      
+      // for (let [key, value] of formData.entries()) {
+      //   console.log(`${key}:`, value);
+      // }
       await addNewProduct(formData);
       CloseModalWindow(!currentStatus);
     } catch (error) {

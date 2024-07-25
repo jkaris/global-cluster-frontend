@@ -6,13 +6,13 @@ import { refreshTokenAction, selectAccessToken, selectRefreshToken } from "../..
 export const useTokens = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const refreshToken = useSelector(selectRefreshToken);
-  const accessToken = useSelector(selectAccessToken);
+  const refresh = useSelector(selectRefreshToken);
+  const access = useSelector(selectAccessToken);
 
   const refreshAccessToken = async () => {
     try {
       const response = await axios.post('/api/v1/token/refresh', {
-        token_refresh: refreshToken,
+        token_refresh: refresh,
       });
       const newAccessToken = response.data.access;
       dispatch(refreshTokenAction({ access: newAccessToken }));
@@ -24,5 +24,5 @@ export const useTokens = () => {
     }
   };
 
-  return { accessToken,refreshAccessToken };
+  return { access,refreshAccessToken };
 };

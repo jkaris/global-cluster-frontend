@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from "prop-types";
 import { BiChevronDown } from 'react-icons/bi';
 import {
   BarChart,
@@ -9,23 +10,8 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
-// Sample data for the bar chart
-const data = [
-  { month: 'Jan', views: 230 },
-  { month: 'Feb', views: 180 },
-  { month: 'Mar', views: 450 },
-  { month: 'Apr', views: 400 },
-  { month: 'May', views: 350 },
-  { month: 'Jun', views: 250 },
-  { month: 'Jul', views: 330 },
-  { month: 'Aug', views: 390 },
-  { month: 'Sep', views: 200 },
-  { month: 'Oct', views: 240 },
-  { month: 'Nov', views: 280 },
-  { month: 'Dec', views: 180 },
-];
-
-function TrafficReportChart() {
+function TrafficReportChart({data=[]}) {
+  
   return (
     <div className="w-[60%] flex flex-col gap-12 shadow-[0_0_10px_rgba(0,0,0,0.1)] p-4 rounded-xl">
       <div className="flex justify-between">
@@ -80,3 +66,6 @@ function TrafficReportChart() {
 }
 
 export default TrafficReportChart;
+TrafficReportChart.propTypes = {
+  data: PropTypes.array
+}
