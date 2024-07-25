@@ -61,8 +61,6 @@ function AddTicket({ addNewTicket, CloseModalWindow, currentStatus }) {
       formData.append("title", data.subject);
       formData.append("priority", priority.toLocaleLowerCase());
       formData.append("description", data.description);
-      formData.append("user", user?.user_id);
-      formData.append("user_type", user?.user_type);
       // formData.append("support", data.need);
       if (selectedFile) {
         formData.append("attachments", selectedFile, selectedFile.name);

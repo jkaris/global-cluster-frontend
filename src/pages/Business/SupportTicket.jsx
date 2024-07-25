@@ -5,7 +5,6 @@ import Filter from "../../components/ui/Filter";
 import BusinessDashboardHeader from "../../components/ui/Header";
 import PageDataHeader from "../../components/ui/PageDataHeader";
 import TableData from "../../components/ui/TableData";
-import { addTicket, fetchSupportTickets } from "../../services/api";
 import { ModalContext } from "./../../App";
 import ActionNotification from "./../../components/ActionNotification";
 import Button from "./../../components/Button";
