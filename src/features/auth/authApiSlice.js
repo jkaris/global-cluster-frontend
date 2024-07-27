@@ -23,9 +23,9 @@ export const AuthApiSlice = globalClusterApi.injectEndpoints({
     }),
     updateUserProfile: builder.mutation({
       query: (updateData) => ({
-        url: "/api/v1/accounts/individuals/",
+        url: `/api/v1/accounts/individuals/${updateData.id}/`,
         method: "PUT",
-        body: updateData,
+        body: JSON.stringify(updateData),
       }),
     }),
 
@@ -54,4 +54,11 @@ export const AuthApiSlice = globalClusterApi.injectEndpoints({
   }),
 });
 
-export const { useSignupMutation,useLoginMutation,useUpdateUserProfileMutation, useResetPasswordMutation,useUpdatePasswordMutation, useForgotPasswordMutation }  = AuthApiSlice
+export const {
+  useSignupMutation,
+  useLoginMutation,
+  useUpdateUserProfileMutation,
+  useResetPasswordMutation,
+  useUpdatePasswordMutation,
+  useForgotPasswordMutation,
+} = AuthApiSlice;
