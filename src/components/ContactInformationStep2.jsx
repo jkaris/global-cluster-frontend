@@ -125,16 +125,16 @@ const ContactInformationStep2 = ({ register, errors }) => {
         {errors.state && <p className="text-red-500">{errors.state.message}</p>}
       </div>
       <div className="flex flex-col gap-2">
-        <label className="p-2" htmlFor="phone">
+        <label className="p-2" htmlFor="phone_number">
           Phone No
         </label>
         <input
           className="p-6 border outline-none rounded-md"
           type="tel"
           id="phone_no"
-          {...register("phone_no", { required: "Phone number is required" })}
+          {...register("phone_number", { required: "Phone number is required" })}
         />
-        {errors.phone && <p className="text-red-500">{errors.phone.message}</p>}
+        {errors.phone_number && <p className="text-red-500">{errors.phone_number.message}</p>}
       </div>
     </div>
   );

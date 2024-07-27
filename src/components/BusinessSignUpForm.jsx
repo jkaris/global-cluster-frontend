@@ -22,7 +22,7 @@ function BusinessSignUpForm({ companySizeInput, SetCompanySizeInput }) {
         ...data,
         user_type: "company",
       }).unwrap();
-      console.log(JSON.stringify(responseData));
+      // console.log(JSON.stringify(responseData));
       navigate(`login`);
     } catch (error) {
       if (error.response) {

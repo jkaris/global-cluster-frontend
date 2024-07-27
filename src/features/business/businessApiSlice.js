@@ -28,10 +28,10 @@ export const BusinessApiSlice = globalClusterApi.injectEndpoints({
       }),
     }),
     updateBusinessProfile: builder.mutation({
-      query: (updateData ) => ({
-        url: `/api/v1/accounts/companies/${updateData.id}`,
+      query: (updateData) => ({
+        url: `/api/v1/accounts/companies/${updateData.id}/`,
         method: "PUT",
-        // body: updateData,
+        body: {...updateData},
       }),
     }),
     updateBusinessPassword: builder.mutation({

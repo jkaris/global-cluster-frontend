@@ -13,13 +13,19 @@ axiosInstance.interceptors.request.use(
     const lc_storage = localStorage.getItem(`persist:${WEBSITE_NAME}:auth`);
     const lc_storage_obj = JSON.parse(lc_storage || "{}"); // Safely parse localStorage
 
-    const accessToken = lc_storage_obj?.access.replace('"',"") ;
-    // if (accessToken &&  !config.url.includes("/login") && !config.url.includes("/register")) {
+    const accessToken = lc_storage_obj?.access.replace('"', "");
 
-    //   const authorizationBearer = `Bearer ${accessToken}`.replace('"',"");
+    // Check if the URL matches the specified patterns and the method is POST
+    const shouldExclude =
+      (config.url.includes("/accounts/individuals/") ||
+      config.url.includes("/accounts/companies/")) &&
+      config.method === "POST";
 
-    //   config.headers.Authorization = authorizationBearer;
-    // }
+    if (accessToken && !shouldExclude) {
+      const authorizationBearer = `Bearer ${accessToken}`.replace('"', "");
+      config.headers.Authorization = authorizationBearer;
+    }
+
     return config;
   },
   (error) => {
