@@ -1,28 +1,40 @@
-import React, { useEffect, useState } from 'react';
-import Filter from '../../components/ui/Filter';
-import BusinessDashboardHeader from '../../components/ui/Header';
-import TicketCard from '../../components/ui/TicketCard';
-import WalletCard from '../../components/WalletCard';
-import { fetchWalletData } from '../../services/api';
-import Pagination from './../../components/Pagination';
-import TableData from './../../components/ui/TableData';
+import React, { useEffect, useState } from "react";
+import Filter from "../../components/ui/Filter";
+import BusinessDashboardHeader from "../../components/ui/Header";
+import TicketCard from "../../components/ui/TicketCard";
+import WalletCard from "../../components/WalletCard";
+import Pagination from "./../../components/Pagination";
+import TableData from "./../../components/ui/TableData";
+import { useWalletMutation } from "../../features/user/userApiSlice";
 
 function Wallet() {
   const [currentPage, setCurrentPage] = useState(1);
   const [walletData, setWalletData] = useState([]);
+  const [wallet] = useWalletMutation();
+  useEffect(() => {
+    const fetchedProducts = async () => {
+      try {
+        const response = await wallet().unwrap();
 
-  useEffect(
-    () =>
-      async function () {
-        const data = await fetchWalletData();
-        setWalletData(data);
-        console.log(data);
-      },
-    [],
-  );
+        setWalletData(response);
+      } catch (error) {
+        if (error.response) {
+          // Server errors (status code outside of 2xx range)
+          console.error("Server Error:", JSON.stringify(error.response));
+        } else if (error.request) {
+          // Network errors or no response from server
+          console.error("Network Error:", error.message);
+        } else {
+          // Other errors
+          console.error("Error:", error.message);
+        }
+      }
+    };
+    fetchedProducts();
+  }, [wallet]);
   const itemsPerPage = 7;
 
-  const handlePageChange = page => {
+  const handlePageChange = (page) => {
     setCurrentPage(page);
   };
 
@@ -36,20 +48,20 @@ function Wallet() {
   }, 0);
 
   const successfullTransactions = walletData.reduce((acc, currTransaction) => {
-    return currTransaction.status === 'successful' ||
-      currTransaction.status.toLowerCase() === 'successfull'
+    return currTransaction.status === "successful" ||
+      currTransaction.status.toLowerCase() === "successfull"
       ? acc + 1
       : acc + 0;
   }, 0);
 
   const pendingTransactions = walletData.reduce((acc, currTransaction) => {
-    return currTransaction.status.toLowerCase() === 'pending'
+    return currTransaction.status.toLowerCase() === "pending"
       ? acc + 1
       : acc + 0;
   }, 0);
 
   const declinedTransactions = walletData.reduce((acc, currTransaction) => {
-    return currTransaction.status.toLowerCase() === 'declined'
+    return currTransaction.status.toLowerCase() === "declined"
       ? acc + 1
       : acc + 0;
   }, 0);
@@ -85,12 +97,12 @@ function Wallet() {
           <TableData
             type="wallet"
             tableHeadNames={[
-              'Reference Id',
-              'Date',
-              'Description',
-              'Amount',
-              'Status',
-              'Action',
+              "Reference Id",
+              "Date",
+              "Description",
+              "Amount",
+              "Status",
+              "Action",
             ]}
             data={currentUser}
           />

@@ -7,7 +7,9 @@ function BonusMangement() {
       <div className="bg-white">
         <AdminDashboardHeader />
       </div>
-      <main className="m-10 rounded-xl flex flex-col gap-4"></main>
+      <main className="m-10 rounded-xl flex flex-col gap-4">
+        
+      </main>
     </div>
   );
 }

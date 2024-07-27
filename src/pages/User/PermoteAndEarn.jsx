@@ -1,62 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, {  useContext, useEffect, useState } from 'react';
 import PromoteAndEarnRowTable from '../../components/PromoteAndEarnRowTable';
 import Filter from '../../components/ui/Filter';
 import BusinessDashboardHeader from '../../components/ui/Header';
 import PageDataHeader from '../../components/ui/PageDataHeader';
 import TicketCard from '../../components/ui/TicketCard';
 import { useProductsMutation } from '../../features/product/productApiSlice';
+import { ModalContext } from '../../App';
+import ShareLinksScreen from '../../components/ShareLinksScreen';
+import Modal from '../../components/Modal';
 
-const products = [
-  {
-    name: 'Lorem ipsum',
-    company: 'Global Cluster',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing.....',
-    date: '1 Jan 2024',
-  },
-  {
-    name: 'Lorem ipsum',
-    company: 'Global Cluster',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing.....',
-    date: '1 Jan 2024',
-  },
-  {
-    name: 'Lorem ipsum',
-    company: 'Global Cluster',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing.....',
-    date: '1 Jan 2024',
-  },
-  {
-    name: 'Lorem ipsum',
-    company: 'Global Cluster',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing.....',
-    date: '1 Jan 2024',
-  },
-  {
-    name: 'Lorem ipsum',
-    company: 'Global Cluster',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing.....',
-    date: '1 Jan 2024',
-  },
-  {
-    name: 'Lorem ipsum',
-    company: 'Global Cluster',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing.....',
-    date: '1 Jan 2024',
-  },
-  {
-    name: 'Lorem ipsum',
-    company: 'Global Cluster',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing.....',
-    date: '1 Jan 2024',
-  },
-  // Add more product objects as needed
-];
 
 function PermoteAndEarn() {
-
   const [products] = useProductsMutation();
   const [productsData, setProductsData] = useState([]);
-
+  const { showModal, setShowModal } = useContext(ModalContext);
+  const [linkToShare, setLinkToShare] = useState('');
   useEffect(() => {
     const fetchedProducts = async () => {
       try {
@@ -96,12 +54,17 @@ function PermoteAndEarn() {
         </section>
         <section className="p-10 ">
           <div className="p-8 flex flex-col gap-10">
-            <Filter />
+          <Filter data={productsData} setProductFunction={setProductsData} showDownload={false} />
           </div>
           <div>
-            <PromoteAndEarnRowTable products={productsData} />
+            <PromoteAndEarnRowTable products={productsData} handleShareModal={()=>setShowModal(!showModal)} setLinkToShare={setLinkToShare} />
           </div>
         </section>
+        {showModal && (
+        <Modal>
+          <ShareLinksScreen handleSharingMoodal={()=>setShowModal(!showModal)} urlToShare ={linkToShare}/>
+        </Modal>
+      )}
       </main>
     </div>
   );

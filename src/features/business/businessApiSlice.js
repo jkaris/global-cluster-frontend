@@ -21,6 +21,20 @@ export const BusinessApiSlice = globalClusterApi.injectEndpoints({
         body: loginData,
       }),
     }),
+    updateBusinessProfile: builder.mutation({
+      query: (updateData) => ({
+        url: "/api/v1/register/company/",
+        method: "PUT",
+        body: updateData,
+      }),
+    }),
+    updateBusinessPassword: builder.mutation({
+      query: (data) => ({
+        url: `/api/v1/register/company/`,
+        method: "POST",
+        body: data,
+      }),
+    }),
     resetPasswordBusiness: builder.mutation({
       query: ({ resetPasswordData, token }) => ({
         url: `/register/company/reset/${token}`,
@@ -38,4 +52,4 @@ export const BusinessApiSlice = globalClusterApi.injectEndpoints({
   }),
 });
 
-export const { useSignupBusinessMutation,useLoginBusinessMutation,useResetPasswordBusinessMutation,useForgotPasswordBusinessMutation }  = BusinessApiSlice
+export const { useSignupBusinessMutation,useLoginBusinessMutation, useUpdateBusinessProfileMutation, useResetPasswordBusinessMutation, useUpdateBusinessPasswordMutation  ,useForgotPasswordBusinessMutation }  = BusinessApiSlice

@@ -1,94 +1,46 @@
-import React, { useState } from 'react';
-import UserDataTable from '../../components/UserDataTable';
-import Header from './../../components/ui/Header';
+import React, { useEffect, useState } from "react";
+import UserDataTable from "../../components/UserDataTable";
+import Header from "./../../components/ui/Header";
+import Pagination from "../../components/Pagination";
+import { useGetUsersMutation } from "../../features/user/userApiSlice";
 
-const userData = [
-  {
-    user: 'Samuel',
-    type: 'Individual',
-    lastUpdated: 'January 20, 2024',
-    email: 'Silasdahun@gmail.com',
-    date: 'January 24,2024',
-    status: 'Pending',
-    phone: '0807331612',
-    address: 'Mobhi Road, Ajah Logos',
-    state: 'Virginia',
-  },
-  {
-    user: 'Samuel',
-    type: 'Individual',
-    lastUpdated: 'January 20, 2024',
-    email: 'Silasdahun@gmail.com',
-    date: 'January 24,2024',
-    status: 'Approve',
-    phone: '0807331612',
-    address: 'Mobhi Road, Ajah Logos',
-    state: 'Los Angles',
-  },
-  {
-    user: 'Samuel',
-    type: 'Individual',
-    lastUpdated: 'January 20, 2024',
-    email: 'Silasdahun@gmail.com',
-    date: 'January 24,2024',
-    status: 'Approve',
-    phone: '0807331612',
-    address: 'Mobhi Road, Ajah Logos',
-    state: 'Virginia',
-  },
-  {
-    user: 'Samuel',
-    type: 'Individual',
-    lastUpdated: 'January 20, 2024',
-    email: 'Silasdahun@gmail.com',
-    date: 'January 24,2024',
-    status: 'Approve',
-    phone: '0807331612',
-    address: 'Mobhi Road, Ajah Logos',
-    state: 'Virginia',
-  },
-  {
-    user: 'Samuel',
-    type: 'Individual',
-    lastUpdated: 'January 20, 2024',
-    email: 'Silasdahun@gmail.com',
-    date: 'January 24,2024',
-    status: 'Decline',
-    phone: '0807331612',
-    address: 'Mobhi Road, Ajah Logos',
-    state: 'Virginia',
-  },
-  {
-    user: 'Samuel',
-    type: 'Individual',
-    lastUpdated: 'January 20, 2024',
-    email: 'Silasdahun@gmail.com',
-    date: 'January 24,2024',
-    status: 'Decline',
-    phone: '0807331612',
-    address: 'Mobhi Road, Ajah Logos',
-    state: 'Virginia',
-  },
-];
 
 function Registrations() {
   const [currentPage, setCurrentPage] = useState(1);
-  const [usersDat, setUsersData] = useState([]);
-
+  const [usersData, setUsersData] = useState([]);
+  const [getUsers] = useGetUsersMutation();
   const itemsPerPage = 5;
 
-  const totalPages = Math.ceil(userData.length / itemsPerPage);
+  const totalPages = Math.ceil(usersData.length / itemsPerPage);
 
-  const handlePageChange = pageNumber => {
+  const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
 
-  const startIndex = (currentPage - 1) * itemsPerPage + 1;
-  const endIndex = Math.min(currentPage * itemsPerPage, userData.length);
-  const paginatedData = userData.slice(
+  const paginatedData = usersData.slice(
     (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage,
+    currentPage * itemsPerPage
   );
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await getUsers().unwrap();
+        setUsersData(response);
+      } catch (error) {
+        if (error.response) {
+          // Server errors (status code outside of 2xx range)
+          console.error("Server Error:", JSON.stringify(error.response));
+        } else if (error.request) {
+          // Network errors or no response from server
+          console.error("Network Error:", error.message);
+        } else {
+          // Other errors
+          console.error("Error:", error.message);
+        }
+      }
+    };
+    fetchUsers();
+  }, []);
   return (
     <div className="bg-gray-50">
       <Header />
@@ -99,15 +51,22 @@ function Registrations() {
             type="default"
             data={paginatedData}
             tableHeadNames={[
-              'User',
-              'Type',
-              'Email',
-              'Date',
-              'Status',
-              'Action',
+              "User",
+              // "Type",
+              "Email",
+              "Date",
+              "Status",
+              "Action",
             ]}
           />
         </div>
+        {itemsPerPage <= usersData.length && (
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
+        )}
       </main>
     </div>
   );

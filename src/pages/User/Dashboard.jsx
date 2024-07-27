@@ -1,19 +1,45 @@
-import React from 'react';
-import { GoChevronDown } from 'react-icons/go';
-import BonusStatistic from '../../components/BonusStatistic';
-import EarningCard from '../../components/EarningCard';
-import NewMember from '../../components/NewMember';
-import PermoteCard from '../../components/PermoteCard';
-import Ranking from '../../components/Ranking';
-import RefererStatisticsGraph from '../../components/RefererStatisticsGraph';
-import TeamPerfomance from '../../components/TeamPerfomance';
-import UserDashboardPayout from '../../components/UserDashboardPayout';
-import UserImg from './../../assets/images/userImg.png';
-import UserDashboardHeader from './../../components/ui/Header';
-import { useUser } from '../../hooks/auth/useUser';
+import React, { useEffect, useState } from "react";
+import { GoChevronDown } from "react-icons/go";
+import BonusStatistic from "../../components/BonusStatistic";
+import EarningCard from "../../components/EarningCard";
+import NewMember from "../../components/NewMember";
+import PermoteCard from "../../components/PermoteCard";
+import Ranking from "../../components/Ranking";
+import RefererStatisticsGraph from "../../components/RefererStatisticsGraph";
+import TeamPerfomance from "../../components/TeamPerfomance";
+import UserDashboardPayout from "../../components/UserDashboardPayout";
+import UserImg from "./../../assets/images/userImg.png";
+import UserDashboardHeader from "./../../components/ui/Header";
+import { useUser } from "../../hooks/auth/useUser";
+import { useGetUsersMutation } from "../../features/user/userApiSlice";
+import { convertStandardDate } from "../../lib/utils";
 
 function Dashboard() {
-  const {user,isisAuthenticated,userRole} = useUser()
+  const { user } = useUser();
+  const [newMembers, setNewMembers] = useState([]);
+
+  const [getUsers] = useGetUsersMutation();
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await getUsers().unwrap();
+        setNewMembers(response);//filter by created_at
+
+      } catch (error) {
+        if (error.response) {
+          // Server errors (status code outside of 2xx range)
+          console.error("Server Error:", JSON.stringify(error.response));
+        } else if (error.request) {
+          // Network errors or no response from server
+          console.error("Network Error:", error.message);
+        } else {
+          // Other errors
+          console.error("Error:", error.message);
+        }
+      }
+    };
+    fetchUsers();
+  }, []);
   return (
     <div className="bg-gray-50 h-full w-full">
       <div className="bg-white">
@@ -22,7 +48,9 @@ function Dashboard() {
       <main className="m-10 rounded-xl flex flex-col gap-4">
         <div className="p-10 flex flex-col gap-6 bg-white rounded-md">
           <div className="flex flex-col gap-3">
-            <h2 className="font-semibold text-3xl">Welcome {user?.firstname }{" "}{user?.lastname}</h2>
+            <h2 className="font-semibold text-3xl">
+              Welcome {user?.firstname} {user?.lastname}
+            </h2>
             <p>Dashboard Summary</p>
           </div>
           <div className="flex gap-4">
@@ -79,36 +107,19 @@ function Dashboard() {
           <div className="flex-1 bg-white p-6 flex flex-col gap-20 rounded-md">
             <p className="font-semibold">New Members</p>
             <div className="flex flex-col gap-3">
-              <NewMember
-                memberName="Silas Dahun"
-                userName="SilasDahun"
-                date="20 May 2024"
-                img={UserImg}
-              />
-              <NewMember
-                memberName="Silas Dahun"
-                userName="SilasDahun"
-                date="20 May 2024"
-                img={UserImg}
-              />
-              <NewMember
-                memberName="Silas Dahun"
-                userName="SilasDahun"
-                date="20 May 2024"
-                img={UserImg}
-              />
-              <NewMember
-                memberName="Silas Dahun"
-                userName="SilasDahun"
-                date="20 May 2024"
-                img={UserImg}
-              />
-              <NewMember
-                memberName="Silas Dahun"
-                userName="SilasDahun"
-                date="20 May 2024"
-                img={UserImg}
-              />
+              {newMembers
+                ? newMembers
+                    .slice(0, 5)
+                    .map((user, index) => (
+                      <NewMember
+                        key={index}
+                        memberName={`${user.first_name} ${user.last_name}`}
+                        userName={user.username}
+                        date={convertStandardDate(user.created_at) || ""}
+                        img={UserImg}
+                      />
+                    ))
+                : null}
             </div>
           </div>
         </div>

@@ -5,16 +5,13 @@ import UserImg from './../assets/images/userProfile.png';
 
 import Modal from './Modal';
 import ShowDetailComp from './ShowDetailComp';
+import { convertStandardDate } from '../lib/utils';
 
 function UserDataTable({ data = [], tableHeadNames, type = 'default' }) {
-  // console.log(data);
   const [showDetail, setShowDetail] = useState(false);
   const [userData, setUserData] = useState();
 
   async function handleShowProducts(user) {
-    // console.log(user);
-    // const userData = await getProfile(user.id);
-    // console.log(userData);
     setUserData(user);
     setShowDetail(!showDetail);
   }
@@ -73,11 +70,10 @@ function UserDataTable({ data = [], tableHeadNames, type = 'default' }) {
                       alt="product images for show off"
                     />
                   </div>
-                  <p>{user.user}</p>
+                  <p>{user.username || `${user.first_name} ${user.last_name}`}</p>
                 </td>
-                <td className="p-6">{user.type}</td>
                 <td className="p-6">{user.email}</td>
-                <td className="p-6">{user.date}</td>
+                <td className="p-6">{convertStandardDate(user.created_at)}</td>
                 <td className="p-6">
                   <p
                     className={`${

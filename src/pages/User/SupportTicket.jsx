@@ -54,10 +54,7 @@ function SupportTicket() {
     setCurrentPage(pageNumber);
   };
 
-  // Calculate start and end index for current page
-  const startIndex = (currentPage - 1) * itemsPerPage + 1;
-  const endIndex = Math.min(currentPage * itemsPerPage, ticketsData.length);
-
+ 
   // Slice the data array based on currentPage and itemsPerPage
   const paginatedData = ticketsData.slice(
     (currentPage - 1) * itemsPerPage,
@@ -133,7 +130,7 @@ function SupportTicket() {
         </section>
         <section className="p-10 space-y-20">
           <div className="p-8 flex flex-col gap-10">
-            <Filter />
+          <Filter data={ticketsData} setProductFunction={setTicketsData} />
             <TableData
               type="supportTicket"
               data={paginatedData}

@@ -1,5 +1,6 @@
 import React from 'react';
 import AdminDashboardHeader from './../../components/ui/Header';
+import BusinessSignUpForm from '../../components/BusinessSignUpForm';
 
 function BusinessRegistrations() {
   return (
@@ -7,7 +8,9 @@ function BusinessRegistrations() {
       <div className="bg-white">
         <AdminDashboardHeader />
       </div>
-      <main className="m-10 rounded-xl flex flex-col gap-4"></main>
+      <main className="m-10 rounded-xl flex flex-col gap-4">
+        <BusinessSignUpForm/>
+      </main>
     </div>
   );
 }

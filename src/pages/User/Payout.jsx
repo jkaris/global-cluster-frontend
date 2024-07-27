@@ -1,34 +1,45 @@
-import React, { useContext, useEffect, useState } from 'react';
-import Button from '../../components/Button';
-import Filter from '../../components/ui/Filter';
-import BusinessDashboardHeader from '../../components/ui/Header';
-import PageDataHeader from '../../components/ui/PageDataHeader';
-import TicketCard from '../../components/ui/TicketCard';
-import { fetchPayoutsData } from '../../services/api';
-import { ModalContext } from './../../App';
-import AddPayout from './../../components/AddPayout';
-import Modal from './../../components/Modal';
-import Pagination from './../../components/Pagination';
-import TableData from './../../components/ui/TableData';
+import React, { useContext, useEffect, useState } from "react";
+import Button from "../../components/Button";
+import Filter from "../../components/ui/Filter";
+import BusinessDashboardHeader from "../../components/ui/Header";
+import PageDataHeader from "../../components/ui/PageDataHeader";
+import TicketCard from "../../components/ui/TicketCard";
+import { ModalContext } from "./../../App";
+import AddPayout from "./../../components/AddPayout";
+import Modal from "./../../components/Modal";
+import Pagination from "./../../components/Pagination";
+import TableData from "./../../components/ui/TableData";
+import { usePayoutMutation } from "../../features/user/userApiSlice";
 
 function Payout() {
   const [currentPage, setCurrentPage] = useState(1);
   const [payoutData, setPayoutData] = useState([]);
   const { showModal, setShowModal } = useContext(ModalContext);
-
-  useEffect(
-    () =>
-      async function () {
-        const data = await fetchPayoutsData();
-        setPayoutData(data);
-        console.log(data);
-      },
-    [],
-  );
+  const [payout] = usePayoutMutation();
+  useEffect(() => {
+    const fetchPayout = async () => {
+      try {
+        const response = await payout().unwrap();
+        setPayoutData(response);
+      } catch (error) {
+        if (error.response) {
+          // Server errors (status code outside of 2xx range)
+          console.error("Server Error:", JSON.stringify(error.response));
+        } else if (error.request) {
+          // Network errors or no response from server
+          console.error("Network Error:", error.message);
+        } else {
+          // Other errors
+          console.error("Error:", error.message);
+        }
+      }
+    };
+    fetchPayout();
+  }, [payout]);
 
   const itemsPerPage = 7;
 
-  const handlePageChange = page => {
+  const handlePageChange = (page) => {
     setCurrentPage(page);
   };
 
@@ -39,19 +50,19 @@ function Payout() {
 
   const requestedPayouts = payoutData.reduce((acc, currPayout) => acc + 1, 0);
   const approvedPayouts = payoutData.reduce((acc, currPayout) => {
-    return currPayout.status.toLowerCase() === 'approved' ? acc + 1 : acc;
+    return currPayout.status.toLowerCase() === "approved" ? acc + 1 : acc;
   }, 0);
   const paidPayouts = payoutData.reduce((acc, currPayout) => {
-    return currPayout.status.toLowerCase() === 'paid' ? acc + 1 : acc;
+    return currPayout.status.toLowerCase() === "paid" ? acc + 1 : acc;
   }, 0);
 
   const pendingPayouts = payoutData.reduce((acc, currPayout) => {
-    return currPayout.status.toLowerCase() === 'pending' ? acc + 1 : acc;
+    return currPayout.status.toLowerCase() === "pending" ? acc + 1 : acc;
   }, 0);
 
   const rejectedPayouts = payoutData.reduce((acc, currPayout) => {
-    return currPayout.status.toLowerCase() === 'declined' ||
-      currPayout.status.toLowerCase() === 'rejected'
+    return currPayout.status.toLowerCase() === "declined" ||
+      currPayout.status.toLowerCase() === "rejected"
       ? acc + 1
       : acc;
   }, 0);
@@ -85,18 +96,22 @@ function Payout() {
         </section>
         <section className="p-10 space-y-4">
           <div className="p-8 flex flex-col gap-10">
-            <Filter />
+            <Filter
+              data={payoutData}
+              setProductFunction={setPayoutData}
+              showDownload={true}
+            />
           </div>
 
           <TableData
             type="payout"
             tableHeadNames={[
-              'Reference Id',
-              'Date',
-              'Amount',
-              'Payment Method',
-              'Status',
-              'Action',
+              "Reference Id",
+              "Date",
+              "Amount",
+              "Payment Method",
+              "Status",
+              "Action",
             ]}
             data={curentPayoutData}
           />

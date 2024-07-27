@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-function OverviewCard({ type }) {
+function OverviewCard({ type,data }) {
+
   if (type === 'sponsorAndMembershipInfo') {
     return (
       <div className="bg-white p-10 text-gray-500">
@@ -10,25 +11,25 @@ function OverviewCard({ type }) {
             Sponsor And Membership Package
           </p>
           <div className="flex flex-col gap-6">
-            <div className="flex w-3/6 justify-between">
+            <div className="grid grid-cols-2 ">
               <div className="flex flex-col gap-3">
                 <p className="font-semibold">Membership Package</p>
-                <p className="text-lg">Individual Package</p>
+                <p className="text-lg">{data?.membership_package}</p>
               </div>
               <div className="flex flex-col gap-3">
                 <p className="font-semibold">Sponsor</p>
-                <p className="text-lg">INF00123</p>
+                <p className="text-lg">{data?.sponsor}</p>
               </div>
             </div>
             {/* 2nd */}
-            <div className="flex w-3/6 justify-between">
+            <div className="grid grid-cols-2 ">
               <div className="flex flex-col gap-3">
-                <p className="font-semibold">Membership Package</p>
-                <p className="text-lg">Individual Package</p>
+                <p className="font-semibold">Price</p>
+                <p className="text-lg">₦{data?.price}</p>
               </div>
               <div className="flex flex-col gap-3">
-                <p className="font-semibold">Sponsor</p>
-                <p className="text-lg">INF00123</p>
+                <p className="font-semibold">Commision</p>
+                <p className="text-lg">₦{data?.commision}</p>
               </div>
             </div>
           </div>
@@ -42,35 +43,35 @@ function OverviewCard({ type }) {
       <div className="bg-white p-10 text-gray-500">
         <div className="flex flex-col gap-10">
           <p className="border px-8 py-6 rounded-lg bg-gray-50">
-            Sponsor And Membership Package
+          Contact Information
           </p>
           <div className="bg-white p-6 rounded-lg ">
             <div className="flex flex-wrap justify-between gap-y-6">
               <div className="w-1/3">
                 <p className="font-semibold">First Name</p>
-                <p className="text-lg">Silas</p>
+                <p className="text-lg">{data?.first_name}</p>
               </div>
               <div className="w-1/3">
                 <p className="font-semibold ">Last Name</p>
-                <p className="text-lg">Dahunzy</p>
+                <p className="text-lg">{data?.last_name}</p>
               </div>
               <div className="w-1/3">
                 <p className="font-semibold ">Address</p>
                 <p className="text-lg">
-                  20 Cooper Square, New York, NY 10003, USA
+                {data?.address?.state}, {data?.address?.address}
                 </p>
               </div>
               <div className="w-1/3">
                 <p className="font-semibold ">Gender</p>
-                <p className="text-lg">M</p>
+                <p className="text-lg">{data?.gender}</p>
               </div>
               <div className="w-1/3">
                 <p className="font-semibold ">Email Address</p>
-                <p className="text-lg">dahunzy@gmail.com</p>
+                <p className="text-lg">{data?.email}</p>
               </div>
               <div className="w-1/3">
                 <p className="font-semibold ">Country</p>
-                <p className="text-lg">USA</p>
+                <p className="text-lg">{data?.address?.country}</p>
               </div>
             </div>
           </div>
@@ -84,12 +85,12 @@ function OverviewCard({ type }) {
       <div className="bg-white p-10 text-gray-500">
         <div className="flex flex-col gap-10">
           <p className="border px-8 py-6 rounded-lg bg-gray-50">
-            Sponsor And Membership Package
+          Login Information
           </p>
-          <div className="flex p-6 w-2/6 justify-between">
+          <div className="flex p-6 w-4/6 justify-between ">
             <div>
-              <p className="font-semibold">Usernmae</p>
-              <p className="text-xl">Dahunzy</p>
+              <p className="font-semibold">Username</p>
+              <p className="text-xl">{data?.username}</p>
             </div>
             <div>
               <p className="font-semibold">Password</p>
@@ -106,6 +107,7 @@ function OverviewCard({ type }) {
 
 OverviewCard.propTypes = {
   type: PropTypes.string,
+  data: PropTypes.object,
 };
 
 export default OverviewCard;

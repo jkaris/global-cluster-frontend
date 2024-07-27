@@ -1,18 +1,21 @@
-import React from 'react';
-import UserProfile from './../assets/images/userProfile.jpg';
+import React from "react";
+import UserProfile from "./../assets/images/userProfile.jpg";
+import { useUser } from "../hooks/auth/useUser";
 
 function UserCredentials() {
+  const { user } = useUser();
+  const {profile } = user;
   return (
     <section className="px-10 mx-14 my-6 shadow-[0_0_10px_rgba(0,0,0,0.1)] ">
       <div className="p-6 flex gap-20 items-center">
         <img
           className="w-[14rem] h-[14rem] border-2 rounded-lg"
-          src={UserProfile}
+          src={profile?.avatar ? profile?.avatar : UserProfile}
           alt="Settings Page Business Logo"
         />
         <div className="flex gap-20 items-center text-2xl divide-x">
           <div className="flex flex-col gap-8 px-16 ">
-            <p className="font-semibold">Silas Dahunzy</p>
+            <p className="font-semibold">{profile?.first_name}{" "}{profile?.last_name}</p>
             <p className="text-gray-400">INF20953045</p>
           </div>
           <div className="flex flex-col gap-8 px-16 ">

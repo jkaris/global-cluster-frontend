@@ -7,18 +7,59 @@ import OverviewStep4 from "./../../components/OverviewStep4";
 import RegisterNowStep1 from "./../../components/RegisterNowStep1";
 import { useUser } from "../../hooks/auth/useUser";
 import { useForm } from "react-hook-form";
+import { useSignupMutation } from "../../features/auth/authApiSlice";
 
 // import RegisterUser from '../../components/RegisterUser'
 
 function Register() {
   const { user } = useUser();
+  const [hasErrors, setHasErrors] = useState(false); // State to manage error messages
+
   const {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
+    getValues,
   } = useForm();
 
   const [regForm, setRegForm] = useState(1);
+  const [signup] = useSignupMutation();
+  let sponsor;
+  switch (user?.user_type) {
+    case "individual":
+      sponsor = user?.profile?.username || user?.profile?.first_name + " " + user?.profile?.last_name   ;
+      break;
+    case "company":
+      sponsor = user?.profile?.company_name;
+      break;
+    default:
+      sponsor = "Admin";
+  }
+  const onSubmit = async (data) => {
+    try {
+      const responseData = await signup({
+        ...data,
+        user_type: "individual",
+        sponsor: sponsor,
+        membership_package:"membership_package",
+        price: "1000",
+      }).unwrap();
+
+      NextFormPage();
+    } catch (error) {
+      if (error.response) {
+        // Server errors (status code outside of 2xx range)
+        console.error("Server Error:", JSON.stringify(error.response));
+      } else if (error.request) {
+        // Network errors or no response from server
+        console.error("Network Error:", error.message);
+      } else {
+        // Other errors
+        console.error("Error:", error.message);
+      }
+    }
+  };
 
   function PreviousFormPage() {
     if (regForm === 1) return;
@@ -74,11 +115,19 @@ function Register() {
             </div>
           </div>
 
-          <div className="w-4/6 mx-auto">
-            {regForm === 1 && <RegisterNowStep1 register={register} />}
-            {regForm === 2 && <ContactInformationStep2 register={register} />}
-            {regForm === 3 && <LoginInformationStep3 register={register} />}
-            {regForm === 4 && <OverviewStep4 />}
+          <form onSubmit={handleSubmit(onSubmit)} className="w-4/6 mx-auto">
+            {regForm === 1 && <RegisterNowStep1 />}
+            {regForm === 2 && (
+              <ContactInformationStep2 register={register} errors={errors} />
+            )}
+            {regForm === 3 && (
+              <LoginInformationStep3
+                register={register}
+                errors={errors}
+                watch={watch}
+              />
+            )}
+            {regForm === 4 && <OverviewStep4 getValues={getValues} />}
             {regForm === 5 && (
               <Payment setRegForm={setRegForm} regForm={regForm} />
             )}
@@ -90,14 +139,32 @@ function Register() {
               >
                 Back
               </p>
-              <p
-                className="px-20 flex-1 py-4 bg-primary-light rounded-lg cursor-pointer select-none"
-                onClick={NextFormPage}
-              >
-                Next
-              </p>
+
+              {regForm === 4 ? (
+                <>
+                  {hasErrors && (
+                    <p className="text-red-500 text-center py-4">
+                      There are errors in the form. Please correct them before
+                      submitting.
+                    </p>
+                  )}
+                  <button
+                    type="submit"
+                    className="buttonx-20 flex-1 py-4 bg-primary-light rounded-lg cursor-pointer select-none"
+                  >
+                    Submit
+                  </button>
+                </>
+              ) : (
+                <p
+                  className="px-20 flex-1 py-4 bg-primary-light rounded-lg cursor-pointer select-none"
+                  onClick={NextFormPage}
+                >
+                  Next
+                </p>
+              )}
             </div>
-          </div>
+          </form>
           {/* Next Button  */}
         </div>
         {/* <*/}

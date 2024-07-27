@@ -2,6 +2,7 @@ import React from "react";
 import { useUpdatePasswordMutation } from "../../features/auth/authApiSlice";
 import { useForm } from "react-hook-form";
 import { useUser } from "../../hooks/auth/useUser";
+import { useUpdateBusinessPasswordMutation } from "../../features/business/businessApiSlice";
 
 function SecurityDetailsForm() {
   const {
@@ -11,13 +12,22 @@ function SecurityDetailsForm() {
     watch,
   } = useForm();
   const [updatePassword] = useUpdatePasswordMutation();
+  const [updateBusinessPassword] = useUpdateBusinessPasswordMutation();
   const { user } = useUser();
   const onSubmit = async (data) => {
     try {
-      const responseData = await updatePassword({
-        ...data,
-        user_type: user?.user_type,
-      }).unwrap();
+      if (user?.user_type === "company") {
+        const responseData = await updateBusinessPassword({
+          ...data,
+          user_type: user?.user_type,
+        }).unwrap();
+      }
+      if (user?.user_type === "individual") {
+        const responseData = await updatePassword(data).unwrap();
+      }
+      if (user?.user_type === "admin") {
+        // const responseData = await updateProfile(data).unwrap();
+      }
     } catch (error) {
       if (error.response) {
         // Server errors (status code outside of 2xx range)

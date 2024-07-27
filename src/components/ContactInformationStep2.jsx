@@ -1,34 +1,41 @@
 import React from "react";
+import PropTypes from "prop-types";
 import countries from "../lib/countries.json";
-function ContactInformationStep2() {
+
+const ContactInformationStep2 = ({ register, errors }) => {
   return (
-    <form className=" mx-auto my-6 text-gray-500">
+    <div className="mx-auto my-6 text-gray-500">
       <div className="flex gap-2">
         <div className="flex flex-col gap-2 w-1/2">
-          {" "}
-          <label className="p-2" htmlFor="firstName">
+          <label className="p-2" htmlFor="first_name">
             First Name
           </label>
           <input
             className="p-6 border outline-none rounded-md"
             type="text"
-            id="firstName"
-            name="firstName"
+            id="first_name"
+            {...register("first_name", { required: "First Name is required" })}
           />
+          {errors.firstName && (
+            <p className="text-red-500">{errors.firstName.message}</p>
+          )}
         </div>
         <div className="flex flex-col gap-2 w-1/2">
-          <label className="p-2" htmlFor="lastName">
+          <label className="p-2" htmlFor="last_name">
             Last Name
           </label>
           <input
             className="p-6 border outline-none rounded-md"
             type="text"
-            id="LastName"
-            name="LastName"
+            id="last_name"
+            {...register("last_name", { required: "Last Name is required" })}
           />
+          {errors.lastName && (
+            <p className="text-red-500">{errors.lastName.message}</p>
+          )}
         </div>
       </div>
-      <div className="flex flex-col gap-2 ">
+      <div className="flex flex-col gap-2">
         <label className="p-2" htmlFor="gender">
           Gender
         </label>
@@ -36,53 +43,62 @@ function ContactInformationStep2() {
           className="p-6 border outline-none rounded-md"
           type="text"
           id="gender"
-          name="gender"
+          {...register("gender", { required: "Gender is required" })}
         />
+        {errors.gender && (
+          <p className="text-red-500">{errors.gender.message}</p>
+        )}
       </div>
       <div className="flex flex-col gap-2">
         <label className="p-2" htmlFor="email">
           Email Address
         </label>
         <input
-          className="p-6  border outline-none rounded-md"
+          className="p-6 border outline-none rounded-md"
           type="email"
           id="email"
-          name="email"
+          {...register("email", {
+            required: "Email is required",
+            pattern: {
+              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+              message: "Invalid email address",
+            },
+          })}
         />
+        {errors.email && <p className="text-red-500">{errors.email.message}</p>}
       </div>
       <div className="flex flex-col gap-2">
         <label className="p-2" htmlFor="address">
           Address
         </label>
         <input
-          className="p-6 outline-none border  rounded-md"
+          className="p-6 border outline-none rounded-md"
           type="text"
           id="address"
-          name="address"
+          {...register("address", { required: "Address is required" })}
         />
+        {errors.address && (
+          <p className="text-red-500">{errors.address.message}</p>
+        )}
       </div>
       <div className="flex flex-col gap-2">
         <label className="p-2" htmlFor="country">
           Country
         </label>
-        {/* <input
-          className="p-6 border outline-none rounded-md"
-          type="text"
-          id="country"
-          name="country"
-        /> */}
         <select
-          // value={}
           id="country"
-          name="country"
           className="p-6 border outline-none rounded-md"
+          {...register("country", { required: "Country is required" })}
         >
           {countries.countries.country.map((country, index) => (
-            <option key={index} className="" value={country.countryName}>
+            <option key={index} value={country.countryName}>
               {country.countryName}
             </option>
           ))}
         </select>
+        {errors.country && (
+          <p className="text-red-500">{errors.country.message}</p>
+        )}
       </div>
       <div className="flex flex-col gap-2">
         <label className="p-2" htmlFor="state">
@@ -92,8 +108,21 @@ function ContactInformationStep2() {
           className="p-6 border outline-none rounded-md"
           type="text"
           id="state"
-          name="state"
+          {...register("state", { required: "State is required" })}
         />
+        {errors.state && <p className="text-red-500">{errors.state.message}</p>}
+      </div>
+      <div className="flex flex-col gap-2">
+        <label className="p-2" htmlFor="city">
+          City
+        </label>
+        <input
+          className="p-6 border outline-none rounded-md"
+          type="text"
+          id="city"
+          {...register("city", { required: "city is required" })}
+        />
+        {errors.state && <p className="text-red-500">{errors.state.message}</p>}
       </div>
       <div className="flex flex-col gap-2">
         <label className="p-2" htmlFor="phone">
@@ -102,12 +131,18 @@ function ContactInformationStep2() {
         <input
           className="p-6 border outline-none rounded-md"
           type="tel"
-          id="phone"
-          name="phone"
+          id="phone_no"
+          {...register("phone_no", { required: "Phone number is required" })}
         />
+        {errors.phone && <p className="text-red-500">{errors.phone.message}</p>}
       </div>
-    </form>
+    </div>
   );
-}
+};
+
+ContactInformationStep2.propTypes = {
+  register: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
+};
 
 export default ContactInformationStep2;

@@ -8,45 +8,94 @@ import { useUser } from "../../hooks/auth/useUser";
 
 function Header() {
   const { user } = useUser();
+
+  const { profile } = user;
   return (
-    <div className="flex items-center justify-between shadow-sm px-10 py-10 bg-gray-50">
-      <div className="w-[50rem]">
-        <HeaderSearch />
-      </div>
-      <div className="flex gap-8 items-center justify-between">
-        <div className="flex gap-4 bg-[#f9fafb] py-4 px-6 rounded-md">
-          <img className="w-10" src={USAFlag} alt="usa flag" />
-          <select
-            className="outline-none bg-[#f9fafb] cursor-pointer"
-            name="language"
-            id="language"
-          >
-            <option value="EngUS">Eng (US)</option>
-            <option value="EngUK">Eng (UK)</option>
-            <option value="EngAUS">Eng (AUS)</option>
-            <option value="Punjabi">Punjabi</option>
-          </select>
-        </div>
-        <div className="p-4 bg-[#fffaf1]">
-          <LuBellRing style={{ color: "#ffa412", fontSize: "1.8rem" }} />
-        </div>
-        <div className="flex items-center justify-center gap-8">
-          <img
-            className="w-14 h-16 rounded-lg"
-            src={user?.avatar || ProfileImg}
-            alt="Profile Img of Business Account"
-          />
-          <div className="flex flex-col">
-            <p className="flex items-center gap-4 justify-between text-2xl">
-              {user?.name || "Silas Oladipo"} <BiChevronDown />
-            </p>
-            <p className="text-lg text-gray-500">
-              { user?.username || "@silasadahum" }
-            </p>
+    <>
+      {user?.user_type === "company" && (
+        <div className="flex items-center justify-between shadow-sm px-10 py-10 bg-gray-50">
+          <div className="w-[50rem]">
+            <HeaderSearch />
+          </div>
+          <div className="flex gap-8 items-center justify-between">
+            <div className="flex gap-4 bg-[#f9fafb] py-4 px-6 rounded-md">
+              <img className="w-10" src={USAFlag} alt="usa flag" />
+              <select
+                className="outline-none bg-[#f9fafb] cursor-pointer"
+                name="language"
+                id="language"
+              >
+                <option value="EngUS">Eng (US)</option>
+                <option value="EngUK">Eng (UK)</option>
+                <option value="EngAUS">Eng (AUS)</option>
+                <option value="Punjabi">Punjabi</option>
+              </select>
+            </div>
+            <div className="p-4 bg-[#fffaf1]">
+              <LuBellRing style={{ color: "#ffa412", fontSize: "1.8rem" }} />
+            </div>
+            <div className="flex items-center justify-center gap-8">
+              <img
+                className="w-14 h-16 rounded-lg"
+                src={profile?.avatar ? profile?.avatar : ProfileImg}
+                alt="Profile Img of Business Account"
+              />
+              <div className="flex flex-col">
+                <p className="flex items-center gap-4 justify-between text-2xl">
+                  {profile?.company_name} <BiChevronDown />
+                </p>
+                <p className="text-lg text-gray-500">
+                  @{profile?.company_name}
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      )}
+      {user?.user_type === "individual" && (
+        <div className="flex items-center justify-between shadow-sm px-10 py-10 bg-gray-50">
+          <div className="w-[50rem]">
+            <HeaderSearch />
+          </div>
+          <div className="flex gap-8 items-center justify-between">
+            <div className="flex gap-4 bg-[#f9fafb] py-4 px-6 rounded-md">
+              <img className="w-10" src={USAFlag} alt="usa flag" />
+              <select
+                className="outline-none bg-[#f9fafb] cursor-pointer"
+                name="language"
+                id="language"
+              >
+                <option value="EngUS">Eng (US)</option>
+                <option value="EngUK">Eng (UK)</option>
+                <option value="EngAUS">Eng (AUS)</option>
+                <option value="Punjabi">Punjabi</option>
+              </select>
+            </div>
+            <div className="p-4 bg-[#fffaf1]">
+              <LuBellRing style={{ color: "#ffa412", fontSize: "1.8rem" }} />
+            </div>
+            <div className="flex items-center justify-center gap-8">
+              <img
+                className="w-14 h-16 rounded-lg"
+                src={profile?.avatar ? profile?.avatar : ProfileImg}
+                alt="Profile Img of Business Account"
+              />
+              <div className="flex flex-col">
+                <p className="flex items-center gap-4 justify-between text-2xl">
+                  {profile?.first_name}
+                  {""}
+                  {profile?.first_name} <BiChevronDown />
+                </p>
+                <p className="text-lg text-gray-500">
+                  @{profile?.first_name}
+                  {profile?.first_name}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 

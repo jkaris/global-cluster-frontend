@@ -1,12 +1,14 @@
 import PropTypes from "prop-types";
-import React, { useState } from "react";
+import React from "react";
 import { MdIosShare } from "react-icons/md";
 import productImg from "./../assets/images/productImg.png";
-import ShareLinksScreen from "./ShareLinksScreen";
 import { getDateStr, imageUrl } from "../lib/utils";
 
-const PromoteAndEarnRowTable = ({ products }) => {
-  const [showShare, setShowShare] = useState(false);
+const PromoteAndEarnRowTable = ({ products,handleShareModal,setLinkToShare }) => {
+  const handleClick = (item) => {
+    handleShareModal()
+    setLinkToShare(item?.product_link)
+  }
   return (
     <div className="container mx-auto px-10 py-7">
       <table className="w-full text-gray-500">
@@ -40,11 +42,18 @@ const PromoteAndEarnRowTable = ({ products }) => {
               </td>
               <td className="py-6">{product.company}</td>
               <td className="py-6">{product.description}</td>
-              <td className="py-6">{product?.date_created ? getDateStr(product?.date_created): new Date().getDay()}</td>
               <td className="py-6">
-                <div className="flex items-center gap-4 cursor-pointer">
+                {product?.date_created
+                  ? getDateStr(product?.date_created)
+                  : new Date().getDay()}
+              </td>
+              <td className="py-6">
+                <div
+                  className="flex items-center gap-4 cursor-pointer"
+                  onClick={() => handleClick(product)}
+                >
                   <span className="mr-3">Share</span>
-                  <MdIosShare className="text-5xl"  />
+                  <MdIosShare className="text-5xl" />
                   {/* <FaExternalLinkAlt /> */}
                 </div>
               </td>
@@ -52,8 +61,7 @@ const PromoteAndEarnRowTable = ({ products }) => {
           ))}
         </tbody>
       </table>
-
-      {showShare && <ShareLinksScreen setShowShare={setShowShare} />}
+     
     </div>
   );
 };
@@ -67,6 +75,8 @@ PromoteAndEarnRowTable.propTypes = {
       date: PropTypes.string.isRequired,
     })
   ).isRequired,
+  handleShareModal: PropTypes.func.isRequired,
+  setLinkToShare: PropTypes.func.isRequired,
 };
 
 export default PromoteAndEarnRowTable;

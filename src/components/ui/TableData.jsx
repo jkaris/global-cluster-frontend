@@ -13,6 +13,7 @@ import {
   DecreaseDescription,
   imageUrl,
 } from "../../lib/utils";
+import EditProduct from "../EditProduct";
 
 function TableData({
   data = [],
@@ -24,6 +25,7 @@ function TableData({
   // console.log(data)
   const [confirmDeletion, setConfirmDeletion] = useState(false);
   const [showProductDetail, setShowProductDetail] = useState(false);
+  const [showEditDetail, setEditProductDetail] = useState(false);
   const [productDetail, setProductDetail] = useState({});
   const [deleteIndex, setDeleteIndex] = useState(null);
 
@@ -50,6 +52,12 @@ function TableData({
     const data = await handleShowProductDetails(item.uuid);
     setProductDetail(data);
     setShowProductDetail(true);
+  }
+
+  async function handleEditProducts(item) {
+    const data = await handleShowProductDetails(item.uuid);
+    setProductDetail(data);
+    setEditProductDetail(true);
   }
 
   return (
@@ -154,8 +162,12 @@ function TableData({
                   <input type="checkbox" id="products" name="products" />
                   <p>{item?.uuid.split("-")}</p>
                 </td>
-                <td className="p-6">{convertStandardDate(item.date_created)}</td>
-                <td className="p-6">{convertStandardDate(item.date_updated)}</td>
+                <td className="p-6">
+                  {convertStandardDate(item.date_created)}
+                </td>
+                <td className="p-6">
+                  {convertStandardDate(item.date_updated)}
+                </td>
                 <td className="p-6">{item.title}</td>
                 <td className="p-6">
                   {item.status.charAt(0).toUpperCase() + item.status.slice(1)}
@@ -264,7 +276,7 @@ function TableData({
                   />
                   <GrEdit
                     style={{ fontSize: "1.5rem", cursor: "pointer" }}
-                    onClick={() => handleShowProducts(item)}
+                    onClick={() => handleEditProducts(item)}
                   />
                   <RiDeleteBin6Line
                     style={{ fontSize: "1.5rem", cursor: "pointer" }}
@@ -292,6 +304,14 @@ function TableData({
             detail={productDetail}
             setShowDetail={setShowProductDetail}
             type={"product"}
+          />
+        </Modal>
+      )}
+      {showEditDetail && (
+        <Modal>
+          <EditProduct
+            setEditDetail={setEditProductDetail}
+            item={productDetail}
           />
         </Modal>
       )}

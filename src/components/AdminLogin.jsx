@@ -31,9 +31,9 @@ function AdminLogin() {
         user_type: "admin",
       }).unwrap();
 
-      const { access, refresh, email, user_type, user_id } = responseData;
+      const { access, refresh, user } = responseData;
 
-      dispatch(loginAction({ access, refresh, email, user_type, user_id }));
+      dispatch(loginAction({ access, refresh, user }));
       navigate(`/user/dashboard`);
       navigate(`/admin/dashboard`);
     } catch (error) {
@@ -112,14 +112,14 @@ function AdminLogin() {
                 />
                 <div className="absolute bottom-6 right-1 w-auto z-10 cursor-pointer ">
                   {showPassword ? (
-                    <IoEyeOutline
-                      className="text-4xl pr-2 "
-                      onClick={() => handleShowPwd("text")}
-                    />
-                  ) : (
                     <FaRegEyeSlash
                       className="text-4xl pr-2"
                       onClick={() => handleShowPwd("password")}
+                    />
+                  ) : (
+                    <IoEyeOutline
+                      className="text-4xl pr-2 "
+                      onClick={() => handleShowPwd("text")}
                     />
                   )}
                 </div>
@@ -130,8 +130,14 @@ function AdminLogin() {
                 )}
               </div>
               <div className="flex justify-between px-2">
-              <span className=""><BiCheckSquare className=""/> <span className="">Remember me</span></span>
-              <div className="w-full bg-primary-light text-white font-semibold py-4 rounded-full hover:bg-primary-dark transition duration-300 flex gap-4 items-center justify-center cursor-pointer">
+                <span className="flex w-auto gap-8 items-center">
+                  <input
+                    type="checkbox"
+                    className="w-8 aspect-auto bg-gray-400"
+                  />
+                  <span>Remember me</span>
+                </span>
+                <div className="w-full max-w-[200px] bg-primary-light text-white font-semibold py-4 rounded-full hover:bg-primary-dark transition duration-300 flex gap-4 items-center justify-center cursor-pointer">
                   <button
                     type="submit"
                     className="flex items-center justify-center gap-4 w-full"

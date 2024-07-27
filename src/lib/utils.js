@@ -56,16 +56,25 @@ export function decrypt(text, secret) {
   return decrypted;
 }
 
-export const imageUrl = (str)=>{
-  
-  // console.log(str+"------------***************************")
-  
-  const url = `${BASE_URL+str}`
- 
-  // console.log(url+"---------------------------------------------")
+export const imageUrl = (str) => {
+  const baseUrl = BASE_URL;
 
-  return url
-}
+  // Regular expression to match URLs with IP and port
+  const ipPortRegex = /^http:\/\/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d+(\/.*)$/;
+
+  let urlPath;
+
+  if (ipPortRegex.test(str)) {
+    // Extract the path part from the URL, preserving the leading slash
+    urlPath = str.match(ipPortRegex)[1];
+  } else {
+    urlPath = str;
+  }
+
+  const url = `${baseUrl}${urlPath}`;
+  return url;
+};
+
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 export function transformProductsToChartData(productsArray) {
@@ -99,3 +108,4 @@ export function transformProductsToChartData(productsArray) {
   const monthName = months[monthIndex];
   return `${monthName}-${day}-${year}`
 }
+

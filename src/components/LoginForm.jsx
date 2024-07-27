@@ -31,9 +31,9 @@ function LoginForm() {
           user_type: loginType,
         }).unwrap();
 
-        const { access, refresh, email, user_type, user_id } = responseData;
+        const { access, refresh, user } = responseData;
 
-        dispatch(loginAction({ access, refresh, email, user_type, user_id }));
+        dispatch(loginAction({ access, refresh, user }));
         navigate(`/user/dashboard`);
 
         // console.log(responseData);
@@ -44,10 +44,10 @@ function LoginForm() {
           user_type: "company",
         }).unwrap();
 
-        const { access, refresh, email, user_type, user_id } = responseData;
-        // console.log(access, refresh, email, user_type, user_id);
+        const { access, refresh, user } = responseData;
+        // console.log(access, refresh, user);
 
-        dispatch(loginAction({ access, refresh, email, user_type, user_id }));
+        dispatch(loginAction({ access, refresh, user }));
         navigate(`/business/dashboard`);
 
         // console.log(responseData);

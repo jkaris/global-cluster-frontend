@@ -22,17 +22,12 @@ import {
 import { itemsPerPage } from "../../lib/constants";
 
 const initialProductsData = [
-  // Your initial products data
 ];
 
 function Products() {
   const { showModal, setShowModal } = useContext(ModalContext);
   const [showAction, setShowAction] = useState(false);
 
-  // const fetchedProductsData = useLoaderData();
-  // const [productsData, setProductsData] = useState(
-  //   fetchedProductsData.length ? fetchedProductsData : initialProductsData
-  // );
   const [productsData, setProductsData] = useState(initialProductsData);
   const [currentPage, setCurrentPage] = useState(1);
   const [product] = useProductMutation();
@@ -47,16 +42,6 @@ function Products() {
       showTemporaryNotification();
     } catch (error) {
       throw new Error("Failed to add new product");
-      // if (error.response) {
-      //   // Server errors (status code outside of 2xx range)
-      //   console.error("Server Error:", JSON.stringify(error.response));
-      // } else if (error.request) {
-      //   // Network errors or no response from server
-      //   console.error("Network Error:", error.message);
-      // } else {
-      //   // Other errors
-      //   console.error("Error Adding New Product:", error.message);
-      // }
     }
   }
 
@@ -169,7 +154,7 @@ function Products() {
           <ProductsTicket products={productsData} />
 
           <section className="flex flex-col gap-6">
-            <Filter />
+            <Filter data={productsData} setProductFunction={setProductsData} />
             <div className="flex flex-col gap-10">
               <TableData
                 data={currentProducts}

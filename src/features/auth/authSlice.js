@@ -4,9 +4,10 @@ const initialState = {
   access: null,
   refresh: null,
   isAuthenticated: false,
-  user: { email: null, user_type: null, user_id: null,profile: null },
+  user: { email: null, user_type: null, user_id: null,profile: {} },
   global: null,
 };
+
 
 /**
  * Creates a slice for handling authentication state using Redux Toolkit.
@@ -20,13 +21,19 @@ const AuthSlice = createSlice({
   initialState,
   reducers: {
     loginAction: (state, action) => {
-      const { access, refresh, email, user_type, user_id } = action.payload;
+      const { access, refresh, user} = action.payload;
       // console.log(access, refresh, email, user_type, user_id)
       state.isAuthenticated = true;
       state.access = access;
       state.refresh = refresh;
-      state.user = {email, user_type, user_id };
-    
+      state.user = {
+        email: user.email,
+        user_type: user.user_type,
+        user_id: user.id,
+        profile: user.user_type === 'company'
+          ? user.company_details || {} // Assign company details if available
+          : user.individual_details || {} // Assign individual details if available
+      };    
     },
     profileAction: (state, action) => {
 

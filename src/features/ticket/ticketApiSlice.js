@@ -4,13 +4,13 @@ export const TicketApiSlice = globalClusterApi.injectEndpoints({
   endpoints: (builder) => ({
     tickets: builder.mutation({
       query: () => ({
-        url: "/api/v1/support-tickets/",
+        url: "/api/v1/referrals/supporttickets/",
         method: "GET",
       }),
     }),
     addTicket: builder.mutation({
       query: (ticket) => ({
-        url: "/api/v1/support-tickets/",
+        url: "/api/v1/referrals/supporttickets/",
         method: "POST",
         body:ticket,
         headers: {
