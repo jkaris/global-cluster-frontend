@@ -145,12 +145,12 @@ function SupportTicket() {
               type="supportTicket"
               data={paginatedData}
               tableHeadNames={[
-                "Reference Id",
-                "Date",
-                "Last Updated",
                 "Subject",
-                "Status",
+                "Submitted By",
+                "status",
                 "Priority",
+                "Last Reply",
+                "Action",
               ]}
             />
             <Pagination

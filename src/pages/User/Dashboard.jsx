@@ -49,7 +49,7 @@ function Dashboard() {
         <div className="p-10 flex flex-col gap-6 bg-white rounded-md">
           <div className="flex flex-col gap-3">
             <h2 className="font-semibold text-3xl">
-              Welcome {user?.firstname} {user?.lastname}
+              Welcome {user?.profile?.first_name} {user?.profile?.last_name}
             </h2>
             <p>Dashboard Summary</p>
           </div>

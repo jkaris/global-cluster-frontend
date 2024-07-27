@@ -4,51 +4,8 @@ import TicketCard from './../components/ui/TicketCard';
 import UserDataTale from './../components/UserDataTable';
 import { useMembersMutation } from '../features/user/userApiSlice';
 
-const dummyMemberDownlineData = [
-  {
-    member: 'REF00111',
-    name: 'Silas Dahun',
-    userName: 'silasdahun',
-    placement: 'INF00111',
-    referee: 'REF00111',
-    level: 1,
-  },
-  {
-    member: 'REF00111',
-    name: 'Silas Dahun',
-    userName: 'silasdahun',
-    placement: 'INF00111',
-    referee: 'REF00111',
-    level: 2,
-  },
-  {
-    member: 'REF00111',
-    name: 'Silas Dahun',
-    userName: 'silasdahun',
-    placement: 'INF00111',
-    referee: 'REF00111',
-    level: 3,
-  },
-  {
-    member: 'REF00111',
-    name: 'Silas Dahun',
-    userName: 'silasdahun',
-    placement: 'INF00111',
-    referee: 'REF00111',
-    level: 1,
-  },
-  {
-    member: 'REF00111',
-    name: 'Silas Dahun',
-    userName: 'silasdahun',
-    placement: 'INF00111',
-    referee: 'REF00111',
-    level: 2,
-  },
-];
-
 function MemberDownline() {
-  const [fetchedMembers,setFetchedMembers] = useState([...dummyMemberDownlineData]);
+  const [fetchedMembers,setFetchedMembers] = useState([]);
   const [members] = useMembersMutation()
   useEffect(() => {
     const fetchMembers = async () => {

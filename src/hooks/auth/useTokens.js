@@ -11,7 +11,7 @@ export const useTokens = () => {
 
   const refreshAccessToken = async () => {
     try {
-      const response = await axios.post('/api/v1/token/refresh', {
+      const response = await axios.post('/api/v1/accounts/token/refresh/', {
         token_refresh: refresh,
       });
       const newAccessToken = response.data.access;

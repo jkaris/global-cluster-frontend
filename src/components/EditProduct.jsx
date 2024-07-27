@@ -81,7 +81,6 @@ function EditProduct({ setEditDetail, item }) {
     try {
       formData.append("product_name", data.productName);
       formData.append("description", data.description);
-      formData.append("uuid", item.uuid);
       formData.append("product_link", data.productLinkType);
       formData.append("link_value", data.linkValue);
       if (selectedFile) {

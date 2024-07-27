@@ -4,13 +4,13 @@ export const ProductApiSlice = globalClusterApi.injectEndpoints({
   endpoints: (builder) => ({
     products: builder.mutation({
       query: () => ({
-        url: "/api/v1/products/",
+        url: "/api/v1/referrals/products/",
         method: "GET",
       }),
     }),
     product: builder.mutation({
       query: (productId) => ({
-        url: `/api/v1/products/${productId}/`,
+        url: `/api/v1/referrals/products/${productId}/`,
         method: "GET",
       }),
     }),
@@ -35,9 +35,9 @@ export const ProductApiSlice = globalClusterApi.injectEndpoints({
         url: `/api/v1/referrals/products/${product.uuid}/`,
         method: "PUT",
         body: product.formdata,
-        headers: {
-          'Content-Type': 'multipart/form-data', // This should be omitted as the browser will set it correctly
-        },
+        // headers: {
+        //   'Content-Type': 'multipart/form-data', // This should be omitted as the browser will set it correctly
+        // },
       }),
     }),
   }),

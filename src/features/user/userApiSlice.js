@@ -4,8 +4,8 @@ export const UserApiSlice = globalClusterApi.injectEndpoints({
   endpoints: (builder) => ({
     getUsers: builder.mutation({
       query: () => ({
-        url: "/api/v1/users",
-        method: "POST",
+        url: "/api/v1/accounts/individuals/",
+        method: "GET",
       }),
     }),
     payout: builder.mutation({

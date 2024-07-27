@@ -46,11 +46,11 @@ function ShowDetailComp({ detail, setShowDetail, type }) {
             <div className="flex flex-wrap gap-10">
               <div className="flex-1">
                 <p>First Name</p>
-                <p className="font-bold">{detail.user}</p>
+                <p className="font-bold">{detail?.first_name}</p>
               </div>
               <div className="flex-1">
                 <p>Last Name</p>
-                <p className="font-bold">Dahuysan</p>
+                <p className="font-bold">{detail?.last_name}</p>
               </div>
               <div className="flex-1">
                 <p>Email Address</p>
@@ -60,7 +60,7 @@ function ShowDetailComp({ detail, setShowDetail, type }) {
             <div className="flex flex-wrap gap-10">
               <div className="flex-1">
                 <p>Phone</p>
-                <p className="font-bold">{detail.phone}</p>
+                <p className="font-bold">{detail.phone_number}</p>
               </div>
               <div className="flex-1">
                 <p>Address</p>

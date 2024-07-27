@@ -51,6 +51,7 @@ import AdminBusinessRegistrations from "./pages/Admin/BusinessRegistrations";
 import { Provider } from "react-redux";
 import { persistor, store } from "./store/store.js";
 import { PersistGate } from "redux-persist/integration/react";
+import AdminRegister from "./pages/Admin/RegisterIndividual.jsx";
 
 const router = createBrowserRouter([
   {
@@ -166,6 +167,11 @@ const router = createBrowserRouter([
         path: "user/manage",
         element: <AdminUserManage />,
       },
+      {
+        path: "user/manage/registrations",
+        element: <AdminRegister />,
+      },
+      
       {
         path: "business/manage",
         element: <AdminBusinessManage />,

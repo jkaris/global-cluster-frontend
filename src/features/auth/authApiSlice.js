@@ -9,21 +9,21 @@ export const AuthApiSlice = globalClusterApi.injectEndpoints({
   endpoints: (builder) => ({
     signup: builder.mutation({
       query: (signupData) => ({
-        url: "/api/v1/register/individual/",
+        url: "/api/v1/accounts/individuals/",
         method: "POST",
         body: signupData,
       }),
     }),
     login: builder.mutation({
       query: (loginData) => ({
-        url: "/api/v1/login/",
+        url: "/api/v1/accounts/token/",
         method: "POST",
         body: loginData,
       }),
     }),
     updateUserProfile: builder.mutation({
       query: (updateData) => ({
-        url: "/api/v1/register/individual/",
+        url: "/api/v1/accounts/individuals/",
         method: "PUT",
         body: updateData,
       }),

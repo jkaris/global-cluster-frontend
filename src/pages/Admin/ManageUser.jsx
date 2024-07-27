@@ -1,13 +1,70 @@
-import React from 'react';
-import AdminDashboardHeader from './../../components/ui/Header';
+import AdminDashboardHeader from "./../../components/ui/Header";
+
+import React, { useEffect, useState } from "react";
+
+import { itemsPerPage } from "../../lib/constants";
+import UserDataTable from "../../components/UserDataTable";
+import { IoMdAdd } from "react-icons/io";
+import Filter from "../../components/ui/Filter";
+import Pagination from "../../components/Pagination";
+import { useNavigate } from "react-router-dom";
 
 function ManageUser() {
+  const [productsData, setProductsData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const navigate = useNavigate();
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+
+  const currentProducts = productsData.slice(startIndex, endIndex);
+
   return (
-    <div className="bg-gray-50 h-full w-full">
-      <div className="bg-white">
-        <AdminDashboardHeader />
-      </div>
-      <main className="m-10 rounded-xl flex flex-col gap-4"></main>
+    <div className="flex flex-col gap-8 bg-gray-50">
+      <AdminDashboardHeader />
+      <main className="m-10 bg-white">
+        <div className="py-20 px-20 flex flex-col gap-10">
+          <div className="flex justify-between items-center">
+            <p className="font-bold text-5xl">Customer Management</p>
+            <div
+              onClick={() => {navigate("/admin/user/manage/registrations")}}
+              className="bg-primary-light text-white font-semibold w-fit 
+    px-4 py-4 rounded-md flex items-center justify-center gap-4 hover:bg-primary-dark cursor-pointer select-none"
+            >
+              <IoMdAdd />
+              <p>Add Individual</p>
+            </div>
+          </div>
+
+          <section className="flex flex-col gap-6">
+            <Filter data={productsData} setProductFunction={setProductsData} />
+            <div className="flex flex-col gap-10">
+              <UserDataTable
+                type="default"
+                data={currentProducts}
+                tableHeadNames={[
+                  "User",
+                  // "Type",
+                  "Email",
+                  "Date",
+                  "Status",
+                  "Action",
+                ]}
+              />
+              <Pagination
+                currentPage={currentPage}
+                totalPages={Math.ceil(productsData.length / itemsPerPage)}
+                onPageChange={handlePageChange}
+              />
+            </div>
+          </section>
+        </div>
+      </main>
     </div>
   );
 }

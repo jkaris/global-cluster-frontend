@@ -22,17 +22,14 @@ const AuthSlice = createSlice({
   reducers: {
     loginAction: (state, action) => {
       const { access, refresh, user} = action.payload;
-      // console.log(access, refresh, email, user_type, user_id)
       state.isAuthenticated = true;
       state.access = access;
       state.refresh = refresh;
       state.user = {
         email: user.email,
         user_type: user.user_type,
-        user_id: user.id,
-        profile: user.user_type === 'company'
-          ? user.company_details || {} // Assign company details if available
-          : user.individual_details || {} // Assign individual details if available
+        user_id: "",
+        profile:user?.profile,
       };    
     },
     profileAction: (state, action) => {

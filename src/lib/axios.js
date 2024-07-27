@@ -54,7 +54,7 @@ axiosInstance.interceptors.response.use(
         }
 
         // Use refresh token logic to get a new access token
-        const response = await axios.post(`${BASE_URL}/api/v1/token/refresh/`, {
+        const response = await axios.post(`${BASE_URL}/api/v1/accounts/token/refresh/`, {
           refresh: refreshToken.replace('"',""),
         });
 

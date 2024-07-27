@@ -34,7 +34,6 @@ function AdminLogin() {
       const { access, refresh, user } = responseData;
 
       dispatch(loginAction({ access, refresh, user }));
-      navigate(`/user/dashboard`);
       navigate(`/admin/dashboard`);
     } catch (error) {
       if (error.response) {
@@ -62,7 +61,7 @@ function AdminLogin() {
           onSubmit={handleSubmit(onSubmit)}
           className="w-full min-h-full  bg-[#F2F2F2] flex flex-grow justify-center items-center "
         >
-          <div className="flex flex-col gap-8 border-gray bg-[#ffffff] my-auto rounded-3xl max-w-[600px] p-16 ">
+          <div className="flex flex-col gap-8 border-gray bg-[#ffffff] my-auto rounded-3xl w-[53rem] p-32 ">
             <div className="flex w-full py-4 px-2 gap-4  items-center justify-center rounded-md select-none flex-col">
               <h2 className="text-4xl font-semibold mb-4">Sign In</h2>
               <p className="text-gray-600 mb-6">
@@ -133,11 +132,11 @@ function AdminLogin() {
                 <span className="flex w-auto gap-8 items-center">
                   <input
                     type="checkbox"
-                    className="w-8 aspect-auto bg-gray-400"
+                    className="bg-gray-400"
                   />
                   <span>Remember me</span>
                 </span>
-                <div className="w-full max-w-[200px] bg-primary-light text-white font-semibold py-4 rounded-full hover:bg-primary-dark transition duration-300 flex gap-4 items-center justify-center cursor-pointer">
+                <div className="w-full max-w-[200px] bg-primary-light text-white font-semibold p-4 py-3 rounded-full hover:bg-primary-dark transition duration-300 flex gap-4 items-center justify-center cursor-pointer">
                   <button
                     type="submit"
                     className="flex items-center justify-center gap-4 w-full"

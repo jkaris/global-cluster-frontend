@@ -4,6 +4,7 @@ import { ImCancelCircle } from "react-icons/im";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import TakeInput from "./TakeInput";
 import { useForm } from "react-hook-form";
+import { useUser } from "../hooks/auth/useUser";
 
 function AddProduct({ addNewProduct, CloseModalWindow, currentStatus }) {
   const {
@@ -11,7 +12,7 @@ function AddProduct({ addNewProduct, CloseModalWindow, currentStatus }) {
     handleSubmit,
     formState: { errors },
   } = useForm();
-
+  const { user } = useUser();
   const [dragging, setDragging] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [productLinkType, setProductLinkType] = useState("");
@@ -69,13 +70,18 @@ function AddProduct({ addNewProduct, CloseModalWindow, currentStatus }) {
     try {
       formData.append("product_name", data.productName);
       formData.append("description", data.description);
+      formData.append("description", data.description);
+      formData.append(
+        "company",
+        user?.user_type === "company" ? user?.profile?.company_name : "Admin"
+      );
       formData.append("product_link", data.productLinkType);
       formData.append("link_value", data.linkValue);
       if (selectedFile) {
         formData.append("product_image", selectedFile, selectedFile.name);
       }
       // Log all entries in the FormData object
-      
+
       // for (let [key, value] of formData.entries()) {
       //   console.log(`${key}:`, value);
       // }

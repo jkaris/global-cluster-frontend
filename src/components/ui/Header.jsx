@@ -9,7 +9,6 @@ import { useUser } from "../../hooks/auth/useUser";
 function Header() {
   const { user } = useUser();
 
-  const { profile } = user;
   return (
     <>
       {user?.user_type === "company" && (
@@ -37,15 +36,15 @@ function Header() {
             <div className="flex items-center justify-center gap-8">
               <img
                 className="w-14 h-16 rounded-lg"
-                src={profile?.avatar ? profile?.avatar : ProfileImg}
+                src={user?.profile?.avatar ? user?.profile?.avatar : ProfileImg}
                 alt="Profile Img of Business Account"
               />
               <div className="flex flex-col">
                 <p className="flex items-center gap-4 justify-between text-2xl">
-                  {profile?.company_name} <BiChevronDown />
+                  {user?.profile?.company_name} <BiChevronDown />
                 </p>
                 <p className="text-lg text-gray-500">
-                  @{profile?.company_name}
+                  @{user?.profile?.company_name}
                 </p>
               </div>
             </div>
@@ -77,18 +76,18 @@ function Header() {
             <div className="flex items-center justify-center gap-8">
               <img
                 className="w-14 h-16 rounded-lg"
-                src={profile?.avatar ? profile?.avatar : ProfileImg}
+                src={user?.profile?.avatar ? user?.profile?.avatar : ProfileImg}
                 alt="Profile Img of Business Account"
               />
               <div className="flex flex-col">
                 <p className="flex items-center gap-4 justify-between text-2xl">
-                  {profile?.first_name}
+                  {user?.profile?.first_name}
                   {""}
-                  {profile?.first_name} <BiChevronDown />
+                  {user?.profile?.first_name} <BiChevronDown />
                 </p>
                 <p className="text-lg text-gray-500">
-                  @{profile?.first_name}
-                  {profile?.first_name}
+                  @{user?.profile?.first_name}
+                  {user?.profile?.first_name}
                 </p>
               </div>
             </div>

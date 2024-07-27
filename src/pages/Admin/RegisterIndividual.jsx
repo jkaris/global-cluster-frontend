@@ -11,7 +11,7 @@ import { useSignupMutation } from "../../features/auth/authApiSlice";
 
 // import RegisterUser from '../../components/RegisterUser'
 
-function Register() {
+function AdminRegister() {
   const { user } = useUser();
   const [hasErrors, setHasErrors] = useState(false); // State to manage error messages
 
@@ -40,7 +40,6 @@ function Register() {
     try {
       const responseData = await signup({
         ...data,
-        phone_number:data.phone_no,
         user_type: "individual",
         sponsor: sponsor,
         membership_package:"membership_package",
@@ -174,4 +173,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default AdminRegister;
