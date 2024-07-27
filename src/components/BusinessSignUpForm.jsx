@@ -15,13 +15,14 @@ function BusinessSignUpForm({ companySizeInput, SetCompanySizeInput }) {
   const [signupBusiness] = useSignupBusinessMutation();
   const navigate = useNavigate();
   const onSubmit = async (data) => {
+    // console.log(data)
     try {
       const responseData = await signupBusiness({
-        companySizeInput,
+          companySizeInput,
         ...data,
         user_type: "company",
       }).unwrap();
-      // console.log(JSON.stringify(responseData));
+      console.log(JSON.stringify(responseData));
       navigate(`login`);
     } catch (error) {
       if (error.response) {
@@ -53,8 +54,8 @@ function BusinessSignUpForm({ companySizeInput, SetCompanySizeInput }) {
                 required: "Company Name is required",
               })}
             />
-            {errors.companyName && (
-              <span className="text-red-500">{errors.companyName.message}</span>
+            {errors.company_name && (
+              <span className="text-red-500">{errors.company_name.message}</span>
             )}
           </div>
           <div className="space-y-4">
@@ -74,8 +75,8 @@ function BusinessSignUpForm({ companySizeInput, SetCompanySizeInput }) {
                 },
               })}
             />
-            {errors.EmailAdress && (
-              <span className="text-red-500">{errors.EmailAdress.message}</span>
+            {errors.email && (
+              <span className="text-red-500">{errors.email.message}</span>
             )}
           </div>
           <div className="space-y-4">
@@ -92,15 +93,15 @@ function BusinessSignUpForm({ companySizeInput, SetCompanySizeInput }) {
           </div>
 
           <div className="space-y-4">
-            <label htmlFor="phone" className="block text-gray-700">
+            <label htmlFor="phone_number" className="block text-gray-700">
               Phone No
             </label>
             <input
-              id="phone"
+              id="phone_number"
               type="tel"
               placeholder="+1 (555) 123-4567"
               className="w-full p-4 border border-gray-300 outline-none rounded-2xl"
-              {...register("phone")}
+              {...register("phone_number")}
             />
           </div>
 
@@ -132,24 +133,24 @@ function BusinessSignUpForm({ companySizeInput, SetCompanySizeInput }) {
 
           <div className="space-y-4">
             <label
-              htmlFor="company_registration_no"
+              htmlFor="company_registration_number"
               className="block text-gray-700"
             >
               Country Registration No (RC or BN)
               <span className="text-red-500">*</span>
             </label>
             <input
-              id="company_registration_no"
+              id="company_registration_number"
               type="text"
               placeholder="Reg1245669"
               className="w-full p-4 border border-gray-300 outline-none rounded-2xl"
-              {...register("company_registration_no", {
+              {...register("company_registration_number", {
                 required: "Registration Number is required",
               })}
             />
-            {errors.CompanyRegistrationNumber && (
+            {errors.company_registration_number && (
               <span className="text-red-500">
-                {errors.CompanyRegistrationNumber.message}
+                {errors.company_registration_number.message}
               </span>
             )}
           </div>

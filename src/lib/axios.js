@@ -14,12 +14,12 @@ axiosInstance.interceptors.request.use(
     const lc_storage_obj = JSON.parse(lc_storage || "{}"); // Safely parse localStorage
 
     const accessToken = lc_storage_obj?.access.replace('"',"") ;
-    if (accessToken &&  !config.url.includes("/login") && !config.url.includes("/register")) {
+    // if (accessToken &&  !config.url.includes("/login") && !config.url.includes("/register")) {
 
-      const authorizationBearer = `Bearer ${accessToken}`.replace('"',"");
+    //   const authorizationBearer = `Bearer ${accessToken}`.replace('"',"");
 
-      config.headers.Authorization = authorizationBearer;
-    }
+    //   config.headers.Authorization = authorizationBearer;
+    // }
     return config;
   },
   (error) => {

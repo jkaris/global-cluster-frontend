@@ -15,7 +15,7 @@ export const BusinessApiSlice = globalClusterApi.injectEndpoints({
       }),
     }),
     getBusiness: builder.mutation({
-      query: (signupData) => ({
+      query: () => ({
         url: "/api/v1/accounts/companies/",
         method: "GET",
       }),
