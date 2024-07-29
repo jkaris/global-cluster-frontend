@@ -1,5 +1,4 @@
-
-```markdown
+````markdown
 # Vite React Project
 
 This is a React project bootstrapped with Vite. It includes a form for adding products with file upload and dynamic input fields based on the selected link type (WhatsApp, Website, Phone). The project uses React Hook Form for form validation and submission.
@@ -9,7 +8,6 @@ This is a React project bootstrapped with Vite. It includes a form for adding pr
 - Fast development and build process with Vite
 - Form validation and submission using React Hook Form
 - File upload functionality
-
 
 ## Project Setup
 
@@ -27,6 +25,7 @@ Ensure you have the following installed:
 ```bash
 git clone https://github.com/Mohamed-code-marvel/global-cluster-frontend.git
 ```
+````
 
 2. Navigate to the project directory:
 
@@ -138,6 +137,8 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 ## Acknowledgements
 
 This project was created using Vite and React. Special thanks to the maintainers of these projects for their excellent work.
+
 ```
 
 Replace the placeholder repository URL in the clone command with your actual GitHub repository URL. You can also add more details and sections as needed, such as screenshots, detailed instructions, or other project-specific information.
+```

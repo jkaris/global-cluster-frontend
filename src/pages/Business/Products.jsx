@@ -21,8 +21,7 @@ import {
 } from "../../features/product/productApiSlice";
 import { itemsPerPage } from "../../lib/constants";
 
-const initialProductsData = [
-];
+const initialProductsData = [];
 
 function Products() {
   const { showModal, setShowModal } = useContext(ModalContext);
@@ -49,7 +48,7 @@ function Products() {
     try {
       await deleteProduct(productId).unwrap();
       const updatedProducts = productsData.filter(
-        (product) => product.uuid !== productId
+        (product) => product.uuid !== productId,
       );
       setProductsData(updatedProducts);
     } catch (error) {
@@ -166,9 +165,7 @@ function Products() {
                   "Status",
                   "Action",
                 ]}
-                onDelete={(productId) =>
-                  handleDelete(productId)
-                }
+                onDelete={(productId) => handleDelete(productId)}
                 handleShowProductDetails={handleShowProductDetails}
               />
               <Pagination

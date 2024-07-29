@@ -1,7 +1,7 @@
-import PropTypes from 'prop-types'; // Import PropTypes
-import React from 'react';
-import { AiOutlineRise } from 'react-icons/ai';
-import { MdSupervisorAccount } from 'react-icons/md';
+import PropTypes from "prop-types"; // Import PropTypes
+import React from "react";
+import { AiOutlineRise } from "react-icons/ai";
+import { MdSupervisorAccount } from "react-icons/md";
 
 function InsightsCard({ CardName, TotalCount, TotalIncDec }) {
   return (
@@ -10,12 +10,12 @@ function InsightsCard({ CardName, TotalCount, TotalIncDec }) {
         <p className="text-gray-500">{CardName}</p>
         <p className="font-bold text-6xl text-gray-600">{TotalCount}</p>
         <p className="flex items-center gap-2 justify-center text-[#10baa1]">
-          {TotalIncDec}% <AiOutlineRise style={{ color: '#10baa1' }} />{' '}
+          {TotalIncDec}% <AiOutlineRise style={{ color: "#10baa1" }} />{" "}
           <span className="text-black">Up from yesterday</span>
         </p>
       </div>
       <div className="p-4 rounded-xl bg-[#d1deea] w-fit h-fit">
-        <MdSupervisorAccount style={{ color: '#0369a1', fontSize: '2.5rem' }} />
+        <MdSupervisorAccount style={{ color: "#0369a1", fontSize: "2.5rem" }} />
       </div>
     </div>
   );

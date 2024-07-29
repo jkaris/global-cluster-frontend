@@ -1,9 +1,8 @@
-import PropTypes from 'prop-types';
-import React from 'react';
+import PropTypes from "prop-types";
+import React from "react";
 
-function OverviewCard({ type,data }) {
-
-  if (type === 'sponsorAndMembershipInfo') {
+function OverviewCard({ type, data }) {
+  if (type === "sponsorAndMembershipInfo") {
     return (
       <div className="bg-white p-10 text-gray-500">
         <div className="flex flex-col gap-10">
@@ -38,12 +37,12 @@ function OverviewCard({ type,data }) {
     );
   }
 
-  if (type === 'ContactInfo') {
+  if (type === "ContactInfo") {
     return (
       <div className="bg-white p-10 text-gray-500">
         <div className="flex flex-col gap-10">
           <p className="border px-8 py-6 rounded-lg bg-gray-50">
-          Contact Information
+            Contact Information
           </p>
           <div className="bg-white p-6 rounded-lg ">
             <div className="flex flex-wrap justify-between gap-y-6">
@@ -58,7 +57,7 @@ function OverviewCard({ type,data }) {
               <div className="w-1/3">
                 <p className="font-semibold ">Address</p>
                 <p className="text-lg">
-                {data?.address?.state}, {data?.address?.address}
+                  {data?.address?.state}, {data?.address?.address}
                 </p>
               </div>
               <div className="w-1/3">
@@ -80,12 +79,12 @@ function OverviewCard({ type,data }) {
     );
   }
 
-  if (type === 'loginInfo') {
+  if (type === "loginInfo") {
     return (
       <div className="bg-white p-10 text-gray-500">
         <div className="flex flex-col gap-10">
           <p className="border px-8 py-6 rounded-lg bg-gray-50">
-          Login Information
+            Login Information
           </p>
           <div className="flex p-6 w-4/6 justify-between ">
             <div>

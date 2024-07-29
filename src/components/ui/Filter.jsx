@@ -42,14 +42,14 @@ function Filter({
 
     const regex = new RegExp(value, "i");
     const filteredData = data.filter((item) =>
-      Object.values(item).some((val) => regex.test(val))
+      Object.values(item).some((val) => regex.test(val)),
     );
     // console.log("called with filteredData: ", filteredData);
     setDataFunction(filteredData);
   };
 
   const handleDownload = () => {
-    if(data.length > 0) {
+    if (data.length > 0) {
       const csv = Papa.unparse(data);
       const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
       saveAs(blob, "data.csv");

@@ -73,7 +73,7 @@ function AddProduct({ addNewProduct, CloseModalWindow, currentStatus }) {
       formData.append("description", data.description);
       formData.append(
         "company",
-        user?.user_type === "company" ? user?.profile?.company_name : "Admin"
+        user?.user_type === "company" ? user?.profile?.company_name : "Admin",
       );
       formData.append("product_link", data.productLinkType);
       formData.append("link_value", data.linkValue);

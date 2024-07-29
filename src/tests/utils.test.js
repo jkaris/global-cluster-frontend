@@ -1,4 +1,4 @@
-import { encrypt,decrypt } from "../lib/utils";
+import { encrypt, decrypt } from "../lib/utils";
 
 describe("Test our encrpty", () => {
   it("should return a valid encrypted string when given a simple text and secret", () => {
@@ -10,7 +10,6 @@ describe("Test our encrpty", () => {
 });
 describe("Test our dencrpty Error", () => {
   it("should throw an error when provided with an incorrect secret", () => {
-
     const secret = "incorrectSecret";
     const text = "salt:iv:encryptedText"; // Replace with actual values for a valid test
 

@@ -1,9 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
-const initialState = {
-    
-};
+const initialState = {};
 
 /**
  * Creates a slice for handling business state using Redux Toolkit.
@@ -13,13 +10,11 @@ const initialState = {
  * @returns An auth slice object with login, signup, and logout actions.
  */
 const BusinessSlice = createSlice({
-    name: 'business',
-    initialState,
-    reducers: {
-        
-    }
-})
+  name: "business",
+  initialState,
+  reducers: {},
+});
 
-export const {  } = BusinessSlice.actions;
+export const {} = BusinessSlice.actions;
 
 export default BusinessSlice.reducer; // Ensure this is correctly exported

@@ -18,7 +18,7 @@ function BusinessSignUpForm({ companySizeInput, SetCompanySizeInput }) {
     // console.log(data)
     try {
       const responseData = await signupBusiness({
-          companySizeInput,
+        companySizeInput,
         ...data,
         user_type: "company",
       }).unwrap();
@@ -55,7 +55,9 @@ function BusinessSignUpForm({ companySizeInput, SetCompanySizeInput }) {
               })}
             />
             {errors.company_name && (
-              <span className="text-red-500">{errors.company_name.message}</span>
+              <span className="text-red-500">
+                {errors.company_name.message}
+              </span>
             )}
           </div>
           <div className="space-y-4">

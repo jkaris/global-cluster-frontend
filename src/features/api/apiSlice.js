@@ -1,7 +1,5 @@
-import { createApi } from '@reduxjs/toolkit/query/react';
-import { axiosInstance } from '../../lib/axios';
-
-
+import { createApi } from "@reduxjs/toolkit/query/react";
+import { axiosInstance } from "../../lib/axios";
 
 // Custom fetchBaseQuery using axiosInstance
 /**
@@ -14,24 +12,32 @@ import { axiosInstance } from '../../lib/axios';
  * @param {Object} options.body - The body of the request.
  * @returns {Promise} A promise that resolves to an object with the response data or an error object.
  */
-const customFetchBaseQuery = ({ baseUrl = '', url = '', method = 'GET', headers = {}, body }) => {
+const customFetchBaseQuery = ({
+  baseUrl = "",
+  url = "",
+  method = "GET",
+  headers = {},
+  body,
+}) => {
   return axiosInstance({
     method,
     url: `${baseUrl}${url}`,
     headers,
     data: body,
-  }).then((response) => ({
-    data: response.data,
-  })).catch((error) => {
-    if (error.response) {
-      const { status, data } = error.response;
-      return { error: { status, data } };
-    } else if (error.request) {
-      return { error: { status: 500, data: 'Network error' } };
-    } else {
-      return { error: { status: 500, data: error.message } };
-    }
-  });
+  })
+    .then((response) => ({
+      data: response.data,
+    }))
+    .catch((error) => {
+      if (error.response) {
+        const { status, data } = error.response;
+        return { error: { status, data } };
+      } else if (error.request) {
+        return { error: { status: 500, data: "Network error" } };
+      } else {
+        return { error: { status: 500, data: error.message } };
+      }
+    });
 };
 // Custom fetchBaseQuery using axiosInstance same functionality as above customFetchBaseQuery but will be testested with actual API
 /**
@@ -39,7 +45,8 @@ const customFetchBaseQuery = ({ baseUrl = '', url = '', method = 'GET', headers 
  * @param {Object} { baseUrl } - The base URL for the axios query.
  * @returns {Function} An async function that takes in parameters for the query and returns a promise.
  */
-const axiosBaseQuery = ({ baseUrl } = { baseUrl: '' }) =>
+const axiosBaseQuery =
+  ({ baseUrl } = { baseUrl: "" }) =>
   async ({ url, method, data, params, headers }) => {
     try {
       const result = await axiosInstance({
@@ -48,19 +55,18 @@ const axiosBaseQuery = ({ baseUrl } = { baseUrl: '' }) =>
         data,
         params,
         headers,
-      })
-      return { data: result.data }
+      });
+      return { data: result.data };
     } catch (axiosError) {
-      const err = axiosError
+      const err = axiosError;
       return {
         error: {
           status: err.response?.status,
           data: err.response?.data || err.message,
         },
-      }
+      };
     }
-  }
-
+  };
 
 // Define a service using a base URL and expected endpoints
 /**
@@ -72,7 +78,7 @@ const axiosBaseQuery = ({ baseUrl } = { baseUrl: '' }) =>
  * @returns The global cluster API.
  */
 export const globalClusterApi = createApi({
-  reducerPath: 'api',
+  reducerPath: "api",
   baseQuery: customFetchBaseQuery,
   endpoints: (builder) => ({
     // Define your endpoints here when they are ready

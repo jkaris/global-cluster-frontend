@@ -1,22 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
-import { AiOutlineProduct } from 'react-icons/ai';
-import { HiOutlineUsers } from 'react-icons/hi2';
-import { IoBusinessOutline } from 'react-icons/io5';
-import { LuUser2 } from 'react-icons/lu';
+import { AiOutlineProduct } from "react-icons/ai";
+import { HiOutlineUsers } from "react-icons/hi2";
+import { IoBusinessOutline } from "react-icons/io5";
+import { LuUser2 } from "react-icons/lu";
 import {
   MdOutlineBusinessCenter,
   MdOutlineManageAccounts,
   MdSupportAgent,
-} from 'react-icons/md';
+} from "react-icons/md";
 
-import { FaGift } from 'react-icons/fa';
-import { PiChartPieSliceFill, PiRankingFill, PiSignOutFill } from 'react-icons/pi';
-import { TbNotes } from 'react-icons/tb';
-import { NavLink, useNavigate } from 'react-router-dom';
-import SidebarLogo from './SidebarLogo';
-import { useDispatch } from 'react-redux';
-import { logoutAction } from '../features/auth/authSlice';
+import { FaGift } from "react-icons/fa";
+import {
+  PiChartPieSliceFill,
+  PiRankingFill,
+  PiSignOutFill,
+} from "react-icons/pi";
+import { TbNotes } from "react-icons/tb";
+import { NavLink, useNavigate } from "react-router-dom";
+import SidebarLogo from "./SidebarLogo";
+import { useDispatch } from "react-redux";
+import { logoutAction } from "../features/auth/authSlice";
 
 function AdminSidebar() {
   const dispatch = useDispatch();
@@ -31,13 +35,13 @@ function AdminSidebar() {
 
   useEffect(() => {
     if (signOut) {
-      navigate('/login');
+      navigate("/login");
     }
   }, [signOut, navigate]);
   const getNavLinkClass = ({ isActive }) =>
     isActive
-      ? 'py-4 px-8 bg-white text-primary-light rounded-lg'
-      : 'py-4 px-8 text-white rounded-lg';
+      ? "py-4 px-8 bg-white text-primary-light rounded-lg"
+      : "py-4 px-8 text-white rounded-lg";
 
   return (
     <div className="flex flex-col gap-6 items-center ">

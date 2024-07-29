@@ -86,7 +86,7 @@ function EditProduct({ setEditDetail, item }) {
       if (selectedFile) {
         formData.append("product_image", selectedFile, selectedFile.name);
       }
-      const response = await updateProduct({formData,uuid:item.uuid});
+      const response = await updateProduct({ formData, uuid: item.uuid });
 
       setEditDetail(false);
     } catch (error) {
@@ -202,7 +202,6 @@ function EditProduct({ setEditDetail, item }) {
                   value="whatsapp"
                   onChange={handleProductLinkTypeChange}
                   checked={productLinkType === "whatsapp"}
-
                 />
                 WhatsApp
               </label>
@@ -216,7 +215,6 @@ function EditProduct({ setEditDetail, item }) {
                   value="website"
                   onChange={handleProductLinkTypeChange}
                   checked={productLinkType === "website"}
-
                 />
                 Website
               </label>
@@ -230,7 +228,6 @@ function EditProduct({ setEditDetail, item }) {
                   value="phone"
                   onChange={handleProductLinkTypeChange}
                   checked={productLinkType === "phone"}
-
                 />
                 Phone
               </label>

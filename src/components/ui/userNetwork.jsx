@@ -1,27 +1,27 @@
-import React from 'react';
-import { FaPlus, FaDownload } from 'react-icons/fa'; // Make sure to install react-icons
+import React from "react";
+import { FaPlus, FaDownload } from "react-icons/fa"; // Make sure to install react-icons
 
 // Dummy data for profile images
 const profileImages = {
-  Silas: 'https://example.com/silas.jpg',
-  Alima: 'https://example.com/alima.jpg',
-  Jimmy: 'https://example.com/jimmy.jpg',
-  Alice: 'https://example.com/alice.jpg',
-  Olaoluwa: 'https://example.com/olaoluwa.jpg',
-  Hammed: 'https://example.com/hammed.jpg',
-  Lolade: 'https://example.com/lolade.jpg',
-  John: 'https://example.com/john.jpg',
-  Kingsley: 'https://example.com/kingsley.jpg',
-  Adedapo: 'https://example.com/adedapo.jpg',
-  Jonah: 'https://example.com/jonah.jpg',
-  George: 'https://example.com/george.jpg',
-  Oluwadami: 'https://example.com/oluwadami.jpg',
+  Silas: "https://example.com/silas.jpg",
+  Alima: "https://example.com/alima.jpg",
+  Jimmy: "https://example.com/jimmy.jpg",
+  Alice: "https://example.com/alice.jpg",
+  Olaoluwa: "https://example.com/olaoluwa.jpg",
+  Hammed: "https://example.com/hammed.jpg",
+  Lolade: "https://example.com/lolade.jpg",
+  John: "https://example.com/john.jpg",
+  Kingsley: "https://example.com/kingsley.jpg",
+  Adedapo: "https://example.com/adedapo.jpg",
+  Jonah: "https://example.com/jonah.jpg",
+  George: "https://example.com/george.jpg",
+  Oluwadami: "https://example.com/oluwadami.jpg",
 };
 
 const Employee = ({ name, hasChildren, isLast, canAdd, canDownload }) => (
   <div className="flex flex-col items-center relative">
     <img
-      src={profileImages[name] || 'https://example.com/default.jpg'}
+      src={profileImages[name] || "https://example.com/default.jpg"}
       alt={name}
       className="w-16 h-16 rounded-full mb-2 object-cover"
     />
@@ -76,28 +76,28 @@ const OrgChart = () => (
         manager="Silas"
         subgroups={[
           {
-            manager: 'Alima',
+            manager: "Alima",
             subgroups: [
               {
-                manager: 'Alice',
-                employees: ['John', 'Kingsley'],
+                manager: "Alice",
+                employees: ["John", "Kingsley"],
               },
               {
-                manager: 'Olaoluwa',
-                employees: ['Adedapo'],
+                manager: "Olaoluwa",
+                employees: ["Adedapo"],
               },
             ],
           },
           {
-            manager: 'Jimmy',
+            manager: "Jimmy",
             subgroups: [
               {
-                manager: 'Hammed',
-                employees: ['Jonah'],
+                manager: "Hammed",
+                employees: ["Jonah"],
               },
               {
-                manager: 'Lolade',
-                employees: ['George', 'Oluwadami'],
+                manager: "Lolade",
+                employees: ["George", "Oluwadami"],
               },
             ],
           },

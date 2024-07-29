@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { BiWalletAlt } from 'react-icons/bi';
-import { BsTicketPerforated } from 'react-icons/bs';
-import { HiOutlineUsers } from 'react-icons/hi2';
-import { IoSettingsOutline } from 'react-icons/io5';
-import { TbNotes } from 'react-icons/tb';
+import React, { useEffect, useState } from "react";
+import { BiWalletAlt } from "react-icons/bi";
+import { BsTicketPerforated } from "react-icons/bs";
+import { HiOutlineUsers } from "react-icons/hi2";
+import { IoSettingsOutline } from "react-icons/io5";
+import { TbNotes } from "react-icons/tb";
 
-import { PiChartPieSliceFill, PiSignOutFill } from 'react-icons/pi';
-import { NavLink, useNavigate } from 'react-router-dom';
-import SidebarLogo from './SidebarLogo';
-import { useDispatch } from 'react-redux';
-import { logoutAction } from '../features/auth/authSlice';
+import { PiChartPieSliceFill, PiSignOutFill } from "react-icons/pi";
+import { NavLink, useNavigate } from "react-router-dom";
+import SidebarLogo from "./SidebarLogo";
+import { useDispatch } from "react-redux";
+import { logoutAction } from "../features/auth/authSlice";
 
 function UserSidebar() {
   const dispatch = useDispatch();
@@ -25,10 +25,10 @@ function UserSidebar() {
 
   useEffect(() => {
     if (signOut) {
-      navigate('/login');
+      navigate("/login");
     }
   }, [signOut, navigate]);
-  
+
   return (
     <div className="flex  flex-col gap-6 items-center">
       <SidebarLogo />

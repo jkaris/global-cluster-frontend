@@ -4,11 +4,13 @@ import PropTypes from "prop-types";
 import { useUser } from "../hooks/auth/useUser";
 
 function OverviewStep4({ getValues }) {
-  const {user} = useUser();
+  const { user } = useUser();
   let sponsor;
   switch (user?.user_type) {
     case "individual":
-      sponsor = user?.profile?.username || user?.profile?.first_name + " " + user?.profile?.last_name   ;
+      sponsor =
+        user?.profile?.username ||
+        user?.profile?.first_name + " " + user?.profile?.last_name;
       break;
     case "company":
       sponsor = user?.profile?.company_name;
@@ -18,7 +20,7 @@ function OverviewStep4({ getValues }) {
   }
   const data = {
     sponsorAndMembershipInfo: {
-      sponsor: sponsor, 
+      sponsor: sponsor,
       membership_package: "Individual Package",
       price: "1000",
       commision: "200",

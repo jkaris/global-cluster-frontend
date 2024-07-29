@@ -48,14 +48,12 @@ function PaymentSettings() {
             id="payment-method"
             name="payment-method"
             {...register("payment-method")}
-
           >
             <option>Select Payment Method</option>
             {/* Add more payment method options as needed */}
             <option>Bank Transfer</option>
             <option>Credit Card</option>
             <option>PayPal</option>
-            
           </select>
         </div>
         <button

@@ -20,7 +20,6 @@ function ContactDetailsForm() {
       state: user?.profile?.state || "",
       city: user?.profile?.city || "",
       phone_no: user?.profile?.phone_no || "",
-      
     },
   });
   const id = user?.profile?.user_id ;

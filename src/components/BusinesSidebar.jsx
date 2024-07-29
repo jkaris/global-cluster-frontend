@@ -1,21 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { PiChartPieSliceFill, PiSignOutFill } from 'react-icons/pi';
-import { NavLink, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { PiChartPieSliceFill, PiSignOutFill } from "react-icons/pi";
+import { NavLink, useNavigate } from "react-router-dom";
 
-import { AiOutlineProduct } from 'react-icons/ai';
-import { BsTicketPerforated } from 'react-icons/bs';
-import { IoSettingsOutline } from 'react-icons/io5';
-import SidebarLogo from './SidebarLogo';
-import { useDispatch } from 'react-redux';
-import { logoutAction } from '../features/auth/authSlice';
+import { AiOutlineProduct } from "react-icons/ai";
+import { BsTicketPerforated } from "react-icons/bs";
+import { IoSettingsOutline } from "react-icons/io5";
+import SidebarLogo from "./SidebarLogo";
+import { useDispatch } from "react-redux";
+import { logoutAction } from "../features/auth/authSlice";
 
 function BusinesSidebar() {
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [signOut, setSignOut] = useState(false);
 
-  
   const handleSignOut = () => {
     dispatch(logoutAction());
     setSignOut(true);
@@ -23,7 +21,7 @@ function BusinesSidebar() {
 
   useEffect(() => {
     if (signOut) {
-      navigate('/login');
+      navigate("/login");
     }
   }, [signOut, navigate]);
   return (

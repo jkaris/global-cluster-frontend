@@ -1,12 +1,18 @@
-import React from 'react';
-import ProductTicket from '../ProductTicket';
+import React from "react";
+import ProductTicket from "../ProductTicket";
 import PropTypes from "prop-types";
 
-function ProductTickets({products}) {
+function ProductTickets({ products }) {
   const totalProducts = products.length;
-  const activeProducts = products.filter(product => product.status === 'active').length;
-  const pendingProducts = products.filter(product => product.status === 'pending').length;
-  const declinedProducts = products.filter(product => product.status === 'declined').length;
+  const activeProducts = products.filter(
+    (product) => product.status === "active",
+  ).length;
+  const pendingProducts = products.filter(
+    (product) => product.status === "pending",
+  ).length;
+  const declinedProducts = products.filter(
+    (product) => product.status === "declined",
+  ).length;
   return (
     <section className="flex gap-8">
       <ProductTicket purpose="Total Products" numbers={totalProducts} />
@@ -20,5 +26,5 @@ function ProductTickets({products}) {
 export default ProductTickets;
 
 ProductTickets.propTypes = {
-  products: PropTypes.array
-}
+  products: PropTypes.array,
+};

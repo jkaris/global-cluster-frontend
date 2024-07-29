@@ -1,6 +1,6 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import BreadCrumbs from '../BreadCrumbs';
+import PropTypes from "prop-types";
+import React from "react";
+import BreadCrumbs from "../BreadCrumbs";
 
 //  name = 'Products';
 //  to = 'products';

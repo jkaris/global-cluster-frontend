@@ -4,10 +4,9 @@ const initialState = {
   access: null,
   refresh: null,
   isAuthenticated: false,
-  user: { email: null, user_type: null, user_id: null,profile: {} },
+  user: { email: null, user_type: null, user_id: null, profile: {} },
   global: null,
 };
-
 
 /**
  * Creates a slice for handling authentication state using Redux Toolkit.
@@ -21,7 +20,7 @@ const AuthSlice = createSlice({
   initialState,
   reducers: {
     loginAction: (state, action) => {
-      const { access, refresh, user} = action.payload;
+      const { access, refresh, user } = action.payload;
       state.isAuthenticated = true;
       state.access = access;
       state.refresh = refresh;
@@ -29,12 +28,10 @@ const AuthSlice = createSlice({
         email: user.email,
         user_type: user.user_type,
         user_id: user?.profile?.user_id,
-        profile:user?.profile,
-      };    
+        profile: user?.profile,
+      };
     },
-    profileAction: (state, action) => {
-
-    },
+    profileAction: (state, action) => {},
     signupAction: (state, action) => {},
     logoutAction: (state) => {
       state.isAuthenticated = false;
@@ -48,8 +45,13 @@ const AuthSlice = createSlice({
   },
 });
 
-export const { loginAction,profileAction, signupAction, logoutAction, refreshTokenAction } =
-  AuthSlice.actions;
+export const {
+  loginAction,
+  profileAction,
+  signupAction,
+  logoutAction,
+  refreshTokenAction,
+} = AuthSlice.actions;
 
 export default AuthSlice.reducer; // Ensure this is correctly exported
 

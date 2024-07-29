@@ -53,7 +53,9 @@ function ManageUser() {
           <div className="flex justify-between items-center">
             <p className="font-bold text-5xl">Customer Management</p>
             <div
-              onClick={() => {navigate("/admin/user/manage/registrations")}}
+              onClick={() => {
+                navigate("/admin/user/manage/registrations");
+              }}
               className="bg-primary-light text-white font-semibold w-fit 
     px-4 py-4 rounded-md flex items-center justify-center gap-4 hover:bg-primary-dark cursor-pointer select-none"
             >

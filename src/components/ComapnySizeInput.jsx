@@ -1,10 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { NavLink } from 'react-router-dom';
+import React from "react";
+import PropTypes from "prop-types";
+import { NavLink } from "react-router-dom";
 
-function CompanySizeInput({ companySize, setCompanySize,handleSubmit }) {
+function CompanySizeInput({ companySize, setCompanySize, handleSubmit }) {
   // Handle radio button change
-  const handleSizeChange = e => {
+  const handleSizeChange = (e) => {
     setCompanySize(e.target.value);
   };
 
@@ -29,7 +29,7 @@ function CompanySizeInput({ companySize, setCompanySize,handleSubmit }) {
             id="2-5Employee"
             name="companySize"
             value="2-5 Employees"
-            checked={companySize === '2-5 Employees'}
+            checked={companySize === "2-5 Employees"}
             onChange={handleSizeChange}
             className="form-radio text-primary "
           />
@@ -43,7 +43,7 @@ function CompanySizeInput({ companySize, setCompanySize,handleSubmit }) {
             id="5-10Employee"
             name="companySize"
             value="5-10 Employees"
-            checked={companySize === '5-10 Employees'}
+            checked={companySize === "5-10 Employees"}
             onChange={handleSizeChange}
             className="form-radio text-primary"
           />
@@ -57,7 +57,7 @@ function CompanySizeInput({ companySize, setCompanySize,handleSubmit }) {
             id="10-50Employee"
             name="companySize"
             value="10-50 Employees"
-            checked={companySize === '10-50 Employees'}
+            checked={companySize === "10-50 Employees"}
             onChange={handleSizeChange}
             className="form-radio text-primary"
           />
@@ -67,7 +67,7 @@ function CompanySizeInput({ companySize, setCompanySize,handleSubmit }) {
         </div>
         <div className="">
           <NavLink to="/business-dashboard">
-            {' '}
+            {" "}
             <button
               type="submit"
               className="w-full bg-primary-light text-white font-semibold py-6 rounded-full hover:bg-primary-dark transition duration-300 flex items-center justify-center"

@@ -18,7 +18,7 @@ function BusinessRegistrations() {
 
   const paginatedData = businessesData.slice(
     (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
+    currentPage * itemsPerPage,
   );
   useEffect(() => {
     const fetchBusinesses = async () => {

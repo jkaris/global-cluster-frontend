@@ -1,10 +1,10 @@
-import React from 'react';
-import BusinessImg from './../../assets/images/BusinessImg.png';
-import { useUser } from '../../hooks/auth/useUser';
+import React from "react";
+import BusinessImg from "./../../assets/images/BusinessImg.png";
+import { useUser } from "../../hooks/auth/useUser";
 
 function BusinessCredentials() {
-  const {user} = useUser();
-  const {profile} = user;
+  const { user } = useUser();
+  const { profile } = user;
   return (
     <section className="px-10 mx-14 my-6 shadow-[0_0_10px_rgba(0,0,0,0.1)] ">
       <div className="p-6 flex gap-20 items-center">
