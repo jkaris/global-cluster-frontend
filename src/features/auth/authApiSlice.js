@@ -25,7 +25,7 @@ export const AuthApiSlice = globalClusterApi.injectEndpoints({
       query: (updateData) => ({
         url: `/api/v1/accounts/individuals/${updateData.id}/`,
         method: "PUT",
-        body: JSON.stringify(updateData),
+        body: {...updateData},
       }),
     }),
 

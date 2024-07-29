@@ -33,7 +33,10 @@ function OverviewStep4({ getValues }) {
       country: getValues("country"),
       state: getValues("state"),
     },
-    loginInfo: {},
+    loginInfo: {
+      username:getValues("username"),
+      password: getValues("password"),
+    },
   };
   return (
     <div>

@@ -4,28 +4,27 @@ import Header from "./../../components/ui/Header";
 import Pagination from "../../components/Pagination";
 import { useGetBusinessMutation } from "../../features/business/businessApiSlice";
 
-
 function BusinessRegistrations() {
   const [currentPage, setCurrentPage] = useState(1);
-  const [usersData, setUsersData] = useState([]);
+  const [businessesData, setBusinessesData] = useState([]);
   const [getBusiness] = useGetBusinessMutation();
   const itemsPerPage = 5;
 
-  const totalPages = Math.ceil(usersData.length / itemsPerPage);
+  const totalPages = Math.ceil(businessesData.length / itemsPerPage);
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
 
-  const paginatedData = usersData.slice(
+  const paginatedData = businessesData.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
   useEffect(() => {
-    const fetchUsers = async () => {
+    const fetchBusinesses = async () => {
       try {
         const response = await getBusiness().unwrap();
-        setUsersData(response);
+        setBusinessesData(response);
       } catch (error) {
         if (error.response) {
           // Server errors (status code outside of 2xx range)
@@ -39,7 +38,7 @@ function BusinessRegistrations() {
         }
       }
     };
-    fetchUsers();
+    fetchBusinesses();
   }, []);
   return (
     <div className="bg-gray-50">
@@ -50,16 +49,10 @@ function BusinessRegistrations() {
           <UserDataTable
             type="company"
             data={paginatedData}
-            tableHeadNames={[
-              "User",
-              "Rc or BN",
-              "Email",
-              "Date",
-              "Action",
-            ]}
+            tableHeadNames={["User", "Rc or BN", "Email", "Date", "Action"]}
           />
         </div>
-        {itemsPerPage <= usersData.length && (
+        {itemsPerPage <= businessesData.length && (
           <Pagination
             currentPage={currentPage}
             totalPages={totalPages}

@@ -31,7 +31,7 @@ function PersonalDetailsForm() {
         const responseData = await updateBusinessProfile({...data,id}).unwrap();
       }
       if (user?.user_type === "individual") {
-        const responseData = await updateUserProfile({data,id}).unwrap();
+        const responseData = await updateUserProfile({...data,id}).unwrap();
       }
       if (user?.user_type === "admin") {
         // const responseData = await updateProfile(data).unwrap();

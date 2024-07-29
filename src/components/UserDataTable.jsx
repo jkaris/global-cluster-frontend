@@ -58,6 +58,7 @@ function UserDataTable({ data = [], tableHeadNames, type = "default" }) {
                 <td className="p-6">{user.level}</td>
               </tr>
             ))}
+
           {type === "company" &&
             data.map((user, index) => (
               <tr key={index} className="border-t">
@@ -74,7 +75,9 @@ function UserDataTable({ data = [], tableHeadNames, type = "default" }) {
                 </td>
                 <td className="p-6">{user?.company_registration_number}</td>
                 <td className="p-6">{user?.email || "placeholder@hxl.com"}</td>
-                <td className="p-6">{convertStandardDate(user?.created_at || new Date() )}</td>
+                <td className="p-6">
+                  {convertStandardDate(user?.created_at || new Date())}
+                </td>
                 <td className="flex gap-4">
                   <p className="bg-green-100 text-green-500 flex justify-center px-2 rounded-lg w-fit">
                     Approve
@@ -84,6 +87,72 @@ function UserDataTable({ data = [], tableHeadNames, type = "default" }) {
                   </p>
                   <p className="bg-red-100 text-red-500 flex justify-center px-2 rounded-lg w-fit">
                     Decline
+                  </p>
+                </td>
+              </tr>
+            ))}
+          {type === "admin_manage_business" &&
+            data.map((business, index) => (
+              <tr key={index} className="border-t">
+                <td className="flex gap-3 items-center p-6">
+                  <input type="checkbox" id="products" name="products" />
+                  <div className="p-2 bg-orange-200">
+                    <img
+                      className="w-10"
+                      src={UserImg}
+                      alt="product images for show off"
+                    />
+                  </div>
+                  <p>{business?.company_name}</p>
+                </td>
+                <td className="p-6">{business?.email}</td>
+                <td className="p-6">{business?.phone_number}</td>
+                <td className="p-6">
+                  {convertStandardDate(business?.created_at || new Date())}
+                </td>
+                <td className="p-6">{business?.status}</td>
+                <td className="flex gap-4">
+                  <p className="bg-green-100 text-green-500 flex justify-center px-2 rounded-lg w-fit">
+                    View
+                  </p>
+                  <p className="bg-orange-100 text-orange-500 flex justify-center px-2 rounded-lg w-fit">
+                    Suspend
+                  </p>
+                  <p className="bg-red-100 text-red-500 flex justify-center px-2 rounded-lg w-fit">
+                    Delete
+                  </p>
+                </td>
+              </tr>
+            ))}
+
+          {type === "admin_manage_users" &&
+            data.map((user, index) => (
+              <tr key={index} className="border-t">
+                <td className="flex gap-3 items-center p-6">
+                  <input type="checkbox" id="products" name="products" />
+                  <div className="p-2 bg-orange-200">
+                    <img
+                      className="w-10"
+                      src={UserImg}
+                      alt="product images for show off"
+                    />
+                  </div>
+                  <p>{`${user?.first_name} ${user?.last_name}`}</p>
+                </td>
+                <td className="p-6">{user?.sponsor}</td>
+                <td className="p-6">{user?.rank}</td>
+                <td className="p-6">{user?.created_at}</td>
+                <td className="p-6">{user?.tree_view}</td>
+                <td className="p-6">{user?.status}</td>
+                <td className="flex gap-4">
+                  <p className="bg-green-100 text-green-500 flex justify-center px-2 rounded-lg w-fit">
+                    View
+                  </p>
+                  <p className="bg-orange-100 text-orange-500 flex justify-center px-2 rounded-lg w-fit">
+                    Suspend
+                  </p>
+                  <p className="bg-red-100 text-red-500 flex justify-center px-2 rounded-lg w-fit">
+                    Delete
                   </p>
                 </td>
               </tr>

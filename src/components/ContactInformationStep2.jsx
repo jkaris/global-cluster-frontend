@@ -131,7 +131,7 @@ const ContactInformationStep2 = ({ register, errors }) => {
         <input
           className="p-6 border outline-none rounded-md"
           type="tel"
-          id="phone_no"
+          id="phone_number"
           {...register("phone_number", { required: "Phone number is required" })}
         />
         {errors.phone_number && <p className="text-red-500">{errors.phone_number.message}</p>}

@@ -111,8 +111,8 @@ function ShowDetailComp({ detail, setShowDetail, type }) {
                 <p className="font-bold ">{detail.status}</p>
               </div>
               <div>
-                <p>Link</p>
-                <p className="font-bold">{detail.link}</p>
+                <p>{detail.product_link}</p>
+                <p className="font-bold">{detail.product_value}</p>
               </div>
             </div>
             <div className="flex flex-col gap-4 p-4">

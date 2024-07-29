@@ -8,10 +8,12 @@ import { IoMdAdd } from "react-icons/io";
 import Filter from "../../components/ui/Filter";
 import Pagination from "../../components/Pagination";
 import { useNavigate } from "react-router-dom";
+import { useGetUsersMutation } from "../../features/user/userApiSlice";
 
 function ManageUser() {
-  const [productsData, setProductsData] = useState([]);
+  const [usersData, setUsersData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [getUsers] = useGetUsersMutation();
 
   const navigate = useNavigate();
 
@@ -22,8 +24,27 @@ function ManageUser() {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
 
-  const currentProducts = productsData.slice(startIndex, endIndex);
-
+  const currentUsers = usersData.slice(startIndex, endIndex);
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await getUsers().unwrap();
+        setUsersData(response);
+      } catch (error) {
+        if (error.response) {
+          // Server errors (status code outside of 2xx range)
+          console.error("Server Error:", JSON.stringify(error.response));
+        } else if (error.request) {
+          // Network errors or no response from server
+          console.error("Network Error:", error.message);
+        } else {
+          // Other errors
+          console.error("Error:", error.message);
+        }
+      }
+    };
+    fetchUsers();
+  }, []);
   return (
     <div className="flex flex-col gap-8 bg-gray-50">
       <AdminDashboardHeader />
@@ -42,23 +63,24 @@ function ManageUser() {
           </div>
 
           <section className="flex flex-col gap-6">
-            <Filter data={productsData} setProductFunction={setProductsData} />
+            <Filter data={usersData} setProductFunction={setUsersData} />
             <div className="flex flex-col gap-10">
               <UserDataTable
-                type="default"
-                data={currentProducts}
+                type="admin_manage_users"
+                data={currentUsers}
                 tableHeadNames={[
-                  "User",
-                  // "Type",
-                  "Email",
+                  "Full Name",
+                  "Sponsor",
+                  "Rank",
                   "Date",
+                  "Tree View",
                   "Status",
                   "Action",
                 ]}
               />
               <Pagination
                 currentPage={currentPage}
-                totalPages={Math.ceil(productsData.length / itemsPerPage)}
+                totalPages={Math.ceil(usersData.length / itemsPerPage)}
                 onPageChange={handlePageChange}
               />
             </div>

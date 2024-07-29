@@ -40,7 +40,6 @@ function Register() {
     try {
       const responseData = await signup({
         ...data,
-        phone_number:data.phone_no,
         user_type: "individual",
         sponsor: sponsor,
         membership_package:"membership_package",

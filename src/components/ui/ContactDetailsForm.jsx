@@ -23,14 +23,15 @@ function ContactDetailsForm() {
       
     },
   });
+  const id = user?.profile?.user_id ;
 
   const onSubmit = async (data) => {
     try {
       if (user?.user_type === "company") {
-        const responseData = await updateBusinessProfile({data,id:user?.user_id}).unwrap();
+        const responseData = await updateBusinessProfile({...data,id}).unwrap();
       }
       if (user?.user_type === "individual") {
-        const responseData = await updateUserProfile({data,id:user?.user_id}).unwrap();
+        const responseData = await updateUserProfile({...data,id}).unwrap();
       }
       if (user?.user_type === "admin") {
         // const responseData = await updateProfile(data).unwrap();
@@ -117,14 +118,14 @@ function ContactDetailsForm() {
           )}
         </div>
         <div className="flex flex-col gap-2 text-gray-500">
-          <label htmlFor="phone_no">Phone No</label>
+          <label htmlFor="phone_number">Phone No</label>
           <input
             className="outline-none border border-gray-300 rounded-md px-4 py-3 w-1/3 focus:border-primary-light transition-all duration-300 ease-in-out"
             type="text"
-            id="phone_no"
-            name="phone_no"
+            id="phone_number"
+            name="phone_number"
             placeholder="Enter your Phone No"
-            {...register("phone_no")}
+            {...register("phone_number")}
           />
           {errors.phone_no && (
             <span className="text-red-500">{errors.phone_no.message}</span>
