@@ -20,17 +20,22 @@ function ContactDetailsForm() {
       state: user?.profile?.state || "",
       city: user?.profile?.city || "",
       phone_no: user?.profile?.phone_no || "",
-      
     },
   });
 
   const onSubmit = async (data) => {
     try {
       if (user?.user_type === "company") {
-        const responseData = await updateBusinessProfile({data,id:user?.user_id}).unwrap();
+        const responseData = await updateBusinessProfile({
+          data,
+          id: user?.user_id,
+        }).unwrap();
       }
       if (user?.user_type === "individual") {
-        const responseData = await updateUserProfile({data,id:user?.user_id}).unwrap();
+        const responseData = await updateUserProfile({
+          data,
+          id: user?.user_id,
+        }).unwrap();
       }
       if (user?.user_type === "admin") {
         // const responseData = await updateProfile(data).unwrap();

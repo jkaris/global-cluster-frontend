@@ -10,9 +10,8 @@ import BusinessSignUp from "./components/BusinessSignUp";
 import BusinessLayout from "./Layouts/BusinessLayout";
 import AdminDashboard from "./pages/Admin/Dashboard";
 import BusinessDashboard from "./pages/Business/Dashboard";
-import BusinessProducts, {
-  // loader as productLoader,
-} from "./pages/Business/Products";
+import BusinessProducts from // loader as productLoader,
+"./pages/Business/Products";
 import BusinessSettings from "./pages/Business/Settings";
 import BusinessSignOut from "./pages/Business/SingOut";
 import BusinessSupportTicket from "./pages/Business/SupportTicket";
@@ -171,7 +170,7 @@ const router = createBrowserRouter([
         path: "user/manage/registrations",
         element: <AdminRegister />,
       },
-      
+
       {
         path: "business/manage",
         element: <AdminBusinessManage />,

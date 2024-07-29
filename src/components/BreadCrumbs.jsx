@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom'; // Assuming you are using React Router
-import { GoChevronRight } from 'react-icons/go';
+import React from "react";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom"; // Assuming you are using React Router
+import { GoChevronRight } from "react-icons/go";
 
 function BreadCrumbs({ to }) {
   return (

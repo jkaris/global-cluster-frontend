@@ -12,15 +12,13 @@ export const TicketApiSlice = globalClusterApi.injectEndpoints({
       query: (ticket) => ({
         url: "/api/v1/referrals/supporttickets/",
         method: "POST",
-        body:ticket,
+        body: ticket,
         headers: {
-          'Content-Type': 'multipart/form-data', // This should be omitted as the browser will set it correctly
+          "Content-Type": "multipart/form-data", // This should be omitted as the browser will set it correctly
         },
       }),
     }),
   }),
 });
 
-export const { useTicketsMutation,useAddTicketMutation }  = TicketApiSlice
-
-
+export const { useTicketsMutation, useAddTicketMutation } = TicketApiSlice;

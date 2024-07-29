@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { IoIosSearch } from 'react-icons/io';
-import MemberDownline from '../../components/MemberDownline';
-import Header from '../../components/ui/Header';
-import GenealogyTree from './../../components/ui/GenealogyTree';
+import React, { useState } from "react";
+import { IoIosSearch } from "react-icons/io";
+import MemberDownline from "../../components/MemberDownline";
+import Header from "../../components/ui/Header";
+import GenealogyTree from "./../../components/ui/GenealogyTree";
 
 function Network() {
-  const [tabs, setTabs] = useState('genealogy');
+  const [tabs, setTabs] = useState("genealogy");
 
   return (
     <div className="bg-gray-50">
@@ -15,17 +15,17 @@ function Network() {
           <div className="flex gap-8">
             <p
               className={`${
-                tabs === 'genealogy' ? 'bg-primary-light text-white' : ''
+                tabs === "genealogy" ? "bg-primary-light text-white" : ""
               } py-3 px-8 cursor-pointer`}
-              onClick={() => setTabs('genealogy')}
+              onClick={() => setTabs("genealogy")}
             >
               Genealogy
             </p>
             <p
               className={`${
-                tabs === 'memberDownline' ? 'bg-primary-light text-white' : ''
+                tabs === "memberDownline" ? "bg-primary-light text-white" : ""
               } py-3 px-8 cursor-pointer`}
-              onClick={() => setTabs('memberDownline')}
+              onClick={() => setTabs("memberDownline")}
             >
               Member Downline
             </p>
@@ -45,14 +45,14 @@ function Network() {
           </div>
         </div>
         <section className="p-10">
-          {tabs === 'genealogy' && (
+          {tabs === "genealogy" && (
             <div className="bg-white m-10 border">
               <div className="bg-gray-50 m-10">
                 <GenealogyTree />
               </div>
             </div>
           )}
-          {tabs === 'memberDownline' && <MemberDownline />}
+          {tabs === "memberDownline" && <MemberDownline />}
         </section>
       </main>
     </div>

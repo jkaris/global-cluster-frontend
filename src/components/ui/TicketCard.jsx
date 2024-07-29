@@ -1,6 +1,6 @@
-import { PropTypes } from 'prop-types';
-import React from 'react';
-import productTicketImg from './../../assets/images/productTicketImg.png';
+import { PropTypes } from "prop-types";
+import React from "react";
+import productTicketImg from "./../../assets/images/productTicketImg.png";
 
 function TicketCard({ name, numbers }) {
   return (

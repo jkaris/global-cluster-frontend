@@ -1,8 +1,8 @@
 // src/components/ui/TreeNode.js
 
-import PropTypes from 'prop-types';
-import React from 'react';
-import UserProfile from './../../assets/images/userProfile.png';
+import PropTypes from "prop-types";
+import React from "react";
+import UserProfile from "./../../assets/images/userProfile.png";
 
 function TreeNode({ node, addNode }) {
   return (
@@ -12,7 +12,7 @@ function TreeNode({ node, addNode }) {
           <img src={UserProfile} alt="profile" className="w-12 h-12" />
           <p>{node.name}</p>
         </div>
-        {node.name === '+' ? (
+        {node.name === "+" ? (
           <button onClick={() => addNode(node.id)} className="text-blue-500">
             +
           </button>
@@ -20,7 +20,7 @@ function TreeNode({ node, addNode }) {
       </div>
       {node.children.length > 0 && (
         <div className="flex gap-4 mt-4">
-          {node.children.map(child => (
+          {node.children.map((child) => (
             <TreeNode key={child.id} node={child} addNode={addNode} />
           ))}
         </div>

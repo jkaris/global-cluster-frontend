@@ -1,7 +1,7 @@
-import React from 'react';
-import LoginForm from '../components/LoginForm';
-import LoginHeader from '../components/LoginHeader';
-import LoginPageImg from './../assets/images/loginPageSideImg.jpeg';
+import React from "react";
+import LoginForm from "../components/LoginForm";
+import LoginHeader from "../components/LoginHeader";
+import LoginPageImg from "./../assets/images/loginPageSideImg.jpeg";
 
 function Login() {
   return (

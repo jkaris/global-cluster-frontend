@@ -1,12 +1,12 @@
 import { BASE_URL as BASE_url } from "../lib/constants";
-export const BASE_URL = BASE_url
+export const BASE_URL = BASE_url;
 //will not be using these methods in prefence of the rtkQuery mutation injectected into the endpoints in feature slices.
 export async function fetchProducts() {
   try {
     const response = await fetch(`${BASE_URL}/products/`, {
-      method: 'GET', // Specify the request method
+      method: "GET", // Specify the request method
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     });
 
@@ -18,31 +18,31 @@ export async function fetchProducts() {
 
     return productsData;
   } catch (error) {
-    console.error('Error fetching products:', error.message);
+    console.error("Error fetching products:", error.message);
 
     return [];
   }
 }
 
 // api/api.js
-export const addProduct = async newProduct => {
+export const addProduct = async (newProduct) => {
   const defaultProduct = {
-    name: 'Default Name',
-    status: 'Pending',
-    description: 'No description provided',
+    name: "Default Name",
+    status: "Pending",
+    description: "No description provided",
     shares: 12,
     traffic: 200,
-    phone_no: '',
-    link: '',
+    phone_no: "",
+    link: "",
     ...newProduct,
     photo: null,
   };
 
   try {
     const response = await fetch(`${BASE_URL}/products/`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(defaultProduct),
     });
@@ -60,9 +60,9 @@ export const addProduct = async newProduct => {
 export async function fetchSupportTickets() {
   try {
     const response = await fetch(`${BASE_URL}/support-tickets/`, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     });
 
@@ -74,7 +74,7 @@ export async function fetchSupportTickets() {
 
     return supportTicketData;
   } catch (error) {
-    console.error('Error fetching products:', error.message);
+    console.error("Error fetching products:", error.message);
 
     return [];
   }
@@ -85,9 +85,9 @@ export async function addTicket(newTicket) {
 
   try {
     const response = await fetch(`${BASE_URL}/support-tickets/`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(newTicket),
     });
@@ -105,9 +105,9 @@ export async function addTicket(newTicket) {
 export async function fetchWalletData() {
   try {
     const response = await fetch(`${BASE_URL}/wallets/`, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     });
 
@@ -119,7 +119,7 @@ export async function fetchWalletData() {
 
     return walletData;
   } catch (error) {
-    console.error('Error fetching products:', error.message);
+    console.error("Error fetching products:", error.message);
 
     return [];
   }
@@ -128,9 +128,9 @@ export async function fetchWalletData() {
 export async function fetchPayoutsData() {
   try {
     const response = await fetch(`${BASE_URL}/payouts/`, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     });
 
@@ -142,7 +142,7 @@ export async function fetchPayoutsData() {
 
     return payoutData;
   } catch (error) {
-    console.error('Error fetching products:', error.message);
+    console.error("Error fetching products:", error.message);
 
     return [];
   }
@@ -152,9 +152,9 @@ export async function fetchPayoutsData() {
 export async function fetchUsersData() {
   try {
     const response = await fetch(`${BASE_URL}/profile/`, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     });
 
@@ -166,7 +166,7 @@ export async function fetchUsersData() {
     console.log(usersData);
     return usersData;
   } catch (error) {
-    console.error('Error fetching products:', error.message);
+    console.error("Error fetching products:", error.message);
 
     return [];
   }
@@ -178,9 +178,9 @@ async function SendProfileData(data) {
 
   try {
     const response = await fetch(`${BASE_URL}/profile/`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
     });

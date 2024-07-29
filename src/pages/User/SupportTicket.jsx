@@ -54,11 +54,10 @@ function SupportTicket() {
     setCurrentPage(pageNumber);
   };
 
- 
   // Slice the data array based on currentPage and itemsPerPage
   const paginatedData = ticketsData.slice(
     (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
+    currentPage * itemsPerPage,
   );
 
   async function addNewTicket(newTicket) {
@@ -130,7 +129,7 @@ function SupportTicket() {
         </section>
         <section className="p-10 space-y-20">
           <div className="p-8 flex flex-col gap-10">
-          <Filter data={ticketsData} setProductFunction={setTicketsData} />
+            <Filter data={ticketsData} setProductFunction={setTicketsData} />
             <TableData
               type="supportTicket"
               data={paginatedData}

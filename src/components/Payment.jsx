@@ -1,17 +1,17 @@
-import PropTypes from 'prop-types';
-import React, { useState } from 'react';
-import { FaCreditCard, FaMobileAlt } from 'react-icons/fa';
-import { IoIosClose } from 'react-icons/io';
-import { RiMoneyDollarCircleLine } from 'react-icons/ri';
+import PropTypes from "prop-types";
+import React, { useState } from "react";
+import { FaCreditCard, FaMobileAlt } from "react-icons/fa";
+import { IoIosClose } from "react-icons/io";
+import { RiMoneyDollarCircleLine } from "react-icons/ri";
 
 function Payment({ regForm, setRegForm }) {
-  const [paymentTab, setPaymentTab] = useState('mobileMoney');
+  const [paymentTab, setPaymentTab] = useState("mobileMoney");
 
   return (
     <div className="h-screen w-screen fixed top-0 left-0 bg-primary-light flex items-center justify-center">
       <div
         className="fixed bg-white p-6 top-20 rounded-full  cursor-pointer"
-        onClick={regForm => setRegForm(regForm - 1)}
+        onClick={(regForm) => setRegForm(regForm - 1)}
       >
         <IoIosClose className="text-5xl" />
       </div>
@@ -20,25 +20,25 @@ function Payment({ regForm, setRegForm }) {
           <h3 className="text-lg font-semibold mb-6">PAY WITH</h3>
           <div
             className={`flex items-center mb-4 cursor-pointer ${
-              paymentTab === 'mobileMoney' ? 'text-green-500' : 'text-gray-600'
+              paymentTab === "mobileMoney" ? "text-green-500" : "text-gray-600"
             }`}
-            onClick={() => setPaymentTab('mobileMoney')}
+            onClick={() => setPaymentTab("mobileMoney")}
           >
             <FaMobileAlt className="mr-2" />
             <span>Mobile Money</span>
-            {paymentTab === 'mobileMoney' && (
+            {paymentTab === "mobileMoney" && (
               <span className="ml-auto text-green-500">•</span>
             )}
           </div>
           <div
             className={`flex items-center cursor-pointer ${
-              paymentTab === 'cardMoney' ? 'text-green-500' : 'text-gray-600'
+              paymentTab === "cardMoney" ? "text-green-500" : "text-gray-600"
             }`}
-            onClick={() => setPaymentTab('cardMoney')}
+            onClick={() => setPaymentTab("cardMoney")}
           >
             <FaCreditCard className="mr-2" />
             <span>Card</span>
-            {paymentTab === 'cardMoney' && (
+            {paymentTab === "cardMoney" && (
               <span className="ml-auto text-green-500">•</span>
             )}
           </div>
@@ -59,7 +59,7 @@ function Payment({ regForm, setRegForm }) {
             </div>
           </div>
 
-          {paymentTab === 'mobileMoney' && (
+          {paymentTab === "mobileMoney" && (
             <>
               <p className="mb-4 text-gray-600">
                 Enter your mobile money number and provider to start the payment
@@ -89,7 +89,7 @@ function Payment({ regForm, setRegForm }) {
             </>
           )}
 
-          {paymentTab === 'cardMoney' && (
+          {paymentTab === "cardMoney" && (
             <>
               <p className="mb-4 text-gray-600">
                 Enter your card details to pay

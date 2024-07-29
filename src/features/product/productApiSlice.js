@@ -26,7 +26,7 @@ export const ProductApiSlice = globalClusterApi.injectEndpoints({
         method: "POST",
         body: product,
         headers: {
-          'Content-Type': 'multipart/form-data', // This should be omitted as the browser will set it correctly
+          "Content-Type": "multipart/form-data", // This should be omitted as the browser will set it correctly
         },
       }),
     }),
@@ -43,4 +43,10 @@ export const ProductApiSlice = globalClusterApi.injectEndpoints({
   }),
 });
 
-export const { useProductsMutation,useProductMutation,useDeleteProductMutation,useAddProductMutation,useUpdateProductMutation } = ProductApiSlice;
+export const {
+  useProductsMutation,
+  useProductMutation,
+  useDeleteProductMutation,
+  useAddProductMutation,
+  useUpdateProductMutation,
+} = ProductApiSlice;

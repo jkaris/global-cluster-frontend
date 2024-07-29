@@ -28,7 +28,9 @@ function AdminRegister() {
   let sponsor;
   switch (user?.user_type) {
     case "individual":
-      sponsor = user?.profile?.username || user?.profile?.first_name + " " + user?.profile?.last_name   ;
+      sponsor =
+        user?.profile?.username ||
+        user?.profile?.first_name + " " + user?.profile?.last_name;
       break;
     case "company":
       sponsor = user?.profile?.company_name;
@@ -42,7 +44,7 @@ function AdminRegister() {
         ...data,
         user_type: "individual",
         sponsor: sponsor,
-        membership_package:"membership_package",
+        membership_package: "membership_package",
         price: "1000",
       }).unwrap();
 

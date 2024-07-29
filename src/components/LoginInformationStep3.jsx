@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
 const LoginInformationStep3 = ({ register, errors, watch }) => {
   const password = watch("password");
@@ -16,7 +16,9 @@ const LoginInformationStep3 = ({ register, errors, watch }) => {
           id="username"
           {...register("username", { required: "Username is required" })}
         />
-        {errors.username && <p className="text-red-500">{errors.username.message}</p>}
+        {errors.username && (
+          <p className="text-red-500">{errors.username.message}</p>
+        )}
       </div>
       <div className="flex flex-col gap-2">
         <label htmlFor="password">
@@ -28,7 +30,9 @@ const LoginInformationStep3 = ({ register, errors, watch }) => {
           id="password"
           {...register("password", { required: "Password is required" })}
         />
-        {errors.password && <p className="text-red-500">{errors.password.message}</p>}
+        {errors.password && (
+          <p className="text-red-500">{errors.password.message}</p>
+        )}
       </div>
       <div className="flex flex-col gap-2">
         <label htmlFor="confirmPassword">
@@ -40,17 +44,21 @@ const LoginInformationStep3 = ({ register, errors, watch }) => {
           id="confirmPassword"
           {...register("confirmPassword", {
             required: "Please confirm your password",
-            validate: (value) => value === password || "Passwords do not match"
+            validate: (value) => value === password || "Passwords do not match",
           })}
         />
-        {errors.confirmPassword && <p className="text-red-500">{errors.confirmPassword.message}</p>}
+        {errors.confirmPassword && (
+          <p className="text-red-500">{errors.confirmPassword.message}</p>
+        )}
       </div>
       <div className="flex gap-2">
         <input
           className="py-6 px-2"
           type="checkbox"
           id="terms"
-          {...register("terms", { required: "You must accept the terms and conditions" })}
+          {...register("terms", {
+            required: "You must accept the terms and conditions",
+          })}
         />
         <label htmlFor="terms" className="uppercase">
           I accept terms and conditions <span className="text-red-500">*</span>
@@ -59,7 +67,7 @@ const LoginInformationStep3 = ({ register, errors, watch }) => {
       </div>
     </div>
   );
-}
+};
 
 LoginInformationStep3.propTypes = {
   register: PropTypes.func.isRequired,

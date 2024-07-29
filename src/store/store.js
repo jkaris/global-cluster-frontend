@@ -24,7 +24,7 @@ import ProductReducer from "../features/product/productSlice"; // Ensure this is
 import UserReducer from "../features/user/userSlice"; // Ensure this is a default export
 import TicketReducer from "../features/ticket/ticketSlice"; // Ensure this is a default export
 import AdminReducer from "../features/admin/adminSlice"; // Ensure this is a default export
-import BusinessReducer from "../features/business/businessSlice"
+import BusinessReducer from "../features/business/businessSlice";
 // Auth persistence configuration
 const authPersistConfig = {
   key: `${WEBSITE_NAME}:auth`,
@@ -45,20 +45,36 @@ const persistedAuthReducer = persistReducer(authPersistConfig, AuthReducer);
 const rootReducer = {
   [globalClusterApi.reducerPath]: globalClusterApi.reducer,
   auth: persistedAuthReducer,
-  product: persistReducer({ key: `${WEBSITE_NAME}:product`, ...sessionPersistConfig }, ProductReducer),
-  ticket: persistReducer({ key: `${WEBSITE_NAME}:ticket`, ...sessionPersistConfig }, TicketReducer),
-  user: persistReducer({ key: `${WEBSITE_NAME}:user`, ...sessionPersistConfig }, UserReducer),
-  admin: persistReducer({ key: `${WEBSITE_NAME}:user`, ...sessionPersistConfig }, AdminReducer),
-  business: persistReducer({ key: `${WEBSITE_NAME}:user`, ...sessionPersistConfig }, BusinessReducer),
+  product: persistReducer(
+    { key: `${WEBSITE_NAME}:product`, ...sessionPersistConfig },
+    ProductReducer,
+  ),
+  ticket: persistReducer(
+    { key: `${WEBSITE_NAME}:ticket`, ...sessionPersistConfig },
+    TicketReducer,
+  ),
+  user: persistReducer(
+    { key: `${WEBSITE_NAME}:user`, ...sessionPersistConfig },
+    UserReducer,
+  ),
+  admin: persistReducer(
+    { key: `${WEBSITE_NAME}:user`, ...sessionPersistConfig },
+    AdminReducer,
+  ),
+  business: persistReducer(
+    { key: `${WEBSITE_NAME}:user`, ...sessionPersistConfig },
+    BusinessReducer,
+  ),
 };
 
 export const store = configureStore({
   reducer: rootReducer,
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware({
-    serializableCheck: {
-      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-    },
-  }).concat(globalClusterApi.middleware),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }).concat(globalClusterApi.middleware),
   devTools: process.env.NODE_ENV !== "production",
 });
 

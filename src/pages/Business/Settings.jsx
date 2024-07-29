@@ -1,20 +1,19 @@
-import React, { useState } from 'react';
-import ActiveTab from '../../components/ui/ActiveTab';
-import BusinessCredentials from '../../components/ui/BusinessCredentials';
-import ContactDetailsForm from '../../components/ui/ContactDetailsForm';
-import BusinessDashboardHeader from '../../components/ui/Header';
-import PersonalDetailsForm from '../../components/ui/PersonalDetailsForm';
-import SecurityDetailsForm from '../../components/ui/SecurityDetailsForm';
+import React, { useState } from "react";
+import ActiveTab from "../../components/ui/ActiveTab";
+import BusinessCredentials from "../../components/ui/BusinessCredentials";
+import ContactDetailsForm from "../../components/ui/ContactDetailsForm";
+import BusinessDashboardHeader from "../../components/ui/Header";
+import PersonalDetailsForm from "../../components/ui/PersonalDetailsForm";
+import SecurityDetailsForm from "../../components/ui/SecurityDetailsForm";
 
 function Settings() {
   // State to keep track of the active tab, default to "Personal Details"
-  const [activeTab, setActiveTab] = useState('Personal Details');
+  const [activeTab, setActiveTab] = useState("Personal Details");
 
   // Function to handle tab click and set the active tab
-  const handleTabClick = tabName => {
+  const handleTabClick = (tabName) => {
     setActiveTab(tabName);
   };
-
 
   return (
     <div className="flex flex-col gap-4 bg-gray-50">
@@ -29,9 +28,9 @@ function Settings() {
           setActiveTab={setActiveTab}
         />
 
-        {activeTab === 'Personal Details' && <PersonalDetailsForm business />}
-        {activeTab === 'Contact Details' && <ContactDetailsForm />}
-        {activeTab === 'Security' && <SecurityDetailsForm />}
+        {activeTab === "Personal Details" && <PersonalDetailsForm business />}
+        {activeTab === "Contact Details" && <ContactDetailsForm />}
+        {activeTab === "Security" && <SecurityDetailsForm />}
       </section>
     </div>
   );

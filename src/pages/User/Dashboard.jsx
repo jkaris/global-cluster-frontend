@@ -23,8 +23,7 @@ function Dashboard() {
     const fetchUsers = async () => {
       try {
         const response = await getUsers().unwrap();
-        setNewMembers(response);//filter by created_at
-
+        setNewMembers(response); //filter by created_at
       } catch (error) {
         if (error.response) {
           // Server errors (status code outside of 2xx range)

@@ -130,10 +130,7 @@ function AdminLogin() {
               </div>
               <div className="flex justify-between px-2">
                 <span className="flex w-auto gap-8 items-center">
-                  <input
-                    type="checkbox"
-                    className="bg-gray-400"
-                  />
+                  <input type="checkbox" className="bg-gray-400" />
                   <span>Remember me</span>
                 </span>
                 <div className="w-full max-w-[200px] bg-primary-light text-white font-semibold p-4 py-3 rounded-full hover:bg-primary-dark transition duration-300 flex gap-4 items-center justify-center cursor-pointer">

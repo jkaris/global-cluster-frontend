@@ -4,7 +4,6 @@ import Header from "./../../components/ui/Header";
 import Pagination from "../../components/Pagination";
 import { useGetUsersMutation } from "../../features/user/userApiSlice";
 
-
 function AdminUserRegistrations() {
   const [currentPage, setCurrentPage] = useState(1);
   const [usersData, setUsersData] = useState([]);
@@ -19,7 +18,7 @@ function AdminUserRegistrations() {
 
   const paginatedData = usersData.slice(
     (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
+    currentPage * itemsPerPage,
   );
   useEffect(() => {
     const fetchUsers = async () => {

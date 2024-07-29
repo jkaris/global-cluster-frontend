@@ -22,16 +22,19 @@ function PersonalDetailsForm() {
       gender: user?.profile?.gender || "",
     },
   });
-  const id = user?.profile?.user_id ;
-  
+  const id = user?.profile?.user_id;
+
   const onSubmit = async (data) => {
     try {
       if (user?.user_type === "company") {
         // console.log(data)
-        const responseData = await updateBusinessProfile({...data,id}).unwrap();
+        const responseData = await updateBusinessProfile({
+          ...data,
+          id,
+        }).unwrap();
       }
       if (user?.user_type === "individual") {
-        const responseData = await updateUserProfile({data,id}).unwrap();
+        const responseData = await updateUserProfile({ data, id }).unwrap();
       }
       if (user?.user_type === "admin") {
         // const responseData = await updateProfile(data).unwrap();

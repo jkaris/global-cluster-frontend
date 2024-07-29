@@ -1,6 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import ProductTicketImg from './../assets/images/productTicketImg.png';
+import React from "react";
+import PropTypes from "prop-types";
+import ProductTicketImg from "./../assets/images/productTicketImg.png";
 
 function ProductTicket({ purpose, numbers }) {
   return (

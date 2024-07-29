@@ -18,7 +18,7 @@ axiosInstance.interceptors.request.use(
     // Check if the URL matches the specified patterns and the method is POST
     const shouldExclude =
       (config.url.includes("/accounts/individuals/") ||
-      config.url.includes("/accounts/companies/")) &&
+        config.url.includes("/accounts/companies/")) &&
       config.method === "POST";
 
     if (accessToken && !shouldExclude) {
@@ -30,7 +30,7 @@ axiosInstance.interceptors.request.use(
   },
   (error) => {
     return Promise.reject(error);
-  }
+  },
 );
 
 // Response interceptor to handle token refresh on 401 errors, excluding login URL
@@ -54,15 +54,18 @@ axiosInstance.interceptors.response.use(
         const lc_storage = localStorage.getItem(`persist:${WEBSITE_NAME}:auth`);
         const lc_storage_obj = JSON.parse(lc_storage || "{}"); // Safely parse localStorage
 
-        const refreshToken = lc_storage_obj?.refresh.replace('"',"");
+        const refreshToken = lc_storage_obj?.refresh.replace('"', "");
         if (!refreshToken) {
           throw new Error("No refresh token available");
         }
 
         // Use refresh token logic to get a new access token
-        const response = await axios.post(`${BASE_URL}/api/v1/accounts/token/refresh/`, {
-          refresh: refreshToken.replace('"',""),
-        });
+        const response = await axios.post(
+          `${BASE_URL}/api/v1/accounts/token/refresh/`,
+          {
+            refresh: refreshToken.replace('"', ""),
+          },
+        );
 
         // console.log(JSON.stringify(response.data) + "-------------Refresh Token--------------");
         const newAccessToken = response.data.access;
@@ -71,7 +74,7 @@ axiosInstance.interceptors.response.use(
         lc_storage_obj.access = newAccessToken;
         localStorage.setItem(
           `persist:${WEBSITE_NAME}:auth`,
-          JSON.stringify(lc_storage_obj)
+          JSON.stringify(lc_storage_obj),
         );
 
         // Retry original request with new access token
@@ -86,7 +89,7 @@ axiosInstance.interceptors.response.use(
     }
 
     return Promise.reject(error);
-  }
+  },
 );
 export const nigeriaStates = [
   "Abia",
@@ -125,5 +128,5 @@ export const nigeriaStates = [
   "Sokoto",
   "Taraba",
   "Yobe",
-  "Zamfara"
-]
+  "Zamfara",
+];

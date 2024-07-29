@@ -74,7 +74,9 @@ function UserDataTable({ data = [], tableHeadNames, type = "default" }) {
                 </td>
                 <td className="p-6">{user?.company_registration_number}</td>
                 <td className="p-6">{user?.email || "placeholder@hxl.com"}</td>
-                <td className="p-6">{convertStandardDate(user?.created_at || new Date() )}</td>
+                <td className="p-6">
+                  {convertStandardDate(user?.created_at || new Date())}
+                </td>
                 <td className="flex gap-4">
                   <p className="bg-green-100 text-green-500 flex justify-center px-2 rounded-lg w-fit">
                     Approve

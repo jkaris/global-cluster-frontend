@@ -4,11 +4,15 @@ import { MdIosShare } from "react-icons/md";
 import productImg from "./../assets/images/productImg.png";
 import { getDateStr, imageUrl } from "../lib/utils";
 
-const PromoteAndEarnRowTable = ({ products,handleShareModal,setLinkToShare }) => {
+const PromoteAndEarnRowTable = ({
+  products,
+  handleShareModal,
+  setLinkToShare,
+}) => {
   const handleClick = (item) => {
-    handleShareModal()
-    setLinkToShare(item?.product_link)
-  }
+    handleShareModal();
+    setLinkToShare(item?.product_link);
+  };
   return (
     <div className="container mx-auto px-10 py-7">
       <table className="w-full text-gray-500">
@@ -61,7 +65,6 @@ const PromoteAndEarnRowTable = ({ products,handleShareModal,setLinkToShare }) =>
           ))}
         </tbody>
       </table>
-     
     </div>
   );
 };
@@ -73,7 +76,7 @@ PromoteAndEarnRowTable.propTypes = {
       company: PropTypes.string.isRequired,
       description: PropTypes.string.isRequired,
       date: PropTypes.string.isRequired,
-    })
+    }),
   ).isRequired,
   handleShareModal: PropTypes.func.isRequired,
   setLinkToShare: PropTypes.func.isRequired,

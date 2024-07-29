@@ -68,7 +68,9 @@ function AddPayout({ CloseModalWindow, currentStatus }) {
         <div className="w-full flex flex-col gap-4">
           {/* Display wallet balance */}
           <div className="border-dashed border-primary px-4 bg-primary/30 py-8 rounded-md flex flex-col items-start">
-            <span className="text-slate-700 font-bold text-2xl ">Wallet Balance</span>
+            <span className="text-slate-700 font-bold text-2xl ">
+              Wallet Balance
+            </span>
             <span className="text-xl font-bold">
               {walletData.balance ? `₦${walletData.balance}` : "Loading..."}
             </span>

@@ -4,7 +4,6 @@ import Header from "./../../components/ui/Header";
 import Pagination from "../../components/Pagination";
 import { useGetBusinessMutation } from "../../features/business/businessApiSlice";
 
-
 function BusinessRegistrations() {
   const [currentPage, setCurrentPage] = useState(1);
   const [usersData, setUsersData] = useState([]);
@@ -19,7 +18,7 @@ function BusinessRegistrations() {
 
   const paginatedData = usersData.slice(
     (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
+    currentPage * itemsPerPage,
   );
   useEffect(() => {
     const fetchUsers = async () => {
@@ -50,13 +49,7 @@ function BusinessRegistrations() {
           <UserDataTable
             type="company"
             data={paginatedData}
-            tableHeadNames={[
-              "User",
-              "Rc or BN",
-              "Email",
-              "Date",
-              "Action",
-            ]}
+            tableHeadNames={["User", "Rc or BN", "Email", "Date", "Action"]}
           />
         </div>
         {itemsPerPage <= usersData.length && (

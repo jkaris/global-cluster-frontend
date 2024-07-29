@@ -53,7 +53,6 @@ function BankDetailForm() {
             id="bank-name"
             // name="bank-name"
             {...register("bank-name")}
-
           >
             <option>Select Bank Name</option>
             {/* Add more bank options as needed */}

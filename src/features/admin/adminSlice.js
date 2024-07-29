@@ -21,13 +21,9 @@ const initialState = {
 const AdminSlice = createSlice({
   name: "admin",
   initialState,
-  reducers: {
-    
-  },
+  reducers: {},
 });
 
-export const {} =
-  AdminSlice.actions;
+export const {} = AdminSlice.actions;
 
 export default AdminSlice.reducer; // Ensure this is correctly exported
-

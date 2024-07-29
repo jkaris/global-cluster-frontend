@@ -1,7 +1,7 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import { CiWallet } from 'react-icons/ci';
-import { PiApproximateEquals } from 'react-icons/pi';
+import PropTypes from "prop-types";
+import React from "react";
+import { CiWallet } from "react-icons/ci";
+import { PiApproximateEquals } from "react-icons/pi";
 
 function WalletCard({ totalBalance }) {
   return (

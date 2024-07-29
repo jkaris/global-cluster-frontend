@@ -1,5 +1,5 @@
-import React from 'react';
-import AdminDashboardHeader from './../../components/ui/Header';
+import React from "react";
+import AdminDashboardHeader from "./../../components/ui/Header";
 
 function StafManagement() {
   return (

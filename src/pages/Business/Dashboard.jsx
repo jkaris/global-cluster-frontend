@@ -73,10 +73,16 @@ function Dashboard() {
   }, [products, access]);
 
   // Calculate total shares
-  const totalShares = productsData.length > 0 ? productsData.reduce((sum, product) => sum + (product.shares || 0),0 )  : 0
+  const totalShares =
+    productsData.length > 0
+      ? productsData.reduce((sum, product) => sum + (product.shares || 0), 0)
+      : 0;
 
   // Calculate total product count
-  const productVisits = productsData.length > 0 ? productsData.reduce((sum, product) => sum + (product.traffic || 0), 0 ) : 0
+  const productVisits =
+    productsData.length > 0
+      ? productsData.reduce((sum, product) => sum + (product.traffic || 0), 0)
+      : 0;
 
   const slicedTopData = productsData.slice(0, 5);
   const totalIncDecVisits = 0;

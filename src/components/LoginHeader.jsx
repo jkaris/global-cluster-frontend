@@ -1,5 +1,5 @@
-import React from 'react';
-import GlobalClusterLogo from './../assets/images/Logo.png';
+import React from "react";
+import GlobalClusterLogo from "./../assets/images/Logo.png";
 
 function LoginHeader() {
   return (

@@ -28,7 +28,9 @@ function Register() {
   let sponsor;
   switch (user?.user_type) {
     case "individual":
-      sponsor = user?.profile?.username || user?.profile?.first_name + " " + user?.profile?.last_name   ;
+      sponsor =
+        user?.profile?.username ||
+        user?.profile?.first_name + " " + user?.profile?.last_name;
       break;
     case "company":
       sponsor = user?.profile?.company_name;
@@ -40,10 +42,10 @@ function Register() {
     try {
       const responseData = await signup({
         ...data,
-        phone_number:data.phone_no,
+        phone_number: data.phone_no,
         user_type: "individual",
         sponsor: sponsor,
-        membership_package:"membership_package",
+        membership_package: "membership_package",
         price: "1000",
       }).unwrap();
 

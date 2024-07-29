@@ -1,74 +1,74 @@
-import React, { useState } from 'react';
-import { BiChevronDown } from 'react-icons/bi';
-import { IoEyeOutline } from 'react-icons/io5';
-import BusinessProductImg from './../../assets/images/productImg.png';
+import React, { useState } from "react";
+import { BiChevronDown } from "react-icons/bi";
+import { IoEyeOutline } from "react-icons/io5";
+import BusinessProductImg from "./../../assets/images/productImg.png";
 
 // Define table headers
 const headers = [
-  'Product Name',
-  'Description',
-  'No of Shares',
-  'Traffic',
-  'Priority',
-  'Action',
+  "Product Name",
+  "Description",
+  "No of Shares",
+  "Traffic",
+  "Priority",
+  "Action",
 ];
 
 // Define table data with month property
 const BusinessProductsData = [
   {
-    name: 'Lorem Ipsum',
+    name: "Lorem Ipsum",
     description:
-      'Lorem ipsum dolor sit amet, consecturote adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    noShares: '423',
-    traffic: '1200',
-    status: 'active',
-    month: 'January', // Added month
+      "Lorem ipsum dolor sit amet, consecturote adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    noShares: "423",
+    traffic: "1200",
+    status: "active",
+    month: "January", // Added month
     action: <IoEyeOutline />,
   },
   {
-    name: 'Lorem Ipsum',
-    description: 'Lorem ipsum dolor sit amet, consecturote adipiscing elit.',
-    noShares: '423',
-    traffic: '1200',
-    status: 'active',
-    month: 'February', // Added month
+    name: "Lorem Ipsum",
+    description: "Lorem ipsum dolor sit amet, consecturote adipiscing elit.",
+    noShares: "423",
+    traffic: "1200",
+    status: "active",
+    month: "February", // Added month
     action: <IoEyeOutline />,
   },
   {
-    name: 'Lorem Ipsum',
-    description: 'Lorem ipsum dolor sit amet, consecturote.',
-    noShares: '423',
-    traffic: '1200',
-    status: 'decline',
-    month: 'March', // Added month
+    name: "Lorem Ipsum",
+    description: "Lorem ipsum dolor sit amet, consecturote.",
+    noShares: "423",
+    traffic: "1200",
+    status: "decline",
+    month: "March", // Added month
     action: <IoEyeOutline />,
   },
   {
-    name: 'Lorem Ipsum',
+    name: "Lorem Ipsum",
     description:
-      'Lorem ipsum dolor sit amet, consecturote adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    noShares: '423',
-    traffic: '1200',
-    status: 'active',
-    month: 'January', // Added month
+      "Lorem ipsum dolor sit amet, consecturote adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    noShares: "423",
+    traffic: "1200",
+    status: "active",
+    month: "January", // Added month
     action: <IoEyeOutline />,
   },
   {
-    name: 'Lorem Ipsum',
-    description: 'Lorem ipsum dolor sit amet, consecturote adipiscing elit.',
-    noShares: '423',
-    traffic: '1200',
-    status: 'decline',
-    month: 'February', // Added month
+    name: "Lorem Ipsum",
+    description: "Lorem ipsum dolor sit amet, consecturote adipiscing elit.",
+    noShares: "423",
+    traffic: "1200",
+    status: "decline",
+    month: "February", // Added month
     action: <IoEyeOutline />,
   },
 ];
 
 // Helper function to truncate text to the first 10 words
 const truncateText = (text, wordLimit) => {
-  const words = text.split(' ');
+  const words = text.split(" ");
   if (words.length > wordLimit) {
-    return words.slice(0, wordLimit).join(' ') + '...';
+    return words.slice(0, wordLimit).join(" ") + "...";
   }
   return text;
 };
@@ -81,22 +81,22 @@ function ProductsBusiness() {
 
   // List of all months for filtering
   const months = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
   ];
 
   // Handler for header checkbox change
-  const handleHeaderCheckboxChange = e => {
+  const handleHeaderCheckboxChange = (e) => {
     const isChecked = e.target.checked;
     if (isChecked) {
       const allRowIndexes = new Set(
@@ -109,7 +109,7 @@ function ProductsBusiness() {
   };
 
   // Handler for individual row checkbox change
-  const handleRowCheckboxChange = index => {
+  const handleRowCheckboxChange = (index) => {
     const updatedSelectedRows = new Set(selectedRows);
     if (updatedSelectedRows.has(index)) {
       updatedSelectedRows.delete(index);
@@ -120,7 +120,7 @@ function ProductsBusiness() {
   };
 
   // Handler for selecting months from dropdown
-  const handleMonthSelect = month => {
+  const handleMonthSelect = (month) => {
     const updatedSelectedMonths = new Set(selectedMonths);
     if (updatedSelectedMonths.has(month)) {
       updatedSelectedMonths.delete(month);
@@ -132,7 +132,9 @@ function ProductsBusiness() {
 
   // Filtered data based on selected months
   const filteredData = Array.from(selectedMonths).length
-    ? BusinessProductsData.filter(product => selectedMonths.has(product.month))
+    ? BusinessProductsData.filter((product) =>
+        selectedMonths.has(product.month),
+      )
     : BusinessProductsData;
 
   // Toggle for showing the month filter dropdown
@@ -148,16 +150,16 @@ function ProductsBusiness() {
             className="flex gap-2 items-center text-gray-500 border px-3 py-2 rounded-md cursor-pointer"
           >
             <p className="text-xl font-semibold">Filter by Month</p>
-            <BiChevronDown style={{ fontSize: '1.5rem' }} />
+            <BiChevronDown style={{ fontSize: "1.5rem" }} />
           </button>
           {showMonthDropdown && (
             <div className="absolute top-12 left-0 mt-2 w-40 bg-white border rounded-md shadow-lg">
-              {months.map(month => (
+              {months.map((month) => (
                 <div
                   key={month}
                   onClick={() => handleMonthSelect(month)}
                   className={`flex items-center p-2 hover:bg-gray-100 cursor-pointer ${
-                    selectedMonths.has(month) ? 'bg-primary text-white' : ''
+                    selectedMonths.has(month) ? "bg-primary text-white" : ""
                   }`}
                 >
                   {month}
@@ -183,11 +185,11 @@ function ProductsBusiness() {
                   />
                 </div>
               </th>
-              {headers.map(header => (
+              {headers.map((header) => (
                 <th
                   key={header}
                   className="px-6 py-3 text-left text-lg font-medium uppercase tracking-wider"
-                  style={header === 'Product Name' ? { minWidth: '200px' } : {}}
+                  style={header === "Product Name" ? { minWidth: "200px" } : {}}
                 >
                   {header}
                 </th>
@@ -226,9 +228,9 @@ function ProductsBusiness() {
                 <td className="px-6 py-4">
                   <span
                     className={`px-2 py-1 ${
-                      product.status === 'decline'
-                        ? 'bg-red-100 text-red-800'
-                        : 'bg-green-100 text-green-800'
+                      product.status === "decline"
+                        ? "bg-red-100 text-red-800"
+                        : "bg-green-100 text-green-800"
                     } rounded text-lg font-semibold`}
                   >
                     {product.status.charAt(0).toUpperCase() +

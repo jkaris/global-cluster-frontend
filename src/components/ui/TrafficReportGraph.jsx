@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 import PropTypes from "prop-types";
-import { BiChevronDown } from 'react-icons/bi';
+import { BiChevronDown } from "react-icons/bi";
 import {
   BarChart,
   Bar,
@@ -8,16 +8,15 @@ import {
   YAxis,
   Tooltip,
   ResponsiveContainer,
-} from 'recharts';
+} from "recharts";
 
-function TrafficReportChart({data=[]}) {
-  
+function TrafficReportChart({ data = [] }) {
   return (
     <div className="w-[60%] flex flex-col gap-12 shadow-[0_0_10px_rgba(0,0,0,0.1)] p-4 rounded-xl">
       <div className="flex justify-between">
         <h2 className="text-xl font-semibold px-6">Traffic Report</h2>
         <p className="flex items-center justify-center gap-6 text-xl text-gray-400">
-          Last 12 Months <BiChevronDown style={{ fontSize: '2.5rem' }} />
+          Last 12 Months <BiChevronDown style={{ fontSize: "2.5rem" }} />
         </p>
       </div>
       <ResponsiveContainer width="100%" height={300}>
@@ -32,17 +31,17 @@ function TrafficReportChart({data=[]}) {
             axisLine={false}
             tickLine={false}
             tickMargin={10} // Increase space between bars and month names
-            tick={{ fill: '#9ca3af', fontSize: 12 }} // Style month names
+            tick={{ fill: "#9ca3af", fontSize: 12 }} // Style month names
           />
           <YAxis
             axisLine={false}
             tickLine={false}
             tickMargin={10} // Increase space between bars and Y-axis labels
-            tick={{ fill: '#9ca3af', fontSize: 12, fontWeight: 'semibold' }} // Style Y-axis labels
+            tick={{ fill: "#9ca3af", fontSize: 12, fontWeight: "semibold" }} // Style Y-axis labels
             domain={[0, 500]} // Set the range of the Y-axis to make bars appear shorter
           />
           <Tooltip
-            cursor={{ fill: 'transparent' }}
+            cursor={{ fill: "transparent" }}
             content={({ active, payload }) => {
               if (active && payload && payload.length) {
                 return (
@@ -67,5 +66,5 @@ function TrafficReportChart({data=[]}) {
 
 export default TrafficReportChart;
 TrafficReportChart.propTypes = {
-  data: PropTypes.array
-}
+  data: PropTypes.array,
+};

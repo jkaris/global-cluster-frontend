@@ -9,9 +9,7 @@ import {
   FaWhatsapp,
 } from "react-icons/fa";
 
-function ShareLinksScreen({ handleSharingMoodal,urlToShare }) {
-  
-
+function ShareLinksScreen({ handleSharingMoodal, urlToShare }) {
   const handleCopyToClipboard = () => {
     navigator.clipboard.writeText(urlToShare).then(() => {
       alert("URL copied to clipboard!");
@@ -72,13 +70,14 @@ function ShareLinksScreen({ handleSharingMoodal,urlToShare }) {
               >
                 <div
                   className="p-8 rounded-full"
-                  style={{ color: `${social.color}` , backgroundColor: `${social.color}4D` }} // 30% opacity
+                  style={{
+                    color: `${social.color}`,
+                    backgroundColor: `${social.color}4D`,
+                  }} // 30% opacity
                 >
                   {social.icon}
                 </div>
-                <p style={{ color: `${social.color}` }}>
-                  {social.name}
-                </p>{" "}
+                <p style={{ color: `${social.color}` }}>{social.name}</p>{" "}
               </a>
             ))}
           </div>

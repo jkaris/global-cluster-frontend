@@ -13,7 +13,6 @@ import {
 } from "../../features/ticket/ticketApiSlice";
 
 function SupportTicket() {
-
   const [currentPage, setCurrentPage] = useState(1);
   const [ticketsData, setTicketsData] = useState([]);
   const [ticket] = useTicketsMutation();
@@ -52,9 +51,8 @@ function SupportTicket() {
   // Slice the data array based on currentPage and itemsPerPage
   const paginatedData = ticketsData.slice(
     (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
+    currentPage * itemsPerPage,
   );
-
 
   // Calculate the total number of tickets
   const sumTickets = ticketsData.length;
@@ -73,9 +71,7 @@ function SupportTicket() {
       <AdminDashboardHeader />
       <main className="mx-10 my-10  rounded-md bg-white">
         <section className="px-20 py-20 flex justify-between items-center">
-          
-        <p className="font-bold text-5xl">Support Center</p>
-
+          <p className="font-bold text-5xl">Support Center</p>
         </section>
 
         <section className=" p-10  bg-gray-50  rounded-xl m-20 flex gap-8">

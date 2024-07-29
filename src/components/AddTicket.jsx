@@ -9,7 +9,12 @@ function AddTicket({ addNewTicket, CloseModalWindow, currentStatus }) {
   const [priority, setPriority] = useState("");
   const [dragging, setDragging] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
-  const { register, handleSubmit, formState: { errors }, setValue } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+  } = useForm();
   const { user } = useUser();
   const modalRef = useRef(null);
 
@@ -102,7 +107,9 @@ function AddTicket({ addNewTicket, CloseModalWindow, currentStatus }) {
                     id="needSupport"
                     className="appearance-none border border-gray-300 rounded-full w-6 h-6 checked:bg-primary-light checked:border-transparent outline-offset-2 focus:ring-primary-light"
                     value="needSupport"
-                    {...register("subject", { required: "Subject is required" })}
+                    {...register("subject", {
+                      required: "Subject is required",
+                    })}
                   />
                   <label className="text-nowrap" htmlFor="needSupport">
                     Need Support
@@ -250,4 +257,4 @@ AddTicket.propTypes = {
   currentStatus: PropTypes.bool,
 };
 
-export default AddTicket
+export default AddTicket;

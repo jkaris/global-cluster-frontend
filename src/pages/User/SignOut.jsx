@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 function SignOut() {
-  return (
-    <div>UserSignOut</div>
-  )
+  return <div>UserSignOut</div>;
 }
 
-export default SignOut
+export default SignOut;

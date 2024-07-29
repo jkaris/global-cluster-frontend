@@ -179,10 +179,10 @@ function TableData({
                       item.priority.toLowerCase() === "high"
                         ? "bg-red-100 text-red-500"
                         : item.priority.toLowerCase() === "medium"
-                        ? "bg-blue-100 text-blue-500"
-                        : item.priority.toLowerCase() === "low"
-                        ? "bg-green-100 text-green-800"
-                        : ""
+                          ? "bg-blue-100 text-blue-500"
+                          : item.priority.toLowerCase() === "low"
+                            ? "bg-green-100 text-green-800"
+                            : ""
                     }`}
                   >
                     {item.priority.charAt(0).toUpperCase() +
@@ -219,8 +219,8 @@ function TableData({
                       item.status === "Active"
                         ? "bg-green-100 text-green-500"
                         : item.status === "Pending"
-                        ? "bg-blue-100 text-blue-500"
-                        : "bg-red-100 text-red-500"
+                          ? "bg-blue-100 text-blue-500"
+                          : "bg-red-100 text-red-500"
                     }`}
                   >
                     {item.status}
@@ -262,8 +262,8 @@ function TableData({
                       item.status === "Active"
                         ? "bg-green-100 text-green-500"
                         : item.status === "Pending"
-                        ? "bg-blue-100 text-blue-500"
-                        : "bg-red-100 text-red-500"
+                          ? "bg-blue-100 text-blue-500"
+                          : "bg-red-100 text-red-500"
                     }`}
                   >
                     {item.status}

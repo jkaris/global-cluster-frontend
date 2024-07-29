@@ -1,20 +1,19 @@
-import React, {  useContext, useEffect, useState } from 'react';
-import PromoteAndEarnRowTable from '../../components/PromoteAndEarnRowTable';
-import Filter from '../../components/ui/Filter';
-import BusinessDashboardHeader from '../../components/ui/Header';
-import PageDataHeader from '../../components/ui/PageDataHeader';
-import TicketCard from '../../components/ui/TicketCard';
-import { useProductsMutation } from '../../features/product/productApiSlice';
-import { ModalContext } from '../../App';
-import ShareLinksScreen from '../../components/ShareLinksScreen';
-import Modal from '../../components/Modal';
-
+import React, { useContext, useEffect, useState } from "react";
+import PromoteAndEarnRowTable from "../../components/PromoteAndEarnRowTable";
+import Filter from "../../components/ui/Filter";
+import BusinessDashboardHeader from "../../components/ui/Header";
+import PageDataHeader from "../../components/ui/PageDataHeader";
+import TicketCard from "../../components/ui/TicketCard";
+import { useProductsMutation } from "../../features/product/productApiSlice";
+import { ModalContext } from "../../App";
+import ShareLinksScreen from "../../components/ShareLinksScreen";
+import Modal from "../../components/Modal";
 
 function PermoteAndEarn() {
   const [products] = useProductsMutation();
   const [productsData, setProductsData] = useState([]);
   const { showModal, setShowModal } = useContext(ModalContext);
-  const [linkToShare, setLinkToShare] = useState('');
+  const [linkToShare, setLinkToShare] = useState("");
   useEffect(() => {
     const fetchedProducts = async () => {
       try {
@@ -38,9 +37,9 @@ function PermoteAndEarn() {
   }, []);
   const totalShare = productsData.reduce(
     (sum, product) => sum + (product.shares || 0),
-    0
+    0,
   );
-  const earnedBonus = 245
+  const earnedBonus = 245;
   return (
     <div className="bg-gray-50">
       <BusinessDashboardHeader />
@@ -54,17 +53,28 @@ function PermoteAndEarn() {
         </section>
         <section className="p-10 ">
           <div className="p-8 flex flex-col gap-10">
-          <Filter data={productsData} setProductFunction={setProductsData} showDownload={false} />
+            <Filter
+              data={productsData}
+              setProductFunction={setProductsData}
+              showDownload={false}
+            />
           </div>
           <div>
-            <PromoteAndEarnRowTable products={productsData} handleShareModal={()=>setShowModal(!showModal)} setLinkToShare={setLinkToShare} />
+            <PromoteAndEarnRowTable
+              products={productsData}
+              handleShareModal={() => setShowModal(!showModal)}
+              setLinkToShare={setLinkToShare}
+            />
           </div>
         </section>
         {showModal && (
-        <Modal>
-          <ShareLinksScreen handleSharingMoodal={()=>setShowModal(!showModal)} urlToShare ={linkToShare}/>
-        </Modal>
-      )}
+          <Modal>
+            <ShareLinksScreen
+              handleSharingMoodal={() => setShowModal(!showModal)}
+              urlToShare={linkToShare}
+            />
+          </Modal>
+        )}
       </main>
     </div>
   );
