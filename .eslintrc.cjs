@@ -7,7 +7,7 @@ module.exports = {
     "plugin:react/jsx-runtime",
     "plugin:react-hooks/recommended",
     "react-app",
-    "recommended",
+    "prettier",
     // "@babel/plugin-transform-private-property-in-object",
     // "next/core-web-vitals"
   ],
