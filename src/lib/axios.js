@@ -21,10 +21,10 @@ axiosInstance.interceptors.request.use(
         config.url.includes("/accounts/companies/")) &&
       config.method === "POST";
 
-    if (accessToken && !shouldExclude) {
-      const authorizationBearer = `Bearer ${accessToken}`.replace('"', "");
-      config.headers.Authorization = authorizationBearer;
-    }
+    // if (accessToken && !shouldExclude) {
+    //   const authorizationBearer = `Bearer ${accessToken}`.replace('"', "");
+    //   config.headers.Authorization = authorizationBearer;
+    // }
 
     return config;
   },
