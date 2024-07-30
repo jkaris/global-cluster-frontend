@@ -5,7 +5,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useSignupBusinessMutation } from "../features/business/businessApiSlice";
 import countries from "../lib/countries.json";
-function BusinessSignUpForm({ companySizeInput, SetCompanySizeInput }) {
+function BusinessSignUpForm({ companySizeInput }) {
   const {
     register,
     handleSubmit,
@@ -15,26 +15,46 @@ function BusinessSignUpForm({ companySizeInput, SetCompanySizeInput }) {
   const [signupBusiness] = useSignupBusinessMutation();
   const navigate = useNavigate();
   const onSubmit = async (data) => {
-    // console.log(data)
     try {
-      const responseData = await signupBusiness({
-        companySizeInput,
+      const signupData = {
         ...data,
+        company_size: companySizeInput,
         user_type: "company",
-      }).unwrap();
-      // console.log(JSON.stringify(responseData));
-      navigate(`login`);
-    } catch (error) {
-      if (error.response) {
-        // Server errors (status code outside of 2xx range)
-        console.error("Server Error:", JSON.stringify(error.response.data));
-      } else if (error.request) {
-        // Network errors or no response from server
-        console.error("Network Error:", error.message);
+      };
+      const responseData = await signupBusiness(signupData).unwrap();
+
+      // Check if the response contains the expected data
+      if (responseData.access && responseData.refresh) {
+        // Store tokens in localStorage or secure storage
+        localStorage.setItem("accessToken", responseData.access);
+        localStorage.setItem("refreshToken", responseData.refresh);
+
+        // Navigate to login or dashboard
+        navigate(`/login`);
       } else {
-        // Other errors
+        console.error("Unexpected response format:", responseData);
+        // Display error to user
+        // You might want to use a state variable or a toast notification library for this
+        alert("An unexpected error occurred. Please try again.");
+      }
+    } catch (error) {
+      let errorMessage = "An error occurred during signup. Please try again.";
+
+      if (error.data) {
+        console.error("Server Error:", JSON.stringify(error.data));
+        errorMessage = error.data.detail || errorMessage;
+      } else if (error.status === 401) {
+        console.error("Authentication Error:", error.message);
+        errorMessage = "Authentication error. Please check your credentials.";
+      } else if (error.request) {
+        console.error("Network Error:", error.message);
+        errorMessage = "Network error. Please check your internet connection.";
+      } else {
         console.error("Error:", JSON.stringify(error));
       }
+
+      // Display error to user
+      alert(errorMessage);
     }
   };
   return (
@@ -111,15 +131,7 @@ function BusinessSignUpForm({ companySizeInput, SetCompanySizeInput }) {
             <label htmlFor="country" className="block text-gray-700">
               Country
             </label>
-            {/* <input
-              id="country"
-              type="text"
-              placeholder="Select Your Country"
-              className="w-full p-4 border border-gray-300 outline-none rounded-2xl"
-              {...register("country")}
-            /> */}
             <select
-              // value={}
               id="country"
               name="country"
               className="w-full p-4 border border-gray-300 outline-none rounded-2xl"
@@ -204,7 +216,6 @@ function BusinessSignUpForm({ companySizeInput, SetCompanySizeInput }) {
           <div
             className="w-full bg-primary-light text-white font-semibold py-6 rounded-full hover:bg-primary-dark
         transition duration-300 flex gap-4 items-center justify-center cursor-pointer"
-            // onClick={() => SetCompanySizeInput(false)}
           >
             <button
               type="submit"
