@@ -22,15 +22,39 @@ function BusinessSignUpForm({ companySizeInput }) {
         user_type: "company",
       };
       const responseData = await signupBusiness(signupData).unwrap();
-      navigate(`/login`);
+
+      // Check if the response contains the expected data
+      if (responseData.access && responseData.refresh) {
+        // Store tokens in localStorage or secure storage
+        localStorage.setItem("accessToken", responseData.access);
+        localStorage.setItem("refreshToken", responseData.refresh);
+
+        // Navigate to login or dashboard
+        navigate(`/login`);
+      } else {
+        console.error("Unexpected response format:", responseData);
+        // Display error to user
+        // You might want to use a state variable or a toast notification library for this
+        alert("An unexpected error occurred. Please try again.");
+      }
     } catch (error) {
+      let errorMessage = "An error occurred during signup. Please try again.";
+
       if (error.data) {
         console.error("Server Error:", JSON.stringify(error.data));
+        errorMessage = error.data.detail || errorMessage;
+      } else if (error.status === 401) {
+        console.error("Authentication Error:", error.message);
+        errorMessage = "Authentication error. Please check your credentials.";
       } else if (error.request) {
         console.error("Network Error:", error.message);
+        errorMessage = "Network error. Please check your internet connection.";
       } else {
         console.error("Error:", JSON.stringify(error));
       }
+
+      // Display error to user
+      alert(errorMessage);
     }
   };
   return (

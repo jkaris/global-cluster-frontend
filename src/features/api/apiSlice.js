@@ -19,6 +19,12 @@ const customFetchBaseQuery = ({
   headers = {},
   body,
 }) => {
+  const accessToken = localStorage.getItem("accessToken"); // Or however you store your access token
+
+  // Add the Authorization header if we have a token
+  if (accessToken) {
+    headers["Authorization"] = `Bearer ${accessToken}`;
+  }
   return axiosInstance({
     method,
     url: `${baseUrl}${url}`,
