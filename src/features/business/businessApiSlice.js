@@ -1,5 +1,20 @@
 import { globalClusterApi } from "../api/apiSlice";
 
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== "") {
+    const cookies = document.cookie.split(";");
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      // Does this cookie string begin with the name we want?
+      if (cookie.substring(0, name.length + 1) === name + "=") {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
 /**
  * BusinessApiSlice is a set of endpoints for authentication-related API calls.
  * @param {globalClusterApi} globalClusterApi - The API object to inject the endpoints into.
@@ -30,16 +45,17 @@ export const BusinessApiSlice = globalClusterApi.injectEndpoints({
     }),
     updateBusinessProfile: builder.mutation({
       query: (updateData) => ({
-        url: `/api/v1/accounts/companies/${updateData.id}/`,
-        method: "PUT",
+        url: `/api/v1/accounts/companies/${updateData.user_id}/`,
+        method: "PATCH",
         body: { ...updateData },
+        headers: { "X-CSRFToken": getCookie("csrftoken") },
       }),
     }),
     updateBusinessPassword: builder.mutation({
       query: (data) => ({
-        url: `/api/v1/accounts/companies/`,
-        method: "POST",
-        body: data,
+        url: `/api/v1/accounts/companies/${data.user_id}/`,
+        method: "PATCH",
+        body: { ...data },
       }),
     }),
     resetPasswordBusiness: builder.mutation({
