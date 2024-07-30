@@ -5,7 +5,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useSignupBusinessMutation } from "../features/business/businessApiSlice";
 import countries from "../lib/countries.json";
-function BusinessSignUpForm({ companySizeInput, SetCompanySizeInput }) {
+function BusinessSignUpForm({ companySizeInput }) {
   const {
     register,
     handleSubmit,
@@ -15,24 +15,19 @@ function BusinessSignUpForm({ companySizeInput, SetCompanySizeInput }) {
   const [signupBusiness] = useSignupBusinessMutation();
   const navigate = useNavigate();
   const onSubmit = async (data) => {
-    // console.log(data)
     try {
       const responseData = await signupBusiness({
         companySizeInput,
         ...data,
         user_type: "company",
       }).unwrap();
-      // console.log(JSON.stringify(responseData));
       navigate(`login`);
     } catch (error) {
       if (error.response) {
-        // Server errors (status code outside of 2xx range)
         console.error("Server Error:", JSON.stringify(error.response.data));
       } else if (error.request) {
-        // Network errors or no response from server
         console.error("Network Error:", error.message);
       } else {
-        // Other errors
         console.error("Error:", JSON.stringify(error));
       }
     }
@@ -111,15 +106,7 @@ function BusinessSignUpForm({ companySizeInput, SetCompanySizeInput }) {
             <label htmlFor="country" className="block text-gray-700">
               Country
             </label>
-            {/* <input
-              id="country"
-              type="text"
-              placeholder="Select Your Country"
-              className="w-full p-4 border border-gray-300 outline-none rounded-2xl"
-              {...register("country")}
-            /> */}
             <select
-              // value={}
               id="country"
               name="country"
               className="w-full p-4 border border-gray-300 outline-none rounded-2xl"
@@ -204,7 +191,6 @@ function BusinessSignUpForm({ companySizeInput, SetCompanySizeInput }) {
           <div
             className="w-full bg-primary-light text-white font-semibold py-6 rounded-full hover:bg-primary-dark
         transition duration-300 flex gap-4 items-center justify-center cursor-pointer"
-            // onClick={() => SetCompanySizeInput(false)}
           >
             <button
               type="submit"
