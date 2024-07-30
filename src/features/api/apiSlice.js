@@ -22,7 +22,9 @@ const customFetchBaseQuery = ({
   return axiosInstance({
     method,
     url: `${baseUrl}${url}`,
-    headers,
+    headers: {
+      ...headers,
+    },
     data: body,
   })
     .then((response) => ({
@@ -54,3 +56,6 @@ export const globalClusterApi = createApi({
     // Define your endpoints here when they are ready
   }),
 });
+
+export const globalClusterReducer = globalClusterApi.reducer;
+export const globalClusterMiddleware = globalClusterApi.middleware;
