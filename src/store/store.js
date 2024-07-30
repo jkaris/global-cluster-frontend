@@ -3,6 +3,10 @@
  * @returns {Object} An object containing the Redux store and persistor.
  */
 import { configureStore } from "@reduxjs/toolkit";
+import {
+  globalClusterReducer,
+  globalClusterMiddleware,
+} from "../features/api/apiSlice";
 import { globalClusterApi } from "../features/api/apiSlice"; // Ensure correct import
 
 import {
@@ -43,6 +47,7 @@ const sessionPersistConfig = {
 const persistedAuthReducer = persistReducer(authPersistConfig, AuthReducer);
 
 const rootReducer = {
+  api: globalClusterReducer,
   [globalClusterApi.reducerPath]: globalClusterApi.reducer,
   auth: persistedAuthReducer,
   product: persistReducer(
@@ -74,7 +79,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(globalClusterApi.middleware),
+    }).concat(globalClusterMiddleware),
   devTools: process.env.NODE_ENV !== "production",
 });
 

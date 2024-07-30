@@ -16,15 +16,25 @@ function BusinessSignUpForm({ companySizeInput }) {
   const navigate = useNavigate();
   const onSubmit = async (data) => {
     try {
-      const responseData = await signupBusiness({
-        companySizeInput,
+      const signupData = {
         ...data,
+        company_size: companySizeInput,
         user_type: "company",
-      }).unwrap();
-      navigate(`login`);
+      };
+
+      // console.log(signupData);
+      const responseData = await signupBusiness(signupData).unwrap();
+      navigate(`/login`);
+      // console.log("Tried so hard!")
+      // const responseData = await signupBusiness({
+      //   companySizeInput,
+      //   ...data,
+      //   user_type: "company",
+      // }).unwrap();
+      // navigate(`login`);
     } catch (error) {
-      if (error.response) {
-        console.error("Server Error:", JSON.stringify(error.response.data));
+      if (error.data) {
+        console.error("Server Error:", JSON.stringify(error.data));
       } else if (error.request) {
         console.error("Network Error:", error.message);
       } else {
