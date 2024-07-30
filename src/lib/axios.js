@@ -7,25 +7,39 @@ const axiosInstance = axios.create({
   headers: { "Content-Type": "application/json" },
 });
 
+// Helper function to get tokens from localStorage
+const getTokensFromStorage = () => {
+  const lc_storage = localStorage.getItem(`persist:${WEBSITE_NAME}:auth`);
+  const lc_storage_obj = JSON.parse(lc_storage || "{}");
+  return {
+    accessToken: lc_storage_obj?.access?.replace(/"/g, ""),
+    refreshToken: lc_storage_obj?.refresh?.replace(/"/g, ""),
+  };
+};
+
+// Helper function to update access token in localStorage
+const updateAccessTokenInStorage = (newAccessToken) => {
+  const lc_storage = localStorage.getItem(`persist:${WEBSITE_NAME}:auth`);
+  const lc_storage_obj = JSON.parse(lc_storage || "{}");
+  lc_storage_obj.access = JSON.stringify(newAccessToken);
+  localStorage.setItem(
+    `persist:${WEBSITE_NAME}:auth`,
+    JSON.stringify(lc_storage_obj),
+  );
+};
+
 // Request interceptor to add authorization header
 axiosInstance.interceptors.request.use(
   (config) => {
-    const lc_storage = localStorage.getItem(`persist:${WEBSITE_NAME}:auth`);
-    const lc_storage_obj = JSON.parse(lc_storage || "{}"); // Safely parse localStorage
-
-    const accessToken = lc_storage_obj?.access.replace('"', "");
-
-    // Check if the URL matches the specified patterns and the method is POST
+    const { accessToken } = getTokensFromStorage();
     const shouldExclude =
       (config.url.includes("/accounts/individuals/") ||
         config.url.includes("/accounts/companies/")) &&
       config.method === "POST";
 
     if (accessToken && !shouldExclude) {
-      const authorizationBearer = `Bearer ${accessToken}`.replace('"', "");
-      config.headers.Authorization = authorizationBearer;
+      config.headers.Authorization = `Bearer ${accessToken}`;
     }
-
     return config;
   },
   (error) => {
@@ -51,35 +65,19 @@ axiosInstance.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
-        const lc_storage = localStorage.getItem(`persist:${WEBSITE_NAME}:auth`);
-        const lc_storage_obj = JSON.parse(lc_storage || "{}"); // Safely parse localStorage
-
-        const refreshToken = lc_storage_obj?.refresh.replace('"', "");
+        const { refreshToken } = getTokensFromStorage();
         if (!refreshToken) {
           throw new Error("No refresh token available");
         }
-
-        // Use refresh token logic to get a new access token
         const response = await axios.post(
           `${BASE_URL}/api/v1/accounts/token/refresh/`,
           {
-            refresh: refreshToken.replace('"', ""),
+            refresh: refreshToken,
           },
         );
-
-        // console.log(JSON.stringify(response.data) + "-------------Refresh Token--------------");
         const newAccessToken = response.data.access;
-
-        // Update access token in localStorage
-        lc_storage_obj.access = newAccessToken;
-        localStorage.setItem(
-          `persist:${WEBSITE_NAME}:auth`,
-          JSON.stringify(lc_storage_obj),
-        );
-
-        // Retry original request with new access token
-        const authorizationBearer = `Bearer ${newAccessToken}`;
-        originalRequest.headers.Authorization = authorizationBearer;
+        updateAccessTokenInStorage(newAccessToken);
+        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
         return axiosInstance(originalRequest);
       } catch (refreshError) {
         console.error("Failed to refresh token:", refreshError);
