@@ -21,17 +21,8 @@ function BusinessSignUpForm({ companySizeInput }) {
         company_size: companySizeInput,
         user_type: "company",
       };
-
-      // console.log(signupData);
       const responseData = await signupBusiness(signupData).unwrap();
       navigate(`/login`);
-      // console.log("Tried so hard!")
-      // const responseData = await signupBusiness({
-      //   companySizeInput,
-      //   ...data,
-      //   user_type: "company",
-      // }).unwrap();
-      // navigate(`login`);
     } catch (error) {
       if (error.data) {
         console.error("Server Error:", JSON.stringify(error.data));
