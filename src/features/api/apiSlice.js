@@ -22,9 +22,7 @@ const customFetchBaseQuery = ({
   return axiosInstance({
     method,
     url: `${baseUrl}${url}`,
-    headers: {
-      ...headers,
-    },
+    headers,
     data: body,
   })
     .then((response) => ({

@@ -2,7 +2,7 @@ import axios from "axios";
 import { BASE_URL, WEBSITE_NAME } from "./constants";
 
 // Create an Axios instance with base URL and default headers
-export const axiosInstance = axios.create({
+const axiosInstance = axios.create({
   baseURL: BASE_URL,
   headers: { "Content-Type": "application/json" },
 });
@@ -91,6 +91,9 @@ axiosInstance.interceptors.response.use(
     return Promise.reject(error);
   },
 );
+
+export { axiosInstance };
+
 export const nigeriaStates = [
   "Abia",
   "Adamawa",
