@@ -7,21 +7,16 @@ import { useDispatch } from "react-redux";
 import { loginAction } from "../features/auth/authSlice";
 import { TypeLogin } from "../lib/constants";
 import { useLoginBusinessMutation } from "../features/business/businessApiSlice";
-import { useLoginAdminMutation } from "../features/admin/adminApiSlice.js";
 
 function LoginForm() {
   const [loginType, setLoginType] = useState(TypeLogin.BUSINESS);
-
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-
   const [login] = useLoginMutation();
   const [loginBusiness] = useLoginBusinessMutation();
-  const [loginAdmin] = useLoginAdminMutation();
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -44,13 +39,6 @@ function LoginForm() {
             user_type: "company",
           }).unwrap();
           navigatePath = "/business/dashboard";
-          break;
-        case TypeLogin.ADMIN:
-          responseData = await loginAdmin({
-            ...data,
-            user_type: "admin",
-          }).unwrap();
-          navigatePath = "/admin/dashboard";
           break;
         default: {
           break;
@@ -77,21 +65,17 @@ function LoginForm() {
         className="flex w-full border border-gray-300 py-4 px-2 gap-4 bg-[#f6f6f9]
        items-center justify-center rounded-md select-none"
       >
-        {[TypeLogin.INDIVIDUAL, TypeLogin.BUSINESS, TypeLogin.ADMIN].map(
-          (type) => (
-            <p
-              key={type}
-              className={`text-center w-full px-4 py-4 rounded-md cursor-pointer ${
-                loginType === type
-                  ? "bg-[#ffffff] text-primary-light border"
-                  : ""
-              }`}
-              onClick={() => setLoginType(type)}
-            >
-              {type.charAt(0).toUpperCase() + type.slice(1)}
-            </p>
-          ),
-        )}
+        {[TypeLogin.INDIVIDUAL, TypeLogin.BUSINESS].map((type) => (
+          <p
+            key={type}
+            className={`text-center w-full px-4 py-4 rounded-md cursor-pointer ${
+              loginType === type ? "bg-[#ffffff] text-primary-light border" : ""
+            }`}
+            onClick={() => setLoginType(type)}
+          >
+            {type.charAt(0).toUpperCase() + type.slice(1)}
+          </p>
+        ))}
       </div>
       <div className="space-y-8">
         <div className="space-y-2">
@@ -157,7 +141,7 @@ function LoginForm() {
             <p className="select-none text-4xl font-thin">Login</p>
           </button>
         </div>
-        {loginType !== TypeLogin.ADMIN && (
+        {loginType !== TypeLogin.INDIVIDUAL && (
           <div className="text-center text-xl">
             <NavLink
               to={
