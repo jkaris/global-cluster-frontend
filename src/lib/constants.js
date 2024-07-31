@@ -1,9 +1,10 @@
 export const BASE_URL = "http://127.0.0.1:8000";
-export const WEBSITE_NAME = "My Website";
+export const WEBSITE_NAME = "Global Cluster";
 export const itemsPerPage = 7;
 export const TypeLogin = {
   BUSINESS: "Business",
   INDIVIDUAL: "Individual",
+  ADMIN: "Admin",
 };
 export const userType = {
   ADMIN: "admin",

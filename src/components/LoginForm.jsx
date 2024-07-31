@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { loginAction } from "../features/auth/authSlice";
 import { TypeLogin } from "../lib/constants";
 import { useLoginBusinessMutation } from "../features/business/businessApiSlice";
+import { useLoginAdminMutation } from "../features/admin/adminApiSlice.js";
 
 function LoginForm() {
   const [loginType, setLoginType] = useState(TypeLogin.BUSINESS);
@@ -19,48 +20,52 @@ function LoginForm() {
 
   const [login] = useLoginMutation();
   const [loginBusiness] = useLoginBusinessMutation();
+  const [loginAdmin] = useLoginAdminMutation();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
     try {
-      if (loginType === TypeLogin.INDIVIDUAL) {
-        const responseData = await login({
-          ...data,
-          user_type: loginType,
-        }).unwrap();
+      let responseData;
+      let navigatePath;
 
-        const { access, refresh, user } = responseData;
-
-        dispatch(loginAction({ access, refresh, user }));
-        navigate(`/user/dashboard`);
-
-        // console.log(responseData);
+      switch (loginType) {
+        case TypeLogin.INDIVIDUAL:
+          responseData = await login({
+            ...data,
+            user_type: loginType,
+          }).unwrap();
+          navigatePath = "/user/dashboard";
+          break;
+        case TypeLogin.BUSINESS:
+          responseData = await loginBusiness({
+            ...data,
+            user_type: "company",
+          }).unwrap();
+          navigatePath = "/business/dashboard";
+          break;
+        case TypeLogin.ADMIN:
+          responseData = await loginAdmin({
+            ...data,
+            user_type: "admin",
+          }).unwrap();
+          navigatePath = "/admin/dashboard";
+          break;
+        default: {
+          break;
+        }
       }
-      if (loginType === TypeLogin.BUSINESS) {
-        const responseData = await loginBusiness({
-          ...data,
-          user_type: "company",
-        }).unwrap();
 
-        const { access, refresh, user } = responseData;
-        // console.log(access, refresh, user);
-
-        dispatch(loginAction({ access, refresh, user }));
-        navigate(`/business/dashboard`);
-
-        // console.log(responseData);
-      }
+      const { access, refresh, user } = responseData;
+      dispatch(loginAction({ access, refresh, user }));
+      navigate(navigatePath);
     } catch (error) {
       if (error.response) {
-        // Server errors (status code outside of 2xx range)
         console.error("Server Error:", JSON.stringify(error.response));
       } else if (error.request) {
-        // Network errors or no response from server
         console.error("Network Error:", error.message);
       } else {
-        // Other errors
         console.error("Error:", error.message);
       }
     }
@@ -72,26 +77,21 @@ function LoginForm() {
         className="flex w-full border border-gray-300 py-4 px-2 gap-4 bg-[#f6f6f9]
        items-center justify-center rounded-md select-none"
       >
-        <p
-          className={`text-center w-full px-4 py-4 rounded-md cursor-pointer ${
-            loginType === TypeLogin.INDIVIDUAL
-              ? "bg-[#ffffff] text-primary-light border"
-              : ""
-          }`}
-          onClick={() => setLoginType(TypeLogin.INDIVIDUAL)}
-        >
-          Individual
-        </p>
-        <p
-          className={`text-center w-full px-4 py-4 rounded-md cursor-pointer ${
-            loginType === "Business"
-              ? "bg-[#ffffff] text-primary-light border"
-              : ""
-          }`}
-          onClick={() => setLoginType(TypeLogin.BUSINESS)}
-        >
-          Business
-        </p>
+        {[TypeLogin.INDIVIDUAL, TypeLogin.BUSINESS, TypeLogin.ADMIN].map(
+          (type) => (
+            <p
+              key={type}
+              className={`text-center w-full px-4 py-4 rounded-md cursor-pointer ${
+                loginType === type
+                  ? "bg-[#ffffff] text-primary-light border"
+                  : ""
+              }`}
+              onClick={() => setLoginType(type)}
+            >
+              {type.charAt(0).toUpperCase() + type.slice(1)}
+            </p>
+          ),
+        )}
       </div>
       <div className="space-y-8">
         <div className="space-y-2">
@@ -157,22 +157,22 @@ function LoginForm() {
             <p className="select-none text-4xl font-thin">Login</p>
           </button>
         </div>
-        {loginType === TypeLogin.BUSINESS ? (
+        {loginType !== TypeLogin.ADMIN && (
           <div className="text-center text-xl">
-            {`Don't`} have an account? Sign up as&nbsp;
-            <NavLink to="/business-signUp">
+            <NavLink
+              to={
+                loginType === TypeLogin.BUSINESS
+                  ? "/business-signUp"
+                  : "/individual-signUp"
+              }
+            >
+              {`Don't`} have an account?{" "}
               <span className="font-semibold hover:underline-offset-1">
-                Business
-              </span>
-            </NavLink>
-            &nbsp; Or &nbsp;
-            <NavLink to="/individual-signUp">
-              <span className="font-semibold hover:underline-offset-1">
-                Individual
+                Sign up as {loginType}
               </span>
             </NavLink>
           </div>
-        ) : null}
+        )}
       </div>
     </form>
   );

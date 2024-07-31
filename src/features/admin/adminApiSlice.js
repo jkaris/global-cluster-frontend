@@ -1,5 +1,21 @@
 import { globalClusterApi } from "../api/apiSlice";
 
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== "") {
+    const cookies = document.cookie.split(";");
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      // Does this cookie string begin with the name we want?
+      if (cookie.substring(0, name.length + 1) === name + "=") {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+
 /**
  * AdminApiSlice is a set of endpoints for authentication-related API calls.
  * @param {globalClusterApi} globalClusterApi - The API object to inject the endpoints into.
@@ -16,7 +32,7 @@ export const AdminApiSlice = globalClusterApi.injectEndpoints({
     // }),
     loginAdmin: builder.mutation({
       query: (loginData) => ({
-        url: "/api/v1/login/",
+        url: "/api/v1/accounts/token/",
         method: "POST",
         body: loginData,
       }),
