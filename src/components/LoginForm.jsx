@@ -10,6 +10,7 @@ import { useLoginBusinessMutation } from "../features/business/businessApiSlice"
 
 function LoginForm() {
   const [loginType, setLoginType] = useState(TypeLogin.BUSINESS);
+  const [errorMessage, setErrorMessage] = useState("");
   const {
     register,
     handleSubmit,
@@ -49,18 +50,26 @@ function LoginForm() {
       dispatch(loginAction({ access, refresh, user }));
       navigate(navigatePath);
     } catch (error) {
-      if (error.response) {
-        console.error("Server Error:", JSON.stringify(error.response));
+      if (error.response && error.response.data) {
+        setErrorMessage(
+          error.response.data.message ||
+            "Invalid login details. Please try again.",
+        );
       } else if (error.request) {
-        console.error("Network Error:", error.message);
+        setErrorMessage(
+          "Network error. Please check your connection and try again.",
+        );
       } else {
-        console.error("Error:", error.message);
+        setErrorMessage("An unexpected error occurred. Please try again.");
       }
     }
   };
 
   return (
     <form className="space-y-20 px-8" onSubmit={handleSubmit(onSubmit)}>
+      {errorMessage && (
+        <div className="text-red-500 text-center">{errorMessage}</div>
+      )}
       <div
         className="flex w-full border border-gray-300 py-4 px-2 gap-4 bg-[#f6f6f9]
        items-center justify-center rounded-md select-none"
