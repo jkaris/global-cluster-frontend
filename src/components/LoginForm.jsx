@@ -101,7 +101,7 @@ function LoginForm() {
           <input
             id="email"
             name="email"
-            type="email" // Change to "text" to allow both email and username
+            type="email"
             placeholder="janedoe@xxx.com"
             className="w-full p-4 border border-gray-300 outline-none rounded-2xl"
             {...register("email", {
@@ -159,10 +159,16 @@ function LoginForm() {
         </div>
         {loginType === TypeLogin.BUSINESS ? (
           <div className="text-center text-xl">
+            {`Don't`} have an account? Sign up as&nbsp;
             <NavLink to="/business-signUp">
-              {`Don't`} have an account?{" "}
               <span className="font-semibold hover:underline-offset-1">
-                Sign up as Business
+                Business
+              </span>
+            </NavLink>
+            &nbsp; Or &nbsp;
+            <NavLink to="/individual-signUp">
+              <span className="font-semibold hover:underline-offset-1">
+                Individual
               </span>
             </NavLink>
           </div>
