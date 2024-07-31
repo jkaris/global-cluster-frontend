@@ -1,6 +1,6 @@
 import React from "react";
 import { HiMiniUserPlus } from "react-icons/hi2";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import AdminHeader from "./AdminHeader";
@@ -9,7 +9,6 @@ import { IoEyeOutline } from "react-icons/io5";
 import { FaRegEyeSlash } from "react-icons/fa6";
 import ErrorBoundary from "./ErrorBoundary";
 import { loginAction } from "../features/auth/authSlice";
-import { BiCheckSquare } from "react-icons/bi";
 
 function AdminLogin() {
   const {
