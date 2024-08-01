@@ -54,7 +54,7 @@ import AdminRegister from "./pages/Admin/RegisterIndividual.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Navigate to="/login" replace />, // Redirect root to login
+    element: <Navigate to="/login" replace />,
   },
   {
     path: "/login",
@@ -79,7 +79,6 @@ const router = createBrowserRouter([
       {
         path: "products",
         element: <BusinessProducts />,
-        // loader: productLoader,
       },
       {
         path: "support-ticket",
@@ -207,7 +206,7 @@ const router = createBrowserRouter([
   },
   {
     path: "*",
-    element: <Navigate to="/login" replace />, // Redirect any unmatched paths to login
+    element: <Navigate to="/login" replace />,
   },
 ]);
 export const ModalContext = createContext();
