@@ -70,7 +70,7 @@ function AddProduct({ addNewProduct, CloseModalWindow, currentStatus }) {
     try {
       formData.append("product_name", data.productName);
       formData.append("description", data.description);
-      // formData.append("company", user?.id);
+      formData.append("company", user?.id);
       formData.append("product_link", data.linkValue);
       formData.append("product_value", data.productLinkType);
       if (selectedFile) {
