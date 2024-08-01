@@ -10,8 +10,7 @@ import BusinessSignUp from "./components/BusinessSignUp";
 import BusinessLayout from "./Layouts/BusinessLayout";
 import AdminDashboard from "./pages/Admin/Dashboard";
 import BusinessDashboard from "./pages/Business/Dashboard";
-import BusinessProducts from // loader as productLoader,
-"./pages/Business/Products";
+import BusinessProducts from "./pages/Business/Products"; // loader as productLoader,
 import BusinessSettings from "./pages/Business/Settings";
 import BusinessSignOut from "./pages/Business/SingOut";
 import BusinessSupportTicket from "./pages/Business/SupportTicket";
@@ -38,7 +37,7 @@ import AdminUserRanking from "./pages/Admin/UserRankings";
 import AdminPayout from "./pages/Admin/Payout";
 import AdminProducts from "./pages/Admin/Products.jsx";
 
-import AdminStafManagement from "./pages/Admin/StafManagement";
+import AdminStaffManagement from "./pages/Admin/StaffManagement";
 
 import AdminBusinessManage from "./pages/Admin/ManageBusiness";
 
@@ -177,7 +176,7 @@ const router = createBrowserRouter([
       },
       {
         path: "staff/management",
-        element: <AdminStafManagement />,
+        element: <AdminStaffManagement />,
       },
       {
         path: "wallet",
