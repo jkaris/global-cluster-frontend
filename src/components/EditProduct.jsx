@@ -40,9 +40,9 @@ function EditProduct({ setEditDetail, item }) {
     if (item) {
       setValue("productName", item.product_name);
       setValue("description", item.description);
-      setValue("productLinkType", item.product_link_type);
-      setValue("linkValue", item.link_value);
-      setProductLinkType(item.product_link);
+      setValue("productLinkType", item.product_value);
+      setValue("linkValue", item.product_link);
+      setValue("product_image", item.product_image.name);
     }
   }, [item, setValue]);
 

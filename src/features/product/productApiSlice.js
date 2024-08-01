@@ -26,7 +26,7 @@ export const ProductApiSlice = globalClusterApi.injectEndpoints({
         method: "POST",
         body: product,
         headers: {
-          "Content-Type": "multipart/form-data", // This should be omitted as the browser will set it correctly
+          "Content-Type": "multipart/form-data",
         },
       }),
     }),
@@ -35,9 +35,6 @@ export const ProductApiSlice = globalClusterApi.injectEndpoints({
         url: `/api/v1/referrals/products/${product.uuid}/`,
         method: "PUT",
         body: product.formdata,
-        // headers: {
-        //   'Content-Type': 'multipart/form-data', // This should be omitted as the browser will set it correctly
-        // },
       }),
     }),
   }),
