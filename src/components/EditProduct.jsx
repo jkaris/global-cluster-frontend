@@ -18,6 +18,8 @@ function EditProduct({ setEditDetail, item }) {
   const [selectedFile, setSelectedFile] = useState(null);
   const [productLinkType, setProductLinkType] = useState("");
   const [updateProduct] = useUpdateProductMutation();
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const modalRef = useRef(null);
 
@@ -77,20 +79,28 @@ function EditProduct({ setEditDetail, item }) {
 
   const onSubmit = async (data) => {
     const formData = new FormData();
+    setIsSubmitting(true);
+    setErrorMessage("");
 
     try {
       formData.append("product_name", data.productName);
       formData.append("description", data.description);
       formData.append("product_link", data.productLinkType);
-      formData.append("link_value", data.linkValue);
+      formData.append("product_value", data.linkValue);
       if (selectedFile) {
         formData.append("product_image", selectedFile, selectedFile.name);
       }
       const response = await updateProduct({ formData, uuid: item.uuid });
-
-      setEditDetail(false);
+      if (response.success) {
+        setEditDetail(false);
+      } else {
+        console.error("Update failed:", response.error);
+      }
     } catch (error) {
-      console.log(error);
+      console.error("Error updating product:", error);
+      setErrorMessage("Failed to update product. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -244,6 +254,7 @@ function EditProduct({ setEditDetail, item }) {
           />
 
           <div className="flex items-center justify-center gap-4">
+            {errorMessage && <p className="text-red-500">{errorMessage}</p>}
             <p
               onClick={() => setEditDetail(false)}
               className="flex-1 flex items-center justify-center px-4 py-6 border rounded-xl border-primary-light hover:bg-primary-light hover:text-white cursor-pointer"
@@ -252,9 +263,12 @@ function EditProduct({ setEditDetail, item }) {
             </p>
             <button
               type="submit"
-              className="flex-1 flex items-center justify-center px-4 py-6 bg-primary-light text-white rounded-xl cursor-pointer hover:bg-primary-dark"
+              disabled={isSubmitting}
+              className={`flex-1 flex items-center justify-center px-4 py-6 bg-primary-light text-white rounded-xl cursor-pointer ${
+                isSubmitting ? "opacity-50" : "hover:bg-primary-dark"
+              }`}
             >
-              Update
+              {isSubmitting ? "Updating..." : "Update"}
             </button>
           </div>
         </form>
