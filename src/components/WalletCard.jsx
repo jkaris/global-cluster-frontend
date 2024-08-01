@@ -15,7 +15,7 @@ function WalletCard({ totalBalance }) {
           <h3 className="text-6xl font-bold">{totalBalance}</h3>
           <div className="flex gap-3 items-center">
             <PiApproximateEquals />
-            <p>N 10,000.00</p>
+            <p>N 0.00</p>
           </div>
         </div>
       </div>

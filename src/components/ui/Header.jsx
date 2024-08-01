@@ -15,8 +15,8 @@ const Header = () => {
       name = user?.profile.company_name;
       username = `@${user?.profile?.company_name}`;
     } else if (user?.user_type === "individual") {
-      name = `${user?.first_name} ${user?.last_name}`;
-      username = `@${user?.first_name}${user?.last_name}`;
+      name = `${user?.profile?.first_name} ${user?.profile.last_name}`;
+      username = `@${user?.profile?.first_name}${user?.profile.last_name}`;
     } else if (user?.user_type === "admin") {
       name = "Admin";
       username = "@admin";
@@ -59,7 +59,7 @@ const Header = () => {
         <div className="flex items-center justify-center gap-8">
           <img
             className="w-14 h-16 rounded-lg"
-            src={user?.profile?.avatar || ProfileImg}
+            src={user?.profile?.profile_picture || ProfileImg}
             alt="Profile Img"
           />
           {renderUserInfo()}
