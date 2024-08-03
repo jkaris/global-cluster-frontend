@@ -45,16 +45,10 @@ function SupportTicket() {
     fetchTickets();
   }, [ticket]);
   const itemsPerPage = 5; // Number of items per page
-
-  // Calculate total pages based on data length and items per page
   const totalPages = Math.ceil(ticketsData.length / itemsPerPage);
-
-  // Function to handle page change
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
-
-  // Slice the data array based on currentPage and itemsPerPage
   const paginatedData = ticketsData.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage,
@@ -68,17 +62,6 @@ function SupportTicket() {
       setShowModal(false);
       showTemporaryNotification();
     } catch (error) {
-      // if (error.response) {
-      //   // Server errors (status code outside of 2xx range)
-      //   console.error("Server Error:", JSON.stringify(error.response));
-      // } else if (error.request) {
-      //   // Network errors or no response from server
-      //   console.error("Network Error:", error.message);
-      // } else {
-      //   // Other errors
-      //   console.error("Error:", error.message);
-
-      // }
       throw new Error("Error:" + JSON.stringify(error));
     }
   }
@@ -89,17 +72,16 @@ function SupportTicket() {
       setShowAction(false);
     }, 1500);
   }
-  // Calculate the total number of tickets
   const sumTickets = ticketsData.length;
-
-  // Function to filter and count tickets by progress status
-  const countTicketsByProgress = (status) => {
-    return ticketsData.filter((ticket) => ticket.progress === status).length;
+  const countResolvedTickets = (status) => {
+    return ticketsData.filter((ticket) => ticket.status === "resolved").length;
   };
-
-  // Count the number of resolved and in-progress tickets
-  const resolvedTickets = countTicketsByProgress("resolved");
-  const progressTickets = countTicketsByProgress("progress");
+  const countInProgressTickets = (status) => {
+    return ticketsData.filter((ticket) => ticket.status === "in-progress")
+      .length;
+  };
+  const resolvedTickets = countResolvedTickets("resolved");
+  const progressTickets = countInProgressTickets("in-progress");
 
   return (
     <div className="bg-gray-50">
