@@ -27,7 +27,14 @@ function StaffManagement() {
   async function addNewStaff(formData) {
     try {
       const response = await addStaff(formData).unwrap();
-      setStaffData([...staffData, response]);
+      const [first_name, ...lastNameParts] = response.name.split(" ");
+      const last_name = lastNameParts.join(" ");
+      const newStaffMember = {
+        ...response,
+        first_name,
+        last_name,
+      };
+      setStaffData([...staffData, newStaffMember]);
       setShowModal(false);
       showTemporaryNotification();
     } catch (error) {

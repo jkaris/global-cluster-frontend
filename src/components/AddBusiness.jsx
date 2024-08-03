@@ -53,6 +53,7 @@ function AddBusiness({ CloseModalWindow, currentStatus }) {
     try {
       const responseData = await signupBusiness({
         ...data,
+        name: data.company_name,
         user_type: "company",
       }).unwrap();
       CloseModalWindow(!currentStatus);

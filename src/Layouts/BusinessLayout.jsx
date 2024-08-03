@@ -14,7 +14,7 @@ function BusinessLayout() {
   }, [isAuthenticated, isBusiness, navigate]);
 
   if (!isAuthenticated || !isBusiness) {
-    return null; // Prevent rendering the children if the user is not authenticated or not an admin
+    return null;
   }
 
   return (

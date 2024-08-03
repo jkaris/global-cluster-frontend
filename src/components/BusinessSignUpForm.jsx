@@ -62,22 +62,20 @@ function BusinessSignUpForm({ companySizeInput }) {
       {companySizeInput && (
         <div className={`space-y-6  px-8`}>
           <div className="space-y-4">
-            <label htmlFor="company_name" className="block text-gray-700">
+            <label htmlFor="name" className="block text-gray-700">
               company Name<span className="text-red-500">*</span>
             </label>
             <input
-              id="company_name"
+              id="name"
               type="text"
               placeholder="Dahort Consult"
               className="w-full p-4 border border-gray-300 outline-none rounded-2xl"
-              {...register("company_name", {
+              {...register("name", {
                 required: "Company Name is required",
               })}
             />
-            {errors.company_name && (
-              <span className="text-red-500">
-                {errors.company_name.message}
-              </span>
+            {errors.name && (
+              <span className="text-red-500">{errors.name.message}</span>
             )}
           </div>
           <div className="space-y-4">

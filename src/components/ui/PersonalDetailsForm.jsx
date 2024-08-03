@@ -15,15 +15,13 @@ function PersonalDetailsForm() {
     watch,
   } = useForm({
     defaultValues: {
-      first_name: user?.profile?.first_name || "",
-      last_name: user?.profile?.last_name || "",
       email: user?.email || "",
-      company_name: user?.profile?.company_name || "",
-      gender: user?.profile?.gender || "",
-      user_id: user?.id || user?.profile?.user_id,
+      name: user?.name || "",
+      gender: user?.gender || "",
+      user_id: user?.id || user?.user_id,
     },
   });
-  const _id = user?.id || user?.profile?.user_id;
+  const _id = user?.id || user?.user_id;
 
   const onSubmit = async (data) => {
     try {
@@ -109,18 +107,17 @@ function PersonalDetailsForm() {
         )}
         {user?.user_type === "company" && (
           <div className="flex flex-col gap-2 text-gray-500">
-            <label htmlFor="company_name">Business Name</label>
+            <label htmlFor="name">Business Name</label>
             <input
               className="outline-none border border-gray-300 rounded-md px-4 py-3 w-1/3 focus:border-primary-light transition-all duration-300 ease-in-out"
               type="text"
-              id="company_name"
+              id="name"
               placeholder="Global Cluster"
-              {...register("company_name")}
+              value={user?.name}
+              {...register("name")}
             />
-            {errors.company_name && (
-              <span className="text-red-500">
-                {errors.company_name.message}
-              </span>
+            {errors.name && (
+              <span className="text-red-500">{errors.name.message}</span>
             )}
           </div>
         )}
@@ -131,6 +128,7 @@ function PersonalDetailsForm() {
             type="email"
             id="email"
             placeholder="example@gmail.com"
+            value={user?.email}
             {...register("email")}
           />
           {errors.email && (

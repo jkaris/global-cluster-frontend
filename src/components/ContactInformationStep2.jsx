@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import countries from "../lib/countries.json";
+import genders from "../lib/genders.json";
 
 const ContactInformationStep2 = ({ register, errors }) => {
   return (
@@ -39,12 +40,17 @@ const ContactInformationStep2 = ({ register, errors }) => {
         <label className="p-2" htmlFor="gender">
           Gender
         </label>
-        <input
+        <select
           className="p-6 border outline-none rounded-md"
-          type="text"
           id="gender"
           {...register("gender", { required: "Gender is required" })}
-        />
+        >
+          {genders.genders.gender.map((gender, index) => (
+            <option key={index} value={gender.sex}>
+              {gender.sex}
+            </option>
+          ))}
+        </select>
         {errors.gender && (
           <p className="text-red-500">{errors.gender.message}</p>
         )}

@@ -15,9 +15,7 @@ function UserCredentials() {
         />
         <div className="flex gap-20 items-center text-2xl divide-x">
           <div className="flex flex-col gap-8 px-16 ">
-            <p className="font-semibold">
-              {profile?.first_name} {profile?.last_name}
-            </p>
+            <p className="font-semibold">{profile?.name}</p>
             <p className="text-gray-400">INF20953045</p>
           </div>
           <div className="flex flex-col gap-8 px-16 ">

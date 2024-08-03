@@ -29,7 +29,14 @@ function AddStaff({ addNewStaff, CloseModalWindow, currentStatus }) {
 
   const onSubmit = async (data) => {
     try {
-      await addNewStaff(data);
+      const staffData = {
+        ...data,
+        name: `${data.first_name} ${data.last_name}`,
+      };
+      delete staffData.first_name;
+      delete staffData.last_name;
+
+      await addNewStaff(staffData);
       CloseModalWindow(!currentStatus);
     } catch (error) {
       console.log(error);
@@ -63,7 +70,9 @@ function AddStaff({ addNewStaff, CloseModalWindow, currentStatus }) {
               type="text"
               id="firstName"
               className="border rounded-md outline-none p-2 w-full"
-              {...register("firstName", { required: "First Name is required" })}
+              {...register("first_name", {
+                required: "First Name is required",
+              })}
             />
             {errors.firstName && (
               <p className="text-red-500">{errors.firstName.message}</p>
@@ -71,17 +80,17 @@ function AddStaff({ addNewStaff, CloseModalWindow, currentStatus }) {
           </div>
 
           <div className="mb-4 flex flex-col gap-2">
-            <label htmlFor="lastName" className="block">
+            <label htmlFor="last_name" className="block">
               Last Name
             </label>
             <input
               type="text"
-              id="lastName"
+              id="last_name"
               className="border rounded-md outline-none p-2 w-full"
-              {...register("lastName", { required: "Last Name is required" })}
+              {...register("last_name", { required: "Last Name is required" })}
             />
-            {errors.lastName && (
-              <p className="text-red-500">{errors.lastName.message}</p>
+            {errors.last_name && (
+              <p className="text-red-500">{errors.last_name.message}</p>
             )}
           </div>
 
@@ -101,19 +110,19 @@ function AddStaff({ addNewStaff, CloseModalWindow, currentStatus }) {
           </div>
 
           <div className="mb-4 flex flex-col gap-2">
-            <label htmlFor="phoneNumber" className="block">
+            <label htmlFor="phone_number" className="block">
               Phone Number
             </label>
             <input
               type="tel"
-              id="phoneNumber"
+              id="phone_number"
               className="border rounded-md outline-none p-2 w-full"
-              {...register("phoneNumber", {
+              {...register("phone_number", {
                 required: "Phone Number is required",
               })}
             />
-            {errors.phoneNumber && (
-              <p className="text-red-500">{errors.phoneNumber.message}</p>
+            {errors.phone_number && (
+              <p className="text-red-500">{errors.phone_number.message}</p>
             )}
           </div>
 

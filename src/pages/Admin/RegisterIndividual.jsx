@@ -33,7 +33,9 @@ function AdminRegister() {
         user?.profile?.first_name + " " + user?.profile?.last_name;
       break;
     case "company":
-      sponsor = user?.profile?.company_name;
+      sponsor =
+        user?.profile?.username ||
+        user?.profile?.first_name + " " + user?.profile?.last_name;
       break;
     default:
       sponsor = "Admin";
@@ -42,6 +44,7 @@ function AdminRegister() {
     try {
       const responseData = await signup({
         ...data,
+        name: data.first_name + " " + data.last_name,
         user_type: "individual",
         sponsor: sponsor,
         membership_package: "membership_package",

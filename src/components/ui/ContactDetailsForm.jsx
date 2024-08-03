@@ -15,12 +15,13 @@ function ContactDetailsForm() {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      address: user?.profile?.address || "",
-      country: user?.profile?.country || "Andorra",
-      state: user?.profile?.state || "",
-      city: user?.profile?.city || "",
-      phone_no: user?.profile?.phone_no || "",
-      user_id: user?.id || user?.profile?.user_id,
+      name: user?.name || "",
+      address: user?.address || "",
+      country: user?.country || "Andorra",
+      state: user?.state || "",
+      city: user?.city || "",
+      phone_no: user?.phone_number || "",
+      user_id: user?.id || user?.user_id,
     },
   });
   // const id = user?.profile?.user_id ;
@@ -79,13 +80,6 @@ function ContactDetailsForm() {
         </div>
         <div className="flex flex-col gap-2 text-gray-500">
           <label htmlFor="country">Country</label>
-          {/* <input
-            className="outline-none border border-gray-300 rounded-md px-4 py-3 w-1/3 focus:border-primary-light transition-all duration-300 ease-in-out"
-            type="text"
-            id="country"
-            name="country"
-            placeholder="Enter your country"
-          /> */}
           <select
             id="country"
             className="outline-none border border-gray-300 rounded-md px-4 py-4 w-1/3 focus:border-primary-light transition-all duration-300 ease-in-out"
@@ -136,8 +130,8 @@ function ContactDetailsForm() {
             placeholder="Enter your Phone No"
             {...register("phone_number")}
           />
-          {errors.phone_no && (
-            <span className="text-red-500">{errors.phone_no.message}</span>
+          {errors.phone_number && (
+            <span className="text-red-500">{errors.phone_number.message}</span>
           )}
         </div>
         <button
