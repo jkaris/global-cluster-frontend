@@ -1,7 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-// import { useLoaderData } from "react-router-dom";
 import { ModalContext } from "./../../App";
-
 import ActionNotification from "../../components/ActionNotification";
 import AddProduct from "../../components/AddProduct";
 import Button from "../../components/Button";
@@ -12,7 +10,6 @@ import BusinessDashboardHeader from "../../components/ui/Header";
 import PageDataHeader from "../../components/ui/PageDataHeader";
 import ProductsTicket from "../../components/ui/ProductTickets";
 import TableData from "../../components/ui/TableData";
-
 import {
   useAddProductMutation,
   useDeleteProductMutation,
@@ -53,13 +50,10 @@ function Products() {
       setProductsData(updatedProducts);
     } catch (error) {
       if (error.response) {
-        // Server errors (status code outside of 2xx range)
         console.error("Server Error:", JSON.stringify(error.response));
       } else if (error.request) {
-        // Network errors or no response from server
         console.error("Network Error:", error.message);
       } else {
-        // Other errors
         console.error("Error:", error.message);
       }
     }
@@ -72,13 +66,10 @@ function Products() {
       return productData;
     } catch (error) {
       if (error.response) {
-        // Server errors (status code outside of 2xx range)
         console.error("Server Error:", JSON.stringify(error.response));
       } else if (error.request) {
-        // Network errors or no response from server
         console.error("Network Error:", error.message);
       } else {
-        // Other errors
         console.error("Error:", error.message);
       }
     }
@@ -180,10 +171,5 @@ function Products() {
     </div>
   );
 }
-
-// export async function loader() {
-//   const productsData = await fetchProducts(); // Assuming this function fetches all products from backend
-//   return productsData;
-// }
 
 export default Products;

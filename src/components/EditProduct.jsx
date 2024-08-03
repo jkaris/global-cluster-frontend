@@ -6,7 +6,7 @@ import TakeInput from "./TakeInput";
 import { useForm } from "react-hook-form";
 import { useUpdateProductMutation } from "../features/product/productApiSlice";
 
-function EditProduct({ setEditDetail, item }) {
+function EditProduct({ setEditDetail, item, CloseModalWindow }) {
   const {
     register,
     handleSubmit,
@@ -27,6 +27,7 @@ function EditProduct({ setEditDetail, item }) {
     function handleClickOutside(event) {
       if (modalRef.current && !modalRef.current.contains(event.target)) {
         setEditDetail(false);
+        CloseModalWindow();
       }
     }
 
@@ -34,7 +35,7 @@ function EditProduct({ setEditDetail, item }) {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [setEditDetail]);
+  }, [setEditDetail, CloseModalWindow]);
 
   useEffect(() => {
     if (item) {
@@ -85,13 +86,22 @@ function EditProduct({ setEditDetail, item }) {
     try {
       formData.append("product_name", data.productName);
       formData.append("description", data.description);
-      formData.append("product_link", data.productLinkType);
-      formData.append("product_value", data.linkValue);
+      formData.append("product_link", data.linkValue);
+      formData.append("product_value", data.productLinkType);
       if (selectedFile) {
         formData.append("product_image", selectedFile, selectedFile.name);
       }
-      const response = await updateProduct({ formData, uuid: item.uuid });
+      formData.append("uuid", item.uuid);
+      if (!item.uuid) {
+        throw new Error("Product UUID is missing");
+      }
+      const response = await updateProduct({ uuid: item.uuid, data: formData });
       if (response.success) {
+        setEditDetail(false);
+      } else {
+        console.error("Update failed:", response.error);
+      }
+      if ("data" in response) {
         setEditDetail(false);
       } else {
         console.error("Update failed:", response.error);
@@ -118,7 +128,10 @@ function EditProduct({ setEditDetail, item }) {
       >
         <div className="flex justify-between items-center px-16 py-8 border-b">
           <p className="font-thin">Edit Product</p>
-          <div className="cursor-pointer" onClick={() => setEditDetail(false)}>
+          <div
+            className="cursor-pointer"
+            onClick={() => setEditDetail(false) && CloseModalWindow()}
+          >
             <ImCancelCircle style={{ fontSize: "2rem" }} />
           </div>
         </div>
@@ -256,7 +269,7 @@ function EditProduct({ setEditDetail, item }) {
           <div className="flex items-center justify-center gap-4">
             {errorMessage && <p className="text-red-500">{errorMessage}</p>}
             <p
-              onClick={() => setEditDetail(false)}
+              onClick={() => setEditDetail(false) && CloseModalWindow()}
               className="flex-1 flex items-center justify-center px-4 py-6 border rounded-xl border-primary-light hover:bg-primary-light hover:text-white cursor-pointer"
             >
               Cancel
@@ -278,6 +291,7 @@ function EditProduct({ setEditDetail, item }) {
 }
 
 EditProduct.propTypes = {
+  CloseModalWindow: PropTypes.func.isRequired,
   setEditDetail: PropTypes.func.isRequired,
   item: PropTypes.object.isRequired,
 };

@@ -31,10 +31,13 @@ export const ProductApiSlice = globalClusterApi.injectEndpoints({
       }),
     }),
     updateProduct: builder.mutation({
-      query: (product) => ({
-        url: `/api/v1/referrals/products/${product.uuid}/`,
-        method: "PUT",
-        body: product.formdata,
+      query: ({ uuid, data }) => ({
+        url: `/api/v1/referrals/products/${uuid}/`,
+        method: "PATCH",
+        body: data,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       }),
     }),
   }),

@@ -70,7 +70,7 @@ function AddProduct({ addNewProduct, CloseModalWindow, currentStatus }) {
     try {
       formData.append("product_name", data.productName);
       formData.append("description", data.description);
-      formData.append("company", user?.id);
+      formData.append("company", user?.profile?.user_id);
       formData.append("product_link", data.linkValue);
       formData.append("product_value", data.productLinkType);
       if (selectedFile) {
@@ -225,8 +225,6 @@ function AddProduct({ addNewProduct, CloseModalWindow, currentStatus }) {
               <p className="text-red-500">{errors.productLinkType.message}</p>
             )}
           </div>
-
-          {/* <TakeInput type={productLinkType} setLinkValue={setLinkValue} /> */}
           <TakeInput
             type={productLinkType}
             register={register}

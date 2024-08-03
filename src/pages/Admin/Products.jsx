@@ -18,6 +18,7 @@ import {
   useDeleteProductMutation,
   useProductMutation,
   useProductsMutation,
+  useUpdateProductMutation,
 } from "../../features/product/productApiSlice";
 import { itemsPerPage } from "../../lib/constants";
 
@@ -33,6 +34,7 @@ function Products() {
   const [products] = useProductsMutation();
   const [deleteProduct] = useDeleteProductMutation();
   const [addProduct] = useAddProductMutation();
+  const [updateProduct] = useUpdateProductMutation();
   async function addNewProduct(formData) {
     try {
       const response = await addProduct(formData).unwrap();
