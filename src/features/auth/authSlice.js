@@ -28,7 +28,7 @@ const AuthSlice = createSlice({
         email: user.email,
         user_type: user.user_type,
         user_id: user?.id || user?.user_id,
-        // profile: user?.profile,
+        username: user?.name,
       };
     },
     profileAction: (state, action) => {},

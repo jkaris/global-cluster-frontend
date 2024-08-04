@@ -44,16 +44,16 @@ export const BusinessApiSlice = globalClusterApi.injectEndpoints({
       }),
     }),
     updateBusinessProfile: builder.mutation({
-      query: (updateData) => ({
-        url: `/api/v1/accounts/companies/${updateData.user_id}/`,
+      query: ({ user_id, updateData }) => ({
+        url: `/api/v1/accounts/companies/${user_id}/`,
         method: "PATCH",
-        body: { ...updateData },
+        body: updateData,
         headers: { "X-CSRFToken": getCookie("csrftoken") },
       }),
     }),
     updateBusinessPassword: builder.mutation({
-      query: (data) => ({
-        url: `/api/v1/accounts/companies/${data.user_id}/`,
+      query: (user_id, data) => ({
+        url: `/api/v1/accounts/companies/${user_id}/`,
         method: "PATCH",
         body: { ...data },
       }),

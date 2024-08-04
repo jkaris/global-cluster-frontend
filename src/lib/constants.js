@@ -1,4 +1,4 @@
-export const BASE_URL = "https://global-cluster-backend.onrender.com";
+export const BASE_URL = "http://localhost:8000";
 export const WEBSITE_NAME = "Global Cluster";
 export const itemsPerPage = 7;
 export const TypeLogin = {

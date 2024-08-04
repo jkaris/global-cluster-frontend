@@ -16,20 +16,19 @@ function PersonalDetailsForm() {
   } = useForm({
     defaultValues: {
       email: user?.email || "",
-      name: user?.name || "",
       gender: user?.gender || "",
       user_id: user?.id || user?.user_id,
     },
   });
   const _id = user?.id || user?.user_id;
+  console.log(user);
 
   const onSubmit = async (data) => {
     try {
       if (user?.user_type === "company") {
-        console.log(data);
         const responseData = await updateBusinessProfile({
           ...data,
-          _id,
+          user_id: _id,
         }).unwrap();
       }
       if (user?.user_type === "individual") {

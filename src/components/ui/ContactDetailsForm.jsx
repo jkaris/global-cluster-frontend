@@ -24,8 +24,7 @@ function ContactDetailsForm() {
       user_id: user?.id || user?.user_id,
     },
   });
-  // const id = user?.profile?.user_id ;
-  const id = user?.id || user?.profile?.user_id;
+  const id = user?.user_id;
 
   const onSubmit = async (data) => {
     try {
@@ -36,9 +35,14 @@ function ContactDetailsForm() {
 
       if (user?.user_type === "company") {
         const responseData = await updateBusinessProfile({
-          id,
-          ...data,
+          user_id: id,
+          updatedData: data,
         }).unwrap();
+        if (responseData) {
+          console.log("Profile updated successfully");
+        } else {
+          console.error("Failed to update profile", responseData.error);
+        }
       }
       if (user?.user_type === "individual") {
         const responseData = await updateUserProfile({ id, ...data }).unwrap();
