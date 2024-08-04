@@ -37,10 +37,9 @@ function TableData({
         <tbody className="bg-white">
           {data.map((item, index) => (
             <tr key={index} className="border-t my-2">
-              <td className="p-6">{`${item.first_name}`}</td>
-              <td className="p-6">{`${item.last_name}`}</td>
+              <td className="p-6">{`${item.name}`}</td>
               <td className="p-6">{item.email}</td>
-              <td className="p-6">{item.phone_number}</td>
+              <td className="p-6">{item.user?.phone_number}</td>
               <td className="p-6">{item.role}</td>
               <td className="p-6">
                 <p

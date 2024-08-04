@@ -52,7 +52,7 @@ function UserDataTable({ data = [], tableHeadNames, type = "default" }) {
                     <p>{user.name}</p>
                   </div>
                 </td>
-                <td className="p-6">{user.userName}</td>
+                <td className="p-6">{user.name}</td>
                 <td className="p-6">{user.placement}</td>
                 <td className="p-6">{user.referee}</td>
                 <td className="p-6">{user.level}</td>
@@ -71,7 +71,7 @@ function UserDataTable({ data = [], tableHeadNames, type = "default" }) {
                       alt="product images for show off"
                     />
                   </div>
-                  <p>{user?.company_name}</p>
+                  <p>{user?.name}</p>
                 </td>
                 <td className="p-6">{user?.company_registration_number}</td>
                 <td className="p-6">{user?.email || "placeholder@hxl.com"}</td>
@@ -103,12 +103,14 @@ function UserDataTable({ data = [], tableHeadNames, type = "default" }) {
                       alt="product images for show off"
                     />
                   </div>
-                  <p>{business?.company_name}</p>
+                  <p>{business?.name}</p>
                 </td>
                 <td className="p-6">{business?.email}</td>
                 <td className="p-6">{business?.phone_number}</td>
                 <td className="p-6">
-                  {convertStandardDate(business?.created_at || new Date())}
+                  {convertStandardDate(
+                    business?.profile?.created_at || new Date(),
+                  )}
                 </td>
                 <td className="p-6">{business?.status}</td>
                 <td className="flex gap-4">
@@ -137,7 +139,7 @@ function UserDataTable({ data = [], tableHeadNames, type = "default" }) {
                       alt="product images for show off"
                     />
                   </div>
-                  <p>{`${user?.first_name} ${user?.last_name}`}</p>
+                  <p>{`${user?.name}`}</p>
                 </td>
                 <td className="p-6">{user?.sponsor}</td>
                 <td className="p-6">{user?.rank}</td>
@@ -169,9 +171,7 @@ function UserDataTable({ data = [], tableHeadNames, type = "default" }) {
                       alt="product images for show off"
                     />
                   </div>
-                  <p>
-                    {user?.username || `${user?.first_name} ${user?.last_name}`}
-                  </p>
+                  <p>{user?.name || `${user?.name}`}</p>
                 </td>
                 <td className="p-6">{user?.email}</td>
                 <td className="p-6">{convertStandardDate(user?.created_at)}</td>

@@ -18,9 +18,10 @@ function SecurityDetailsForm() {
     try {
       if (user?.user_type === "company") {
         const responseData = await updateBusinessPassword({
+          id: user.user_id,
           ...data,
           user_type: user?.user_type,
-          user_id: user?.id || user?.profile?.user_id,
+          password: data.newPassword,
         }).unwrap();
       }
       if (user?.user_type === "individual") {
@@ -53,7 +54,6 @@ function SecurityDetailsForm() {
             className="outline-none border border-gray-300 rounded-md px-4 py-3 w-1/3 focus:border-primary-light transition-all duration-300 ease-in-out"
             type="password"
             id="oldPassword"
-            // name="oldPassword"
             placeholder="Enter your password"
             {...register("oldPassword", {
               required: "oldPassword is required",

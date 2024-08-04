@@ -27,13 +27,10 @@ function BusinessRegistrations() {
         setBusinessesData(response);
       } catch (error) {
         if (error.response) {
-          // Server errors (status code outside of 2xx range)
           console.error("Server Error:", JSON.stringify(error.response));
         } else if (error.request) {
-          // Network errors or no response from server
           console.error("Network Error:", error.message);
         } else {
-          // Other errors
           console.error("Error:", error.message);
         }
       }

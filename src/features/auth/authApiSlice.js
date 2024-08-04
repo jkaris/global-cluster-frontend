@@ -23,8 +23,8 @@ export const AuthApiSlice = globalClusterApi.injectEndpoints({
     }),
     updateUserProfile: builder.mutation({
       query: (updateData) => ({
-        url: `/api/v1/accounts/individuals/${updateData.user._id}/`,
-        method: "PUT",
+        url: `/api/v1/accounts/individuals/${updateData.id}/`,
+        method: "PATCH",
         body: { ...updateData },
       }),
     }),

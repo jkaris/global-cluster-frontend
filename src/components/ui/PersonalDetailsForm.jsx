@@ -15,27 +15,30 @@ function PersonalDetailsForm() {
     watch,
   } = useForm({
     defaultValues: {
+      name: user?.profile?.name || "",
       email: user?.email || "",
-      gender: user?.gender || "",
-      user_id: user?.id || user?.user_id,
     },
   });
-  const _id = user?.id || user?.user_id;
-  console.log(user);
 
   const onSubmit = async (data) => {
     try {
       if (user?.user_type === "company") {
         const responseData = await updateBusinessProfile({
+          id: user.user_id,
           ...data,
-          user_id: _id,
         }).unwrap();
       }
       if (user?.user_type === "individual") {
-        const responseData = await updateUserProfile({ ...data, _id }).unwrap();
+        const responseData = await updateUserProfile({
+          id: user.user_id,
+          ...data,
+        }).unwrap();
       }
       if (user?.user_type === "admin") {
-        // const responseData = await updateProfile(data).unwrap();
+        const responseData = await updateUserProfile({
+          id: user.user_id,
+          ...data,
+        }).unwrap();
       }
     } catch (error) {
       if (error.response) {
@@ -112,7 +115,6 @@ function PersonalDetailsForm() {
               type="text"
               id="name"
               placeholder="Global Cluster"
-              value={user?.name}
               {...register("name")}
             />
             {errors.name && (
@@ -127,7 +129,6 @@ function PersonalDetailsForm() {
             type="email"
             id="email"
             placeholder="example@gmail.com"
-            value={user?.email}
             {...register("email")}
           />
           {errors.email && (

@@ -2,11 +2,13 @@ import React from "react";
 import countries from "../../lib/countries.json";
 import { useUser } from "../../hooks/auth/useUser";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 import { useUpdateUserProfileMutation } from "../../features/auth/authApiSlice";
 import { useUpdateBusinessProfileMutation } from "../../features/business/businessApiSlice";
 import { loginAction } from "../../features/auth/authSlice";
 function ContactDetailsForm() {
   const { user } = useUser();
+  const dispatch = useDispatch();
   const [updateUserProfile] = useUpdateUserProfileMutation();
   const [updateBusinessProfile] = useUpdateBusinessProfileMutation();
   const {
@@ -15,40 +17,43 @@ function ContactDetailsForm() {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      name: user?.name || "",
-      address: user?.address || "",
-      country: user?.country || "Andorra",
-      state: user?.state || "",
-      city: user?.city || "",
-      phone_no: user?.phone_number || "",
-      user_id: user?.id || user?.user_id,
+      phone_number: user?.profile?.phone_number || "",
+      address: user?.profile.address || "",
+      country: user?.profile.country || "",
+      state: user?.profile.state || "",
+      city: user?.profile.city || "",
     },
   });
-  const id = user?.user_id;
 
   const onSubmit = async (data) => {
     try {
-      if (!id) {
-        console.error("User ID is undefined");
-        return;
-      }
-
+      let responseData;
       if (user?.user_type === "company") {
-        const responseData = await updateBusinessProfile({
-          user_id: id,
-          updatedData: data,
+        responseData = await updateBusinessProfile({
+          id: user.user_id,
+          ...data,
         }).unwrap();
-        if (responseData) {
-          console.log("Profile updated successfully");
-        } else {
-          console.error("Failed to update profile", responseData.error);
-        }
       }
       if (user?.user_type === "individual") {
-        const responseData = await updateUserProfile({ id, ...data }).unwrap();
+        responseData = await updateUserProfile({
+          id: user.user_id,
+          ...data,
+        }).unwrap();
       }
       if (user?.user_type === "admin") {
-        // const responseData = await updateProfile(data).unwrap();
+        const responseData = await updateUserProfile({
+          id: user.user_id,
+          ...data,
+        }).unwrap();
+        dispatch(
+          loginAction({
+            ...user,
+            profile: {
+              ...user.profile,
+              ...responseData,
+            },
+          }),
+        );
       }
     } catch (error) {
       if (error.response) {
@@ -134,8 +139,8 @@ function ContactDetailsForm() {
             placeholder="Enter your Phone No"
             {...register("phone_number")}
           />
-          {errors.phone_number && (
-            <span className="text-red-500">{errors.phone_number.message}</span>
+          {errors.phone_no && (
+            <span className="text-red-500">{errors.phone_no.message}</span>
           )}
         </div>
         <button

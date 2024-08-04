@@ -125,13 +125,7 @@ function StaffManagement() {
               <div className="flex flex-col gap-10">
                 <TableData
                   data={currentStaff}
-                  tableHeadNames={[
-                    "First Name",
-                    "Last Name",
-                    "Phone Number",
-                    "Role",
-                    "Action",
-                  ]}
+                  tableHeadNames={["Name", "Phone Number", "Role", "Action"]}
                   handleShowStaffDetails={handleShowStaffDetails}
                 />
                 <Pagination
